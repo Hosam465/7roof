@@ -41,16 +41,29 @@
             min-height: 100vh;
             overflow-y: auto;
             overflow-x: hidden;
-            min-height: 100vh;
             background-color: var(--bg-dark);
-            /* حذفنا رابط الـ http وأبقينا التدرج اللوني الجميل */
             background-image:
                 radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
                 linear-gradient(var(--bg-dark), var(--bg-light));
+            color: white;
+            position: relative;
+            z-index: 0;
+        }
+
+        /* --- BACKGROUND IMAGE --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('worldcup.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            color: white;
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .q-delete-btn {
@@ -70,17 +83,13 @@
             color: white;
         }
 
-        /* تنسيق الشعار في القائمة الرئيسية */
         .main-brand-logo {
             position: absolute;
-
             top: 180px;
             width: 200px;
-            /* يمكنك التحكم في الحجم من هنا */
             height: auto;
             margin-bottom: 15px;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-            /* إضافة توهج خفيف */
         }
 
         .lang-switch {
@@ -109,7 +118,6 @@
             color: black;
         }
 
-        /* تنسيق الشعار الصغير داخل اللعبة */
         .game-header-logo {
             position: absolute;
             top: 0px;
@@ -118,25 +126,12 @@
             height: auto;
             z-index: 1000;
             opacity: 0.8;
-            /* شفافية بسيطة ليعطي مظهر علامة مائية */
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
-       /*  .gamee-header-logo {
-            position: absolute;
-            top: -140px;
-            left: 320px;
-            width: 300px;
-            height: auto;
-            z-index: 1000;
-            opacity: 0.8;
-            
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-        }
-        /*
 
         /* --- QR CODE STYLES --- */
         .qr-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -146,6 +141,7 @@
             width: fit-content;
             cursor: pointer;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .qr-container img {
@@ -281,11 +277,13 @@
             background: white;
             color: black;
         }
-.hidden-text {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-}
+        
+        .hidden-text {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        
         .score-number {
             font-size: clamp(3.5rem, 5vw, 5rem);
             font-weight: 900;
@@ -321,15 +319,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .player-info {
@@ -379,20 +370,9 @@
         }
 
         @keyframes floatUp {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0.5);
-            }
-
-            20% {
-                opacity: 1;
-                transform: translateY(-15px) scale(1.1);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-80px) scale(1);
-            }
+            0% { opacity: 0; transform: translateY(0) scale(0.5); }
+            20% { opacity: 1; transform: translateY(-15px) scale(1.1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1); }
         }
 
         #game-container {
@@ -422,7 +402,8 @@
             align-items: center;
             justify-content: center;
             padding: 70px 90px;
-            background: rgba(27, 38, 59, 0.95);
+            background: rgba(27, 38, 59, 0.85);
+            backdrop-filter: blur(10px);
             border-radius: 50px;
             position: relative;
             z-index: 10;
@@ -441,7 +422,7 @@
             border-left-color: var(--neon-red);
             border-right-color: var(--neon-red);
             pointer-events: none;
-            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+            filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.7));
         }
 
         .hex-grid {
@@ -457,13 +438,8 @@
             margin-bottom: 5px;
         }
 
-        .row:nth-child(odd) {
-            transform: translateX(27.5px);
-        }
-
-        .row:nth-child(even) {
-            transform: translateX(-27.5px);
-        }
+        .row:nth-child(odd) { transform: translateX(27.5px); }
+        .row:nth-child(even) { transform: translateX(-27.5px); }
 
         .hex {
             width: 100px;
@@ -488,6 +464,7 @@
             background-color: var(--hex-hover);
             transform: scale(1.15) translateY(-5px);
             z-index: 100;
+            box-shadow: 0 0 20px gold;
         }
 
         .hex.taken-green {
@@ -550,6 +527,7 @@
 
         .joker-btn:hover {
             transform: scale(1.03);
+            border-color: #ffd700;
         }
 
         #bottom-code-bar {
@@ -650,110 +628,6 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        @media (max-width: 1200px) {
-            :root {
-                --sidebar-width: 180px;
-            }
-
-            .game-board {
-                transform: scale(0.75);
-            }
-        }
-
-        @media (max-width: 900px) {
-            :root {
-                --sidebar-width: 140px;
-            }
-
-            .game-board {
-                transform: scale(0.6);
-            }
-
-            .player-card {
-                font-size: 0.8rem;
-                padding: 5px;
-            }
-
-            h1 {
-                margin-top: 130px;
-            }
-        }
-
-        @media (max-width: 700px) {
-            body {
-                justify-content: flex-start;
-                overflow-y: auto;
-            }
-
-            .team-sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                padding: 10px;
-                border: none;
-                background: rgba(0, 0, 0, 0.5);
-            }
-
-            #red-sidebar {
-                border-bottom: 2px solid var(--game-red);
-                order: 2;
-            }
-
-            #green-sidebar {
-                border-bottom: 2px solid var(--game-green);
-                order: 3;
-            }
-
-            .score-box {
-                flex-direction: row;
-                gap: 10px;
-                margin: 0;
-                padding: 5px 15px;
-            }
-
-            .score-number {
-                font-size: 1.5rem;
-            }
-
-            #list-green,
-            #list-red {
-                display: none;
-            }
-
-            #game-container {
-                padding: 10px;
-                height: auto;
-                order: 1;
-                margin-top: 20px;
-            }
-
-            .game-board {
-                transform: scale(0.45);
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-
-            .exit-btn {
-                top: 10px;
-                left: 10px;
-                font-size: 0.8rem;
-            }
-
-            #bottom-code-bar {
-                width: 90%;
-                font-size: 1.2rem;
-                bottom: 10px;
-            }
-
-            h1 {
-                margin-top: 10px;
-            }
-        }
-
         .modal-overlay {
             display: none;
             position: fixed;
@@ -765,34 +639,33 @@
             align-items: center;
         }
 
+        /* --- GLASSMORPHISM MODAL & MENUS --- */
+        .modal, .menu-content, .settings-box, .editor-box, .confirm-modal-box {
+            background: rgba(13, 27, 42, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.05);
+            color: white;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
         .modal {
-            background: #f4f4f4;
-            padding: 30px;
-            border-radius: 25px;
             width: 95%;
             max-width: 900px;
-            text-align: center;
-            border: 4px solid #ffd700;
-            color: #333;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             animation: popIn 0.2s;
         }
 
         @keyframes popIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .buzzer-winner-msg {
-            background: #222;
+            background: rgba(0, 0, 0, 0.6);
             color: white;
             padding: 15px;
             border-radius: 15px;
@@ -805,15 +678,8 @@
         }
 
         @keyframes flash {
-            0% {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-buttons {
@@ -833,69 +699,66 @@
             transition: 0.2s;
         }
 
-        .btn-green {
-            background: var(--game-green);
-            color: white;
-        }
+        .btn-green { background: var(--game-green); color: white; }
+        .btn-red { background: var(--game-red); color: white; }
 
-        .btn-red {
-            background: var(--game-red);
-            color: white;
-        }
-
-        .btn-green:hover,
-        .btn-red:hover {
+        .btn-green:hover, .btn-red:hover {
             transform: scale(1.02);
             filter: brightness(1.1);
         }
 
+        /* --- MCQ OPTIONS WITH SHAKE ANIMATION FOR WRONG ANSWERS --- */
         .mcq-option {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.08);
             padding: 20px;
             border-radius: 15px;
             font-weight: 900;
             font-size: 1.8rem;
-            border: 4px solid #ccc;
+            border: 2px solid rgba(255, 215, 0, 0.3);
             cursor: pointer;
             transition: 0.15s;
             user-select: none;
-            color: #333;
+            color: white;
             margin-bottom: 15px;
+            backdrop-filter: blur(5px);
         }
+
+        .mcq-option span { color: white !important; }
 
         .mcq-option:hover {
             transform: scale(1.01);
-            border-color: #999;
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
         }
 
         .mcq-option.correct {
-            background: #28a745 !important;
+            background: rgba(40, 167, 69, 0.8) !important;
             color: white !important;
             border-color: #28a745 !important;
             animation: pulse 0.5s;
         }
 
         .mcq-option.wrong {
-            background: #dc3545 !important;
+            background: rgba(220, 53, 69, 0.8) !important;
             color: white !important;
             border-color: #dc3545 !important;
-            opacity: 0.7;
+            opacity: 0.8;
+            animation: shake 0.4s;
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.02);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
 
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* GOLD & GAME OVER OVERLAYS */
         #gold-celebration,
         #game-over-overlay {
             position: fixed;
@@ -948,9 +811,7 @@
             font-family: 'Cairo';
         }
 
-        .next-round-btn:hover {
-            transform: scale(1.1);
-        }
+        .next-round-btn:hover { transform: scale(1.1); }
 
         /* MENU STYLES */
         #main-menu,
@@ -963,24 +824,14 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            background: rgba(13, 27, 42, 0.98);
             padding: 20px;
         }
 
-        #editor-container,
-        #settings-page {
-            display: none;
-        }
+        #editor-container, #settings-page { display: none; }
 
         .menu-content {
             width: 100%;
             max-width: 600px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 30px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1023,23 +874,10 @@
         }
 
         /* SETTINGS PAGE STYLES */
-        .settings-box {
-            width: 100%;
-            max-width: 700px;
-            background: linear-gradient(135deg, #162447, #1f4068);
-            border-radius: 30px;
-            padding: 40px;
-            border: 2px solid #ffd700;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        .settings-box { width: 100%; max-width: 700px; gap: 20px; }
 
         .settings-section {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             padding: 20px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1049,21 +887,12 @@
             margin: 0 0 15px 0;
             color: #ffd700;
             font-size: 1.4rem;
-            border-bottom: 1px solid #555;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
             padding-bottom: 5px;
         }
 
-        .settings-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .settings-label {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
+        .settings-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .settings-label { font-size: 1.2rem; font-weight: bold; }
 
         .settings-input {
             padding: 10px;
@@ -1077,11 +906,7 @@
             font-size: 1.2rem;
         }
 
-        .settings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
         .settings-btn-tile {
             padding: 20px;
@@ -1097,267 +922,99 @@
             gap: 10px;
             transition: 0.2s;
             color: white;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .settings-btn-tile:hover {
-            transform: scale(1.05);
-        }
-
-        .tile-edit {
-            background: linear-gradient(45deg, #17a2b8, #117a8b);
-        }
-
-        .tile-reset {
-            background: linear-gradient(45deg, #dc3545, #a71d2a);
-        }
+        .settings-btn-tile:hover { transform: scale(1.05); }
+        .tile-edit { background: linear-gradient(45deg, rgba(23, 162, 184, 0.6), rgba(17, 122, 139, 0.6)); }
+        .tile-reset { background: linear-gradient(45deg, rgba(220, 53, 69, 0.6), rgba(167, 29, 42, 0.6)); }
 
         .save-btn {
-            background: #28a745;
-            width: 100%;
-            padding: 15px;
-            font-size: 1.3rem;
-            border-radius: 50px;
-            border: none;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
+            background: #28a745; width: 100%; padding: 15px; font-size: 1.3rem;
+            border-radius: 50px; border: none; color: white; font-weight: bold;
+            cursor: pointer; margin-top: 10px;
         }
 
         /* EDITOR LIST STYLES */
-        .editor-box {
-            width: 100%;
-            max-width: 900px;
-            height: 90%;
-            background: #162447;
-            border-radius: 30px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-        }
+        .editor-box { width: 100%; max-width: 900px; height: 90%; display: flex; flex-direction: column; }
 
-        .editor-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #555;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
+        .editor-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 15px; }
 
-        .questions-list {
-            flex: 1;
-            overflow-y: auto;
-            margin: 0;
-            padding-right: 10px;
-        }
-
-        .questions-list::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .questions-list::-webkit-scrollbar-track {
-            background: #0d1b2a;
-            border-radius: 10px;
-        }
-
-        .questions-list::-webkit-scrollbar-thumb {
-            background: #ffd700;
-            border-radius: 10px;
-        }
+        .questions-list { flex: 1; overflow-y: auto; margin: 0; padding-right: 10px; }
+        .questions-list::-webkit-scrollbar { width: 10px; }
+        .questions-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
+        .questions-list::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
 
         .q-item {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 15px;
-            border-right: 6px solid #ffd700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.15s, background 0.15s;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px; margin-bottom: 10px; border-radius: 15px;
+            border-right: 6px solid #ffd700; display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.15s, background 0.15s; border-left: 1px solid rgba(255,255,255,0.1);
         }
-
-        .q-item:hover {
-            transform: translateX(-3px);
-            background: rgba(255, 255, 255, 0.15);
-        }
+        .q-item:hover { transform: translateX(-3px); background: rgba(255, 255, 255, 0.15); }
 
         .q-letter {
-            background: #ffd700;
-            color: black;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.2rem;
-            margin-left: 15px;
-            flex-shrink: 0;
+            background: #ffd700; color: black; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; margin-left: 15px; flex-shrink: 0;
         }
 
         .q-text {
-            flex-grow: 1;
-            font-size: 1.1rem;
-            color: #fff;
-            text-align: right;
-            font-weight: bold;
-            margin: 0 15px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            flex-grow: 1; font-size: 1.1rem; color: #fff; text-align: right; font-weight: bold; margin: 0 15px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
 
-        .q-answer {
-            background: #28a745;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 15px;
-            white-space: nowrap;
-            font-weight: bold;
-        }
+        .q-answer { background: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; margin-left: 15px; white-space: nowrap; font-weight: bold; }
 
         .q-edit-btn {
-            background: transparent;
-            border: 2px solid #ffd700;
-            color: #ffd700;
-            padding: 5px 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Cairo';
-            white-space: nowrap;
+            background: transparent; border: 2px solid #ffd700; color: #ffd700; padding: 5px 15px;
+            border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; font-family: 'Cairo'; white-space: nowrap;
         }
-
-        .q-edit-btn:hover {
-            background: #ffd700;
-            color: black;
-        }
+        .q-edit-btn:hover { background: #ffd700; color: black; }
 
         .add-q-btn {
-            background: linear-gradient(45deg, #28a745, #218838);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: 'Cairo';
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            background: linear-gradient(45deg, #28a745, #218838); color: white; border: none; padding: 10px 20px;
+            border-radius: 20px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; display: flex; align-items: center; gap: 5px;
         }
 
         /* EDIT FORM STYLES */
-        #edit-form-container {
-            display: none;
-            flex-direction: column;
-            gap: 15px;
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        .edit-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .edit-input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            text-align: right;
-            flex: 1;
-        }
-
-        .edit-input-group label {
-            color: #ffd700;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .edit-input {
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #555;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-family: 'Cairo';
-            font-size: 1rem;
-        }
-
-        .edit-select {
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #555;
-            background: #1f4068;
-            color: white;
-            font-family: 'Cairo';
-            font-size: 1rem;
-        }
-
-        .edit-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
+        #edit-form-container { display: none; flex-direction: column; gap: 15px; height: 100%; overflow-y: auto; }
+        .edit-row { display: flex; gap: 10px; }
+        .edit-input-group { display: flex; flex-direction: column; gap: 5px; text-align: right; flex: 1; }
+        .edit-input-group label { color: #ffd700; font-weight: bold; font-size: 0.9rem; }
+        .edit-input, .edit-select { padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0, 0, 0, 0.4); color: white; font-family: 'Cairo'; font-size: 1rem; }
+        .edit-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
 
         /* CUSTOM CONFIRM MODAL */
-        .confirm-modal-box {
-            background: linear-gradient(135deg, #222, #333);
-            padding: 40px;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            color: white;
-            border: 3px solid #ffd700;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-        }
-
-        .confirm-btn-yes {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin: 10px;
-        }
-
-        .confirm-btn-no {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin: 10px;
+        .confirm-btn-yes { background: #28a745; color: white; border: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; margin: 10px; }
+        .confirm-btn-no { background: #dc3545; color: white; border: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; margin: 10px; }
+        
+        /* Responsive Overrides */
+        @media (max-width: 1200px) { :root { --sidebar-width: 180px; } .game-board { transform: scale(0.75); } }
+        @media (max-width: 900px) { :root { --sidebar-width: 140px; } .game-board { transform: scale(0.6); } .player-card { font-size: 0.8rem; padding: 5px; } h1 { margin-top: 130px; } }
+        @media (max-width: 700px) {
+            body { justify-content: flex-start; overflow-y: auto; }
+            .team-sidebar { position: relative; width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px; border: none; background: rgba(0, 0, 0, 0.5); }
+            #red-sidebar { border-bottom: 2px solid var(--game-red); order: 2; }
+            #green-sidebar { border-bottom: 2px solid var(--game-green); order: 3; }
+            .score-box { flex-direction: row; gap: 10px; margin: 0; padding: 5px 15px; }
+            .score-number { font-size: 1.5rem; }
+            #list-green, #list-red { display: none; }
+            #game-container { padding: 10px; height: auto; order: 1; margin-top: 20px; }
+            .game-board { transform: scale(0.45); padding: 20px; margin-bottom: 20px; }
+            .exit-btn { top: 10px; left: 10px; font-size: 0.8rem; }
+            #bottom-code-bar { width: 90%; font-size: 1.2rem; bottom: 10px; }
+            h1 { margin-top: 10px; }
         }
     </style>
 </head>
 
 <body>
 
-    <audio id="sound_start" src="https://assets.mixkit.co/sfx/preview/mixkit-quick-click-button-112.mp3" preload="auto"
-        volume="0.3"></audio>
+    <audio id="sound_start" src="game-start-317318.mp3" preload="auto" volume="0.3"></audio>
     <audio id="sound_buzzer" src="correct-472358.mp3" preload="auto"></audio>
-      <audio id="sound_start" src="game-start-317318.mp3" preload="auto" volume="0.3"></audio>
-
-<audio id="sound_hover" src="lesiakower-minimalist-button-hover-sound-effect-399749.mp3" preload="auto"></audio>  
-  <audio id="sound_wrong" src="wrong-answer-21-199825.mp3" preload="auto"></audio>
+    <audio id="sound_hover" src="lesiakower-minimalist-button-hover-sound-effect-399749.mp3" preload="auto"></audio>  
+    <audio id="sound_wrong" src="wrong-answer-21-199825.mp3" preload="auto"></audio>
     <audio id="sound_gold" src="winner-game-sound-404167.mp3" preload="auto"></audio>
     <audio id="sound_round_win" src="winner-game-sound-404167.mp3" preload="auto"></audio>
 
@@ -1426,8 +1083,7 @@
             </div>
             <div id="lobby-bar"></div>
 
-            <button class="btn" onclick="openSettings()"
-                style="background: linear-gradient(45deg, #17a2b8, #138496);">⚙️ الإعدادات</button>
+            <button class="btn" onclick="openSettings()" style="background: linear-gradient(45deg, #17a2b8, #138496); color: white; border: 1px solid rgba(255,255,255,0.3);">⚙️ الإعدادات</button>
             <button class="btn" onclick="startGame()">ابدأ اللعب</button>
         </div>
     </div>
@@ -1435,11 +1091,11 @@
     <div class="backdrop" onclick="toggleQRCode()"></div>
 
     <div id="settings-page">
-        <button class="settings-btn-tile" style="background: #f39c12;" onclick="resetUsedList()">
-    🔄 إعادة تدوير الأسئلة المستعملة
-</button>
+        <button class="settings-btn-tile" style="background: rgba(243, 156, 18, 0.8); margin-bottom: 20px;" onclick="resetUsedList()">
+            🔄 إعادة تدوير الأسئلة المستعملة
+        </button>
         <div class="settings-box">
-            <h2 style="color:#ffd700; margin-bottom:20px;">لوحة التحكم</h2>
+            <h2 style="color:#ffd700; margin-bottom:20px; text-shadow: 0 0 10px gold;">لوحة التحكم</h2>
 
             <div class="settings-section">
                 <h3>⏱️ إعدادات اللعب</h3>
@@ -1454,14 +1110,9 @@
 
                 <div class="settings-row">
                     <span class="settings-label">لغة الأسئلة</span>
-                    <div
-                        style="display: flex; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px solid gold; overflow: hidden;">
-                        <button id="set-ar"
-                            style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: gold; color: black;"
-                            onclick="setLanguage('ar')">العربية</button>
-                        <button id="set-en"
-                            style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: transparent; color: white;"
-                            onclick="setLanguage('en')">English</button>
+                    <div style="display: flex; background: rgba(0,0,0,0.5); border-radius: 10px; border: 1px solid gold; overflow: hidden;">
+                        <button id="set-ar" style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: gold; color: black;" onclick="setLanguage('ar')">العربية</button>
+                        <button id="set-en" style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: transparent; color: white;" onclick="setLanguage('en')">English</button>
                     </div>
                 </div>
             </div>
@@ -1501,92 +1152,53 @@
 
     <div class="modal-overlay" id="joker-menu-modal">
         <div class="modal" style="width: 600px;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 30px;">اختر نوع المساعدة</h2>
+            <h2 style="font-size: 2.5rem; margin-bottom: 30px; text-shadow: 0 0 10px gold;">اختر نوع المساعدة</h2>
             <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
-                <button class="joker-option-btn" style="background: #dc3545;" onclick="selectJokerEffect('remove')">🚫
-                    حذف إجابة خاطئة</button>
-                <button class="joker-option-btn" style="background: #17a2b8;" onclick="selectJokerEffect('cat')">📂
-                    اختيار تصنيف السؤال</button>
-                <button class="joker-option-btn" style="background: #ffc107; color: black;"
-                    onclick="selectJokerEffect('time')">⏳ وقت مفتوح للإجابة</button>
+                <button class="joker-option-btn" style="background: rgba(220, 53, 69, 0.8);" onclick="selectJokerEffect('remove')">🚫 حذف إجابة خاطئة</button>
+                <button class="joker-option-btn" style="background: rgba(255, 193, 7, 0.9); color: black;" onclick="selectJokerEffect('time')">⏳ وقت مفتوح للإجابة</button>
             </div>
-            <button
-                style="margin-top: 30px; background: #6c757d; color: white; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 20px; cursor: pointer;"
-                onclick="closeJokerMenu()">إلغاء</button>
+            <button style="margin-top: 30px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 20px; cursor: pointer; backdrop-filter: blur(5px);" onclick="closeJokerMenu()">إلغاء</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="modal">
         <div class="modal" id="modal-content">
-            <div style="position: absolute; top: -35px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: #222; border-radius: 50%; border: 4px solid #ffd700; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.8rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3);"
-                id="timer-display">30</div>
+            <div style="position: absolute; top: -35px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border-radius: 50%; border: 4px solid #ffd700; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.8rem; box-shadow: 0 5px 15px rgba(0,0,0,0.6);" id="timer-display">30</div>
 
             <div style="margin-top: 30px;"></div>
             <div id="buzzer-winner" class="buzzer-winner-msg"></div>
 
-            <h2 id="modal-letter" style="font-size: 2rem; margin: 0 0 10px 0; color: #333;"></h2>
-            <p id="modal-question"
-                style="font-size: clamp(2.5rem, 5vw, 4rem); margin: 20px 0; color: #000; line-height: 1.2; font-weight: 900;">
-            </p>
+            <h2 id="modal-letter" style="font-size: 2rem; margin: 0 0 10px 0; color: #ffd700;"></h2>
+            <p id="modal-question" style="font-size: clamp(2.5rem, 5vw, 4rem); margin: 20px 0; color: white; line-height: 1.2; font-weight: 900;"></p>
 
             <div id="mcq-view" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
             </div>
 
             <div class="modal-buttons">
-                <button class="btn-green" id="btn-green-correct" onclick="resolveQuestion('green')">صحيحة
-                    (أخضر)</button>
+                <button class="btn-green" id="btn-green-correct" onclick="resolveQuestion('green')">صحيحة (أخضر)</button>
                 <button class="btn-red" id="btn-red-correct" onclick="resolveQuestion('red')">صحيحة (أحمر)</button>
-                <button
-                    style="grid-column: span 2; padding: 15px; cursor: pointer; background: #6c757d; color: white; border: none; border-radius: 10px; font-weight: bold;"
-                    onclick="closeModal()">إلغاء</button>
+                <button style="grid-column: span 2; padding: 15px; cursor: pointer; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; font-weight: bold; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'" onclick="closeModal()">إلغاء</button>
             </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="cat-modal">
-        <div class="cat-modal-content">
-            <h2 style="font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 10px gold;">اختر نوع السؤال</h2>
-            <div class="cat-grid">
-                <button class="cat-btn" onclick="selectCategory('sport')">⚽ رياضة</button>
-                <button class="cat-btn" onclick="selectCategory('history')">📜 تاريخ</button>
-                <button class="cat-btn" onclick="selectCategory('geo')">🌍 جغرافيا</button>
-                <button class="cat-btn" onclick="selectCategory('science')">🧪 علوم</button>
-                <button class="cat-btn" onclick="selectCategory('general')">💡 عام</button>
-                <button class="cat-btn" onclick="selectCategory('islamic')">☪️ إسلاميات</button>
-            </div>
-            <button class="cancel-btn" onclick="closeCatModal()">إلغاء</button>
         </div>
     </div>
 
     <div id="editor-container">
         <div style="display: flex; gap: 10px; justify-content: center; width: 100%; margin: 10px 0;">
-            <button class="btn" style="background: #28a745; width: auto; margin: 0;"
-                onclick="uploadToFirebase('ar')">Upload Arabic</button>
-            <button class="btn" style="background: #007bff; width: auto; margin: 0;"
-                onclick="uploadToFirebase('en')">Upload English</button>
+            <button class="btn" style="background: rgba(40, 167, 69, 0.8); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; margin: 0;" onclick="uploadToFirebase('ar')">Upload Arabic</button>
+            <button class="btn" style="background: rgba(0, 123, 255, 0.8); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; margin: 0;" onclick="uploadToFirebase('en')">Upload English</button>
         </div>
         <div class="editor-box">
 
             <div class="editor-header">
-                <h2 style="color: white; margin:0;" id="txt-editor-title">قائمة الأسئلة (Online DB)</h2>
+                <h2 style="color: #ffd700; margin:0;" id="txt-editor-title">قائمة الأسئلة (Online DB)</h2>
                 <button class="add-q-btn" onclick="openAddQuestion()">➕ إضافة سؤال جديد</button>
             </div>
 
             <div id="editor-tabs" style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
-                <button id="btn-tab-ar" class="btn"
-                    style="width: auto; padding: 10px 25px; background: gold; color: black;"
-                    onclick="switchEditorTab('ar')">الأسئلة العربية</button>
-                <button id="btn-tab-en" class="btn"
-                    style="width: auto; padding: 10px 25px; background: #6c757d; color: white;"
-                    onclick="switchEditorTab('en')">English Questions</button>
-
-
+                <button id="btn-tab-ar" class="btn" style="width: auto; padding: 10px 25px; background: gold; color: black;" onclick="switchEditorTab('ar')">الأسئلة العربية</button>
+                <button id="btn-tab-en" class="btn" style="width: auto; padding: 10px 25px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4);" onclick="switchEditorTab('en')">English Questions</button>
             </div>
 
-
-            <div style="display: flex; gap: 10px; justify-content: center;">
-
-            </div>
             <div id="list-ar-wrapper" class="questions-list" style="display: block;"></div>
             <div id="list-en-wrapper" class="questions-list" style="display: none;"></div>
 
@@ -1598,8 +1210,7 @@
                 <div class="edit-row">
                     <div class="edit-input-group">
                         <label>الحرف</label>
-                        <input type="text" id="edit-q-letter" class="edit-input" maxlength="1"
-                            style="text-align:center;">
+                        <input type="text" id="edit-q-letter" class="edit-input" maxlength="1" style="text-align:center;">
                     </div>
                     <div class="edit-input-group">
                         <label>التصنيف</label>
@@ -1630,820 +1241,333 @@
                 </div>
 
                 <div class="edit-actions">
-                    <button class="btn" style="background:#28a745; padding: 10px 20px;"
-                        onclick="saveQuestion()">حفظ</button>
-                    <button class="btn" style="background:#6c757d; padding: 10px 20px;"
-                        onclick="cancelEdit()">إلغاء</button>
+                    <button class="btn" style="background:#28a745; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px;" onclick="saveQuestion()">حفظ</button>
+                    <button class="btn" style="background:rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); padding: 10px 20px;" onclick="cancelEdit()">إلغاء</button>
                 </div>
             </div>
 
-            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;"
-                id="editor-main-actions">
-                <button class="btn" onclick="closeEditor()" style="font-size: 1rem; padding: 10px 30px;">رجوع
-                    للإعدادات</button>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;" id="editor-main-actions">
+                <button class="btn" onclick="closeEditor()" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); font-size: 1rem; padding: 10px 30px;">رجوع للإعدادات</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- MANUAL HIJAI ORDER (To force correct sorting) ---
-        const hijaiOrder = [
-            'أ', 'إ', 'ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش',
-            'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'هـ', 'و', 'ي'
+        const hijaiOrder = ['أ', 'إ', 'ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'هـ', 'و', 'ي'];
+        const firebaseConfig = { apiKey: "AIzaSyBWShBcWNHm64xliJ-OlEm_P-0RFRY-x2s", authDomain: "hroof-837b6.firebaseapp.com", projectId: "hroof-837b6", storageBucket: "hroof-837b6.firebasestorage.app", messagingSenderId: "1061358003828", appId: "1:1061358003828:web:e85a22b79440a660905321", measurementId: "G-4B1CHV1F4R" };
+
+        let totalQuestionsAsked = 0; let nextEggTarget = 5; 
+        const easterEggPool = [
+            { id: "egg_1", letter: "★", question: "ما القيمة المرتبطة بـ (HEART – من القلب)؟", answer: "التعاطف", options: ["السرعة", "التنافس", "السيطرة"], type: "mcq" },
+            { id: "egg_2", letter: "★", question: "ماذا تعني قيمة (NO EXCUSES – بدون أعذار)؟", answer: "تحمل المسؤولية", options: ["تجاهل الأخطاء", "التأجيل", "التهرب"], type: "mcq" },
+            { id: "egg_3", letter: "★", question: "أي من التالي يندرج تحت (TEAM FIRST – الفريق أولاً)؟", answer: "التضحية الشخصية", options: ["المصلحة الفردية", "الأنانية", "المنافسة الداخلية"], type: "mcq" },
+            { id: "egg_4", letter: "★", question: "ما السلوك المرتبط بـ (INTEGRITY – النزاهة)؟", answer: "الصدق", options: ["المجاملة الزائدة", "إخفاء الأخطاء", "التبرير"], type: "mcq" },
+            { id: "egg_5", letter: "★", question: "ماذا تعني (DRIVE – العزم) في بيئة العمل؟", answer: "التطور المستمر", options: ["الاكتفاء بالحد الأدنى", "التراخي", "التوقف عند الخطأ"], type: "mcq" },
+            { id: "egg_6", letter: "★", question: "أي قيمة تعكس (HEART) بشكل مباشر؟", answer: "الاحترام", options: ["السيطرة", "الصرامة", "الإهمال"], type: "mcq" },
+            { id: "egg_7", letter: "★", question: "ما السمة الأساسية في (NO EXCUSES)؟", answer: "الالتزام والاستمرارية", options: ["الأعذار", "التردد", "التأجيل"], type: "mcq" },
+            { id: "egg_8", letter: "★", question: "أي من التالي مرتبط بـ (TEAM FIRST)؟", answer: "التعاون", options: ["العمل الفردي", "المنافسة الداخلية", "العزلة"], type: "mcq" },
+            { id: "egg_9", letter: "★", question: "ما المقصود بـ (Lead by Example) ضمن النزاهة؟", answer: "القدوة الحسنة", options: ["إعطاء أوامر فقط", "النقد المستمر", "تجاهل الفريق"], type: "mcq" },
+            { id: "egg_10", letter: "★", question: "ما معنى (Open Minded) في قيمة العزم؟", answer: "تقبل الآراء الجديدة", options: ["رفض التغيير", "التمسك بالرأي", "تجاهل الآخرين"], type: "mcq" }
         ];
 
-        // --- FIREBASE CONFIGURATION ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyBWShBcWNHm64xliJ-OlEm_P-0RFRY-x2s",
-            authDomain: "hroof-837b6.firebaseapp.com",
-            projectId: "hroof-837b6",
-            storageBucket: "hroof-837b6.firebasestorage.app",
-            messagingSenderId: "1061358003828",
-            appId: "1:1061358003828:web:e85a22b79440a660905321",
-            measurementId: "G-4B1CHV1F4R"
-        };
+        async function openQuestion(element, letter) {
+            totalQuestionsAsked++;
+            if (typeof clearBuzzes === 'function') await clearBuzzes();
+            const buzzerWinnerEl = document.getElementById('buzzer-winner');
+            if (buzzerWinnerEl) { buzzerWinnerEl.style.display = 'none'; buzzerWinnerEl.innerHTML = ''; }
 
-      // The counter and the "Target" (e.g., show egg every 5th question)
-let totalQuestionsAsked = 0;
-let nextEggTarget = 5; 
+            const index = parseInt(element.dataset.index);
+            if (element.classList.contains('taken-green')) { showConfirmModal('هل تريد تحويل هذه الخانة للفريق الأحمر؟', () => { element.classList.remove('taken-green'); element.classList.add('taken-red'); boardState[index] = 2; adjustScore('green', -10); adjustScore('red', 10); checkWin('red'); }); return; }
+            if (element.classList.contains('taken-red')) { showConfirmModal('هل تريد تحويل هذه الخانة للفريق الأخضر؟', () => { element.classList.remove('taken-red'); element.classList.add('taken-green'); boardState[index] = 1; adjustScore('red', -10); adjustScore('green', 10); checkWin('green'); }); return; }
 
-// Your pool of Easter Egg questions
-const easterEggPool = [
-    { id: "egg_1", letter: "★", question: "ما القيمة المرتبطة بـ (HEART – من القلب)؟", answer: "التعاطف", options: ["السرعة", "التنافس", "السيطرة"], type: "mcq" },
-    { id: "egg_2", letter: "★", question: "ماذا تعني قيمة (NO EXCUSES – بدون أعذار)؟", answer: "تحمل المسؤولية", options: ["تجاهل الأخطاء", "التأجيل", "التهرب"], type: "mcq" },
-    { id: "egg_3", letter: "★", question: "أي من التالي يندرج تحت (TEAM FIRST – الفريق أولاً)؟", answer: "التضحية الشخصية", options: ["المصلحة الفردية", "الأنانية", "المنافسة الداخلية"], type: "mcq" },
-    { id: "egg_4", letter: "★", question: "ما السلوك المرتبط بـ (INTEGRITY – النزاهة)؟", answer: "الصدق", options: ["المجاملة الزائدة", "إخفاء الأخطاء", "التبرير"], type: "mcq" },
-    { id: "egg_5", letter: "★", question: "ماذا تعني (DRIVE – العزم) في بيئة العمل؟", answer: "التطور المستمر", options: ["الاكتفاء بالحد الأدنى", "التراخي", "التوقف عند الخطأ"], type: "mcq" },
-    { id: "egg_6", letter: "★", question: "أي قيمة تعكس (HEART) بشكل مباشر؟", answer: "الاحترام", options: ["السيطرة", "الصرامة", "الإهمال"], type: "mcq" },
-    { id: "egg_7", letter: "★", question: "ما السمة الأساسية في (NO EXCUSES)؟", answer: "الالتزام والاستمرارية", options: ["الأعذار", "التردد", "التأجيل"], type: "mcq" },
-    { id: "egg_8", letter: "★", question: "أي من التالي مرتبط بـ (TEAM FIRST)؟", answer: "التعاون", options: ["العمل الفردي", "المنافسة الداخلية", "العزلة"], type: "mcq" },
-    { id: "egg_9", letter: "★", question: "ما المقصود بـ (Lead by Example) ضمن النزاهة؟", answer: "القدوة الحسنة", options: ["إعطاء أوامر فقط", "النقد المستمر", "تجاهل الفريق"], type: "mcq" },
-    { id: "egg_10", letter: "★", question: "ما معنى (Open Minded) في قيمة العزم؟", answer: "تقبل الآراء الجديدة", options: ["رفض التغيير", "التمسك بالرأي", "تجاهل الآخرين"], type: "mcq" }
-];
-async function openQuestion(element, letter) {
-    // 1. Counter and initial UI reset
-    totalQuestionsAsked++;
-    
-    if (typeof clearBuzzes === 'function') await clearBuzzes();
-    
-    const buzzerWinnerEl = document.getElementById('buzzer-winner');
-    if (buzzerWinnerEl) {
-        buzzerWinnerEl.style.display = 'none';
-        buzzerWinnerEl.innerHTML = '';
-    }
+            let q;
+            const modalContent = document.getElementById('modal-content');
+            const usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
+            const availableEggs = easterEggPool.filter(egg => !usedIds.includes(egg.id));
+            let disable = 0;
 
-    const index = parseInt(element.dataset.index);
-    
-    // 2. Handle tile capturing (Green/Red conversion)
-    if (element.classList.contains('taken-green')) { 
-        showConfirmModal('هل تريد تحويل هذه الخانة للفريق الأحمر؟', () => { 
-            element.classList.remove('taken-green'); 
-            element.classList.add('taken-red'); 
-            boardState[index] = 2; 
-            adjustScore('green', -10); 
-            adjustScore('red', 10); 
-            checkWin('red'); 
-        }); 
-        return; 
-    }
-    if (element.classList.contains('taken-red')) { 
-        showConfirmModal('هل تريد تحويل هذه الخانة للفريق الأخضر؟', () => { 
-            element.classList.remove('taken-red'); 
-            element.classList.add('taken-green'); 
-            boardState[index] = 1; 
-            adjustScore('red', -10); 
-            adjustScore('green', 10); 
-            checkWin('green'); 
-        }); 
-        return; 
-    }
+            if (totalQuestionsAsked === nextEggTarget && availableEggs.length > 0 && disable === 1) {
+                const eggIndex = Math.floor(Math.random() * availableEggs.length);
+                q = availableEggs[eggIndex];
+                usedIds.push(q.id);
+                localStorage.setItem('usedQuestionIds', JSON.stringify(usedIds));
+                modalContent.style.borderColor = "var(--neon-green)";
+                modalContent.style.boxShadow = "0 0 30px var(--neon-green)";
+                nextEggTarget += Math.floor(Math.random() * 3) + 5; 
+                showToast("🎁 سؤال مفاجئ!");
+            } else {
+                q = getNormalQuestion(letter);
+                modalContent.style.borderColor = "#ffd700";
+                modalContent.style.boxShadow = "0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.05)";
+            }
 
-    // 3. Selection Logic: Easter Egg vs Normal Question
-    let q;
-    const modalContent = document.getElementById('modal-content');
-    const usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
-    
-    // Filter available Easter Eggs that haven't been used
-    const availableEggs = easterEggPool.filter(egg => !usedIds.includes(egg.id));
-let disable = 0;
-    if (totalQuestionsAsked === nextEggTarget && availableEggs.length > 0&& disable===1) {
-        // TRIGGER EASTER EGG
-        const eggIndex = Math.floor(Math.random() * availableEggs.length);
-        q = availableEggs[eggIndex];
-        
-        // Save ID to prevent future repeats
-        usedIds.push(q.id);
-        localStorage.setItem('usedQuestionIds', JSON.stringify(usedIds));
+            if (!q) { showToast('نفدت الأسئلة لهذا الحرف!'); return; }
 
-        // Styling for Surprise
-        modalContent.style.borderColor = "var(--neon-green)";
-        modalContent.style.boxShadow = "0 0 30px var(--neon-green)";
-        
-        // Set next target (randomized for variety)
-        nextEggTarget += Math.floor(Math.random() * 3) + 5; 
-        showToast("🎁 سؤال مفاجئ!");
-    } else {
-        // GET NORMAL QUESTION FROM DB
-        q = getNormalQuestion(letter); // This function already handles its own localStorage ID saving
-        
-        // Default styling
-        modalContent.style.borderColor = "#ffd700";
-        modalContent.style.boxShadow = "";
-    }
+            currentData = q; currentTarget = element;
+            document.getElementById('modal-letter').textContent = "الحرف: " + q.letter;
+            const questionEl = document.getElementById('modal-question');
+            questionEl.textContent = q.question;
+            questionEl.style.display = 'block'; 
+            currentQuestionIsGold = (index === goldHexIndex);
 
-    if (!q) {
-        showToast('نفدت الأسئلة لهذا الحرف!');
-        return;
-    }
+            const mcqView = document.getElementById('mcq-view'); 
+            mcqView.innerHTML = '';
+            
+            if(q.type === 'mcq') {
+                let opts = [q.answer, ...q.options]; opts.sort(() => Math.random() - 0.5); 
+                if (jokerEffect.type === 'remove' && opts.length > 2) { 
+                    const wrongIndex = opts.findIndex(o => o !== q.answer); 
+                    if (wrongIndex > -1) opts.splice(wrongIndex, 1); 
+                }
+                opts.forEach(o => {
+                    const d = document.createElement('div'); 
+                    d.className = 'mcq-option'; 
+                    d.innerHTML = `<span>${o}</span>`;
+                    d.onclick = function() {
+                        questionEl.style.display = 'block';
+                        if (o === q.answer) { 
+                            this.classList.add('correct'); playSound('correct'); 
+                        } else { 
+                            this.classList.add('wrong'); playSound('wrong'); 
+                        }
+                    };
+                    mcqView.appendChild(d);
+                });
+            }
 
-    // 4. Setup Modal Content
-    currentData = q; 
-    currentTarget = element;
-    
-    document.getElementById('modal-letter').textContent = "الحرف: " + q.letter;
-    const questionEl = document.getElementById('modal-question');
-    questionEl.textContent = q.question;
-    questionEl.style.display = 'block'; // Ensure it's visible when opening
-    
-    currentQuestionIsGold = (index === goldHexIndex);
+            const btnGreen = document.getElementById('btn-green-correct'); const btnRed = document.getElementById('btn-red-correct');
+            if (jokerEffect.team) { 
+                if (jokerEffect.team === 'green') { btnRed.style.display = 'none'; btnGreen.style.display = 'inline-block'; } 
+                else { btnGreen.style.display = 'none'; btnRed.style.display = 'inline-block'; } 
+            } else { btnGreen.style.display = 'inline-block'; btnRed.style.display = 'inline-block'; }
 
-    // 5. Build MCQ Options
-    const mcqView = document.getElementById('mcq-view'); 
-    mcqView.innerHTML = '';
-    
-    if(q.type === 'mcq') {
-        let opts = [q.answer, ...q.options]; 
-        opts.sort(() => Math.random() - 0.5); 
-        
-        // Joker removal logic
-        if (jokerEffect.type === 'remove' && opts.length > 2) { 
-            const wrongIndex = opts.findIndex(o => o !== q.answer); 
-            if (wrongIndex > -1) opts.splice(wrongIndex, 1); 
+            document.getElementById('modal').style.display = 'flex'; 
+            isQuestionOpen = true;
+            broadcast({ type: 'QUESTION_OPEN' });
+
+            if (jokerEffect.type === 'time') { document.getElementById('timer-display').textContent = "∞"; } 
+            else { startTimer(); }
+        }
+
+        function nextRound() {
+            totalQuestionsAsked = 0; nextEggTarget = 5; 
+            document.getElementById('game-over-overlay').style.display = 'none'; 
+            boardState.fill(0); 
+            greenJokerUsed = false; redJokerUsed = false; activeCategoryFilter = null;
+            document.getElementById('green-joker-btn').style.opacity = '1'; document.getElementById('red-joker-btn').style.opacity = '1';
+            renderBoard();
         }
         
-        opts.forEach(o => {
-            const d = document.createElement('div'); 
-            d.className = 'mcq-option'; 
-            d.innerHTML = `<span style="color:#000;">${o}</span>`;
-            d.onclick = function() {
-                // REAPPEAR QUESTION TEXT once an answer is chosen
-                questionEl.style.display = 'block';
-
-                if (o === q.answer) { 
-                    this.classList.add('correct'); 
-                    playSound('correct'); 
-                } else { 
-                    this.classList.add('wrong'); 
-                    playSound('wrong'); 
-                }
-            };
-            mcqView.appendChild(d);
-        });
-    }
-
-    // 6. Manage Team Buttons & Modal Visibility
-    const btnGreen = document.getElementById('btn-green-correct'); 
-    const btnRed = document.getElementById('btn-red-correct');
-    
-    if (jokerEffect.team) { 
-        if (jokerEffect.team === 'green') { 
-            btnRed.style.display = 'none'; btnGreen.style.display = 'inline-block'; 
-        } else { 
-            btnGreen.style.display = 'none'; btnRed.style.display = 'inline-block'; 
-        } 
-    } else { 
-        btnGreen.style.display = 'inline-block'; btnRed.style.display = 'inline-block'; 
-    }
-
-    document.getElementById('modal').style.display = 'flex'; 
-    isQuestionOpen = true;
-    
-    broadcast({ type: 'QUESTION_OPEN' });
-
-    // 7. Timer Logic
-    if (jokerEffect.type === 'time') { 
-        document.getElementById('timer-display').textContent = "∞"; 
-    } else { 
-        startTimer(); // This continues running regardless of buzzer clicks
-    }
-}
-function nextRound() {
-    totalQuestionsAsked = 0; 
-    nextEggTarget = 5; 
-
-    document.getElementById('game-over-overlay').style.display = 'none'; 
-    boardState.fill(0); 
-    greenJokerUsed = false; 
-    redJokerUsed = false; 
-    activeCategoryFilter = null;
-    document.getElementById('green-joker-btn').style.opacity = '1'; 
-    document.getElementById('red-joker-btn').style.opacity = '1';
-    renderBoard();
-}
-
-        
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const questionsCollection = db.collection('questions');
+        const db = firebase.firestore(); const questionsCollection = db.collection('questions');
 
-        let currentGameData = [];
-        let boardState = new Array(25).fill(0);
-        let currentTarget = null;
-        let currentData = null;
-        let isQuestionOpen = false;
+        let currentGameData = []; let boardState = new Array(25).fill(0); let currentTarget = null; let currentData = null; let isQuestionOpen = false;
+        let timerInterval; let gameTimerDuration = 10; let pointsToWin = 500; let activeCategoryFilter = null;
+        let greenJokerUsed = false; let redJokerUsed = false; let activeJokerTeam = null; let jokerEffect = { type: null, team: null };
+        let goldHexIndex = -1; let currentQuestionIsGold = false; let scores = { green: 0, red: 0 }; let isMatchOver = false; let lastHoverSoundTime = 0;
+        let peer = null; let connections = []; let currentLanguage = 'ar';
 
-        let timerInterval;
-        let gameTimerDuration = 10;
-        let pointsToWin = 500;
-
-        let activeCategoryFilter = null;
-        let greenJokerUsed = false;
-        let redJokerUsed = false;
-        let activeJokerTeam = null;
-        let jokerEffect = { type: null, team: null };
-
-        let goldHexIndex = -1;
-        let currentQuestionIsGold = false;
-        let scores = { green: 0, red: 0 };
-        let isMatchOver = false;
-        let lastHoverSoundTime = 0;
-
-        let peer = null;
-        let connections = [];
-
-        window.onload = function () {
-            initHost();
-            loadGameData();
-        };
-        // 1. متغير لتخزين اللغة المختارة (الافتراضي عربي)
-        let currentLanguage = 'ar'; // المتغير الافتراضي
+        window.onload = function () { initHost(); loadGameData(); };
 
         function setLanguage(lang) {
             currentLanguage = lang;
             document.getElementById('set-ar').classList.toggle('active', lang === 'ar');
             document.getElementById('set-en').classList.toggle('active', lang === 'en');
+            
+            const btnAr = document.getElementById('set-ar');
+            const btnEn = document.getElementById('set-en');
+            if(lang === 'ar') {
+                btnAr.style.background = 'gold'; btnAr.style.color = 'black';
+                btnEn.style.background = 'transparent'; btnEn.style.color = 'white';
+            } else {
+                btnEn.style.background = 'gold'; btnEn.style.color = 'black';
+                btnAr.style.background = 'transparent'; btnAr.style.color = 'white';
+            }
             showToast(lang === 'ar' ? "اللغة: العربية" : "Language: English");
         }
 
-        // --- DATABASE FUNCTIONS ---
-
         function loadGameData() {
-    showToast("جاري تحميل الأسئلة من قاعدة البيانات...");
-
-    questionsCollection.get().then((querySnapshot) => {
-        let allData = []; // Temporary holder for all questions
-        querySnapshot.forEach((doc) => {
-            let data = doc.data();
-            data.id = doc.id; 
-            allData.push(data);
-        });
-
-        // --- NEW: Filter out previously used questions ---
-        const usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
-        currentGameData = allData.filter(q => !usedIds.includes(q.id));
-
-        // Sort the remaining questions
-        currentGameData.sort((a, b) => {
-            let indexA = hijaiOrder.indexOf(a.letter);
-            let indexB = hijaiOrder.indexOf(b.letter);
-            if (indexA === -1) indexA = 999;
-            if (indexB === -1) indexB = 999;
-            return indexA - indexB;
-        });
-
-        if (currentGameData.length === 0 && allData.length > 0) {
-            showToast("لقد انتهيت من جميع الأسئلة! توجه للإعدادات لإعادة التعيين.");
-        } else if (currentGameData.length === 0) {
-            showConfirmModal("قاعدة البيانات فارغة. هل تريد رفع الأسئلة الافتراضية؟", uploadDefaultData);
-        } else {
-            
-            renderEditorList();
+            showToast("جاري تحميل الأسئلة من قاعدة البيانات...");
+            questionsCollection.get().then((querySnapshot) => {
+                let allData = [];
+                querySnapshot.forEach((doc) => { let data = doc.data(); data.id = doc.id; allData.push(data); });
+                const usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
+                currentGameData = allData.filter(q => !usedIds.includes(q.id));
+                currentGameData.sort((a, b) => {
+                    let indexA = hijaiOrder.indexOf(a.letter); let indexB = hijaiOrder.indexOf(b.letter);
+                    if (indexA === -1) indexA = 999; if (indexB === -1) indexB = 999; return indexA - indexB;
+                });
+                if (currentGameData.length === 0 && allData.length > 0) { showToast("لقد انتهيت من جميع الأسئلة! توجه للإعدادات لإعادة التعيين."); } 
+                else if (currentGameData.length === 0) { showConfirmModal("قاعدة البيانات فارغة. هل تريد رفع الأسئلة الافتراضية؟", uploadDefaultData); } 
+                else { renderEditorList(); }
+            });
         }
-    });
-}
-function resetUsedList() {
-    if(confirm("هل تريد تصفير قائمة الأسئلة المستخدمة والبدء من جديد؟")) {
-        localStorage.removeItem('usedQuestionIds');
-        showToast("تم مسح الذاكرة! جاري تحديث البيانات...");
-        location.reload();
-    }
-}
+
+        function resetUsedList() {
+            if(confirm("هل تريد تصفير قائمة الأسئلة المستخدمة والبدء من جديد؟")) {
+                localStorage.removeItem('usedQuestionIds');
+                showToast("تم مسح الذاكرة! جاري تحديث البيانات..."); location.reload();
+            }
+        }
+
         function uploadDefaultData() {
             currentGameData = [];
-            if (typeof defaultGameData === 'undefined') {
-                showToast("Error: questions.js not found!");
-                return;
-            }
-
-            showToast("جاري رفع البيانات... (قد يستغرق وقتاً)");
-            const batch = db.batch();
-
+            if (typeof defaultGameData === 'undefined') { showToast("Error: questions.js not found!"); return; }
+            showToast("جاري رفع البيانات... (قد يستغرق وقتاً)"); const batch = db.batch();
             const dataToUpload = defaultGameData.slice(0, 400);
-
-            dataToUpload.forEach((q) => {
-                const docRef = questionsCollection.doc();
-                batch.set(docRef, q);
-            });
-
-            batch.commit().then(() => {
-                showToast("تم رفع الأسئلة من الملف!");
-                loadGameData();
-            }).catch((error) => {
-                console.error("Error writing batch: ", error);
-                showToast("حدث خطأ أثناء الرفع");
-            });
+            dataToUpload.forEach((q) => { const docRef = questionsCollection.doc(); batch.set(docRef, q); });
+            batch.commit().then(() => { showToast("تم رفع الأسئلة من الملف!"); loadGameData(); }).catch((error) => { console.error("Error writing batch: ", error); showToast("حدث خطأ أثناء الرفع"); });
         }
-       function deleteQuestion(index) {
-        const q = currentGameData[index];
-        if (confirm(`هل أنت متأكد من حذف حرف (${q.letter})؟`)) {
-            questionsCollection.doc(q.id).delete().then(() => {
-                showToast("تم الحذف");
-                currentGameData.splice(index, 1);
-                renderEditorList();
-            });
-        }
-    }
-       function saveQuestion() {
-    const isNew = document.getElementById('is-new-question').value === "true";
-    const index = document.getElementById('edit-index').value;
-    
-    const questionObj = {
-        letter: document.getElementById('edit-q-letter').value.trim().toUpperCase(),
-        category: document.getElementById('edit-q-category').value,
-        question: document.getElementById('edit-q-text').value.trim(),
-        answer: document.getElementById('edit-q-answer').value.trim(),
-        options: [
-            document.getElementById('edit-q-opt1').value.trim(),
-            document.getElementById('edit-q-opt2').value.trim(),
-            document.getElementById('edit-q-opt3').value.trim()
-        ].filter(o => o !== ''),
-        type: 'mcq'
-    };
 
-    if (isNew) {
-        questionsCollection.add(questionObj).then(doc => {
-            showToast("تمت الإضافة بنجاح");
-            questionObj.id = doc.id;
-            currentGameData.push(questionObj);
-            cancelEdit(); // العودة للوضع الطبيعي
-        });
-    } else {
-        const id = currentGameData[index].id;
-        questionsCollection.doc(id).update(questionObj).then(() => {
-            showToast("تم التحديث بنجاح");
-            questionObj.id = id;
-            currentGameData[index] = questionObj;
-            cancelEdit(); // العودة للوضع الطبيعي
-        });
-    }
-}
+        function deleteQuestion(index) {
+            const q = currentGameData[index];
+            if (confirm(`هل أنت متأكد من حذف حرف (${q.letter})؟`)) {
+                questionsCollection.doc(q.id).delete().then(() => { showToast("تم الحذف"); currentGameData.splice(index, 1); renderEditorList(); });
+            }
+        }
+
+        function saveQuestion() {
+            const isNew = document.getElementById('is-new-question').value === "true"; const index = document.getElementById('edit-index').value;
+            const questionObj = {
+                letter: document.getElementById('edit-q-letter').value.trim().toUpperCase(), category: document.getElementById('edit-q-category').value,
+                question: document.getElementById('edit-q-text').value.trim(), answer: document.getElementById('edit-q-answer').value.trim(),
+                options: [document.getElementById('edit-q-opt1').value.trim(), document.getElementById('edit-q-opt2').value.trim(), document.getElementById('edit-q-opt3').value.trim()].filter(o => o !== ''), type: 'mcq'
+            };
+            if (isNew) { questionsCollection.add(questionObj).then(doc => { showToast("تمت الإضافة بنجاح"); questionObj.id = doc.id; currentGameData.push(questionObj); cancelEdit(); }); } 
+            else { const id = currentGameData[index].id; questionsCollection.doc(id).update(questionObj).then(() => { showToast("تم التحديث بنجاح"); questionObj.id = id; currentGameData[index] = questionObj; cancelEdit(); }); }
+        }
 
         async function resetGameData() {
             showToast("جاري حذف البيانات القديمة...");
-
-            // 1. جلب كل الأسئلة الحالية لمسحها
-            const snapshot = await questionsCollection.get();
-            const batch = db.batch();
-
-            snapshot.docs.forEach((doc) => {
-                batch.delete(doc.ref);
-            });
-
-            // 2. الانتظار حتى ينتهي المسح تماماً من السيرفر
-            await batch.commit();
-
-            showToast("تم الحذف، جاري رفع الأسئلة الجديدة...");
-
-            // 3. الآن فقط نقوم برفع البيانات الافتراضية
-            uploadDefaultData();
+            const snapshot = await questionsCollection.get(); const batch = db.batch();
+            snapshot.docs.forEach((doc) => { batch.delete(doc.ref); }); await batch.commit();
+            showToast("تم الحذف، جاري رفع الأسئلة الجديدة..."); uploadDefaultData();
         }
 
-        // --- SOUND FX LIBRARY ---
         function playSound(name) {
-            // إذا كان الصوت هو "correct" نستخدم دالة التصفيق المخصصة
-            if (name === 'correct') {
-                playClappingSound();
-                return;
-            }
-
+            if (name === 'correct') { playClappingSound(); return; }
             const audio = document.getElementById(`sound_${name}`);
-            if (audio) {
-                audio.currentTime = 0; // إعادة الصوت للبداية
-                audio.play().catch(e => {
-                    console.warn(`فشل تشغيل الصوت ${name}: ربما بسبب قيود المتصفح أو الرابط متعطل.`, e);
-                });
-            }
+            if (audio) { audio.currentTime = 0; audio.play().catch(e => { console.warn(`فشل تشغيل الصوت ${name}`, e); }); }
         }
 
         function playClappingSound() {
-            // محاولة تشغيل الملف المحلي clapping.wav
             const clapping = new Audio('clapping.wav');
-            clapping.play().catch(e => {
-                console.error("لم يتم العثور على ملف clapping.wav محلياً، سيتم استخدام الصوت الافتراضي.");
-                // إذا فشل، نحاول تشغيل الصوت البديل من الـ HTML
-                const fallback = document.getElementById('sound_correct');
-                if (fallback) {
-                    fallback.currentTime = 0;
-                    fallback.play();
+            clapping.play().catch(e => { const fallback = document.getElementById('sound_correct'); if (fallback) { fallback.currentTime = 0; fallback.play(); } });
+        }
+
+        function showConfirmModal(text, onYes) { document.getElementById('confirm-text').textContent = text; document.getElementById('confirm-modal').style.display = 'flex'; document.getElementById('confirm-yes').onclick = function () { onYes(); closeConfirmModal(); }; }
+        function closeConfirmModal() { document.getElementById('confirm-modal').style.display = 'none'; }
+        function showToast(msg) { const t = document.getElementById('toast-notification'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1000); }
+        function generateId() { return Math.floor(1000 + Math.random() * 9000).toString(); }
+
+        async function initHost() {
+            gameId = generateId(); document.getElementById('host-id-display').textContent = gameId; document.getElementById('game-screen-code').textContent = gameId;
+            const sessionRef = db.collection('sessions').doc(gameId);
+            await sessionRef.set({ state: 'WAITING', winnerName: '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() });
+            sessionRef.collection('players').onSnapshot((snapshot) => { connections = []; snapshot.forEach(doc => { connections.push({ id: doc.id, ...doc.data() }); }); updatePlayersUI(); });
+            sessionRef.collection('buzzes').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+                if (!snapshot.empty && isQuestionOpen) {
+                    const firstBuzzDoc = snapshot.docs[0]; const firstBuzzData = firstBuzzDoc.data();
+                    const isPlayerActive = connections.some(p => p.name === firstBuzzData.name);
+                    if (isPlayerActive) { handleBuzzerClick(firstBuzzData); } else { firstBuzzDoc.ref.delete(); }
                 }
             });
         }
 
-        function playClickSound() {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                oscillator.frequency.value = 800; oscillator.type = 'sine';
-                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-                oscillator.start(audioContext.currentTime); oscillator.stop(audioContext.currentTime + 0.05);
-            } catch (e) { console.log("Click sound failed:", e); }
+        function handleBuzzerClick(buzzData) {
+            if (isQuestionOpen) {
+                if (jokerEffect.team && buzzData.team !== jokerEffect.team) return;
+                isQuestionOpen = false; const winMsg = document.getElementById('buzzer-winner'); const questionText = document.getElementById('modal-question');
+                const pTeam = buzzData.team; const pName = buzzData.name; const teamColor = (pTeam === 'green') ? 'var(--neon-green)' : 'var(--neon-red)'; const teamLabel = (pTeam === 'green') ? 'الأخضر' : 'الأحمر';
+                if (winMsg) { winMsg.innerHTML = `🚨 <span style="color:${teamColor}">${pName}</span> (فريق ${teamLabel}) ضغط أولاً!`; winMsg.style.display = 'block'; }
+                if (questionText) { questionText.style.display = 'none'; }
+                playSound('buzzer'); broadcast({ type: 'LOCKED', winner: pName, winnerTeam: pTeam });
+            }
         }
 
-
-        function showConfirmModal(text, onYes) {
-            document.getElementById('confirm-text').textContent = text;
-            document.getElementById('confirm-modal').style.display = 'flex';
-            document.getElementById('confirm-yes').onclick = function () { onYes(); closeConfirmModal(); };
-        }
-        function closeConfirmModal() { document.getElementById('confirm-modal').style.display = 'none'; }
-
-        function showToast(msg) {
-            const t = document.getElementById('toast-notification'); t.textContent = msg; t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 1000);
-        }
-
-        // Change this in host.html
-        // توليد كود مكون من 6 أرقام لتقليل احتمالية التشابه مع مستخدمين آخرين
-        function generateId() {
-            return Math.floor(1000 + Math.random() * 9000).toString();
-        }
-        // --- FIREBASE REALTIME SYNC ---
-        let gameId = "";
-
-        // --- FIREBASE SYNC LOGIC (بدلاً من PeerJS) ---
-
-        async function initHost() {
-            gameId = generateId();
-            document.getElementById('host-id-display').textContent = gameId;
-            document.getElementById('game-screen-code').textContent = gameId;
-
-            // تهيئة مستند الجلسة في فيربيز
-            const sessionRef = db.collection('sessions').doc(gameId);
-
-            await sessionRef.set({
-                state: 'WAITING',
-                winnerName: '',
-                lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
-            });
-
-            console.log("Room opened via Firebase. Code: " + gameId);
-
-            // 1. الاستماع للاعبين المنضمين
-            sessionRef.collection('players').onSnapshot((snapshot) => {
-                connections = [];
-                snapshot.forEach(doc => {
-                    connections.push({ id: doc.id, ...doc.data() });
-                });
-                updatePlayersUI();
-            });
-
-            // 2. الاستماع لضغطات الزر (Buzzer) مع التحقق من صلاحية اللاعب
-            sessionRef.collection('buzzes')
-                .orderBy('timestamp', 'asc')
-                .onSnapshot((snapshot) => {
-                    if (!snapshot.empty && isQuestionOpen) {
-                        const firstBuzzDoc = snapshot.docs[0];
-                        const firstBuzzData = firstBuzzDoc.data();
-
-                        // --- التعديل الأساسي: التأكد أن اللاعب موجود في القائمة الحالية (لم يُطرد) ---
-                        const isPlayerActive = connections.some(p => p.name === firstBuzzData.name);
-
-                        if (isPlayerActive) {
-                            handleBuzzerClick(firstBuzzData);
-                        } else {
-                            // إذا كان اللاعب مطروداً، نحذف ضغطته ونتجاهلها
-                            console.log("تجاهل ضغطة لاعب مطرود: " + firstBuzzData.name);
-                            firstBuzzDoc.ref.delete();
-                        }
-                    }
-                });
-        }
-
-        // تحديث حالة اللعبة لجميع اللاعبين
-
- function handleBuzzerClick(buzzData) {
-    if (isQuestionOpen) {
-        if (jokerEffect.team && buzzData.team !== jokerEffect.team) return;
-
-        // REMOVED: clearInterval(timerInterval); <--- The timer will now keep running
+        async function clearBuzzes() { const snapshot = await db.collection('sessions').doc(gameId).collection('buzzes').get(); const batch = db.batch(); snapshot.forEach(doc => batch.delete(doc.ref)); await batch.commit(); }
         
-        isQuestionOpen = false; 
-        const winMsg = document.getElementById('buzzer-winner');
-        const questionText = document.getElementById('modal-question');
-
-        const pTeam = buzzData.team; 
-        const pName = buzzData.name;
-        const teamColor = (pTeam === 'green') ? 'var(--neon-green)' : 'var(--neon-red)';
-        const teamLabel = (pTeam === 'green') ? 'الأخضر' : 'الأحمر';
-
-        if (winMsg) {
-            winMsg.innerHTML = `🚨 <span style="color:${teamColor}">${pName}</span> (فريق ${teamLabel}) ضغط أولاً!`;
-            winMsg.style.display = 'block';
+        function hideQuestionText() {
+            const questionElement = document.getElementById('modal-question-text');
+            if (questionElement) { questionElement.classList.toggle('hidden-text'); const btn = event.target; if (questionElement.classList.contains('hidden-text')) { btn.innerText = "إظهار السؤال"; } else { btn.innerText = "إخفاء السؤال"; } }
         }
-
-        // Hide the question text so they can't keep reading
-        if (questionText) {
-            questionText.style.display = 'none';
-        }
-
-        playSound('buzzer');
-
-        broadcast({
-            type: 'LOCKED',
-            winner: pName,
-            winnerTeam: pTeam
-        });
-    }
-}
-        // وظيفة حذف ضغطات الزر السابقة
-        async function clearBuzzes() {
-            const snapshot = await db.collection('sessions').doc(gameId).collection('buzzes').get();
-            const batch = db.batch();
-            snapshot.forEach(doc => batch.delete(doc.ref));
-            await batch.commit();
-        }
-function hideQuestionText() {
-    const questionElement = document.getElementById('modal-question-text');
-    if (questionElement) {
-        questionElement.classList.toggle('hidden-text');
-        
-        // Optional: Change button text based on state
-        const btn = event.target;
-        if (questionElement.classList.contains('hidden-text')) {
-            btn.innerText = "إظهار السؤال"; // "Show Question"
-        } else {
-            btn.innerText = "إخفاء السؤال"; // "Hide Question"
-        }
-    }
-}
 
         function copyId() { navigator.clipboard.writeText(document.getElementById('host-id-display').textContent).then(() => showToast('تم نسخ الكود!')); }
 
         function updatePlayersUI() {
-            const listGreen = document.getElementById('list-green');
-            const listRed = document.getElementById('list-red');
-            const lobby = document.getElementById('lobby-bar');
-
-            // تنظيف القوائم قبل إعادة الرسم
-            listGreen.innerHTML = '';
-            listRed.innerHTML = '';
-            if (lobby) lobby.innerHTML = '';
-
+            const listGreen = document.getElementById('list-green'); const listRed = document.getElementById('list-red'); const lobby = document.getElementById('lobby-bar');
+            listGreen.innerHTML = ''; listRed.innerHTML = ''; if (lobby) lobby.innerHTML = '';
             connections.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'player-card';
-
-                // استخدام p.id (معرف فيربيز) بدلاً من p.conn.peer
-                div.innerHTML = `
-            <div class="player-info">
-                <div class="dot active"></div> 
-                <span>${p.name}</span>
-            </div>
-            <button class="kick-btn" onclick="kickPlayer('${p.id}')">×</button>
-        `;
-
-                // توزيع اللاعبين حسب الفريق بدقة
-                if (p.team === 'green') {
-                    listGreen.appendChild(div);
-                } else if (p.team === 'red') {
-                    listRed.appendChild(div);
-                }
+                const div = document.createElement('div'); div.className = 'player-card';
+                div.innerHTML = `<div class="player-info"><div class="dot active"></div> <span>${p.name}</span></div><button class="kick-btn" onclick="kickPlayer('${p.id}')">×</button>`;
+                if (p.team === 'green') { listGreen.appendChild(div); } else if (p.team === 'red') { listRed.appendChild(div); }
             });
         }
 
-        function kickPlayer(playerId) {
-            db.collection('sessions').doc(gameId).collection('players').doc(playerId).delete();
-        } function removePlayer(c) { connections = connections.filter(p => p.conn !== c); updatePlayersUI(); }
-
-        function handleData(data, c) { // Ensure 'c' is the parameter name here
-            if (data.type === 'JOIN') {
-                connections.push({ conn: c, name: data.name, team: data.team || null });
-                updatePlayersUI();
-            }
-            else if (data.type === 'BUZZ') {
-                const player = connections.find(p => p.conn === c);
-                if (player && data.team) {
-                    player.team = data.team;
-                    updatePlayersUI();
-                }
-
-                if (isQuestionOpen) {
-                    if (jokerEffect.team && data.team !== jokerEffect.team) return;
-
-                    // We keep the timer running by NOT calling clearInterval(timerInterval) here.
-                    isQuestionOpen = false;
-
-                    const winMsg = document.getElementById('buzzer-winner');
-                    const teamName = data.team === 'green' ? 'الأخضر' : 'الأحمر';
-
-                    winMsg.innerHTML = `🚨 <span style="color:${data.team === 'green' ? '#00ff00' : '#ff0000'}">${data.name}</span> (${teamName}) ضغط الزر!`;
-                    winMsg.style.display = 'block';
-
-                    // Optional: You might want to keep the question visible 
-                    // so the host can verify the answer while the timer counts downR.
-                    // document.getElementById('modal-question').style.display = 'none'; 
-
-                    broadcast({ type: 'LOCKED', winner: data.name });
-                }
-            }
-        }
+        function kickPlayer(playerId) { db.collection('sessions').doc(gameId).collection('players').doc(playerId).delete(); }
 
         function broadcast(msg) {
-            if (!gameId) return;
-            // تحويل الرسالة إلى حالة يفهمها اللاعب
-            let firebaseState = "";
-            if (msg.type === 'QUESTION_OPEN') firebaseState = 'QUESTION_OPEN';
-            else if (msg.type === 'LOCKED') firebaseState = 'LOCKED';
-            else if (msg.type === 'RESET') firebaseState = 'RESET';
-
-            db.collection('sessions').doc(gameId).update({
-                state: firebaseState,
-                winnerName: msg.winner || '',
-                lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            if (!gameId) return; let firebaseState = "";
+            if (msg.type === 'QUESTION_OPEN') firebaseState = 'QUESTION_OPEN'; else if (msg.type === 'LOCKED') firebaseState = 'LOCKED'; else if (msg.type === 'RESET') firebaseState = 'RESET';
+            db.collection('sessions').doc(gameId).update({ state: firebaseState, winnerName: msg.winner || '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() });
         }
+
         function adjustScore(team, amount) {
             if (isMatchOver && amount > 0) return;
             scores[team] += amount; document.getElementById(`score-${team}`).textContent = scores[team]; showFloatingPoints(team, amount);
             if (scores[team] >= pointsToWin && !isMatchOver) { showWinScreen(team, true); }
         }
 
-
-
-      function renderBoard() {
-    const container = document.getElementById('grid-container');
-    if (!container) return;
-    container.innerHTML = '';
-
-    // 1. Determine gold location randomly (0-24)
-    goldHexIndex = Math.floor(Math.random() * 25);
-    console.log("Gold Hex Index: " + goldHexIndex);
-
-    // Filter the pool based on the current language setting
-    // This ensures only English letters (A-Z) or non-English letters are considered
-    let languageFilteredData = currentGameData.filter(q => {
-        const isEnglish = /^[a-zA-Z]+$/.test(q.letter);
-        return (currentLanguage === 'en') ? isEnglish : !isEnglish;
-    });
-
-    // 2. Extract UNIQUE letters from the FILTERED data
-    // FIX: Changed from currentGameData to languageFilteredData
-    let uniqueLetters = [...new Set(languageFilteredData.map(i => i.letter))];
-
-    // 3. Initial Sorting
-    if (currentLanguage === 'en') {
-        // Randomize English letters if preferred, or use .sort() for alphabetical
-        uniqueLetters.sort(() => Math.random() - 0.5);
-    } else {
-        // Sort Arabic letters based on the predefined hijaiOrder
-        uniqueLetters.sort((a, b) => {
-            let indexA = hijaiOrder.indexOf(a);
-            let indexB = hijaiOrder.indexOf(b);
-            if (indexA === -1) indexA = 999;
-            if (indexB === -1) indexB = 999;
-            return indexA - indexB;
-        });
-    }
-
-    // 4. Data check to prevent errors if a language pool is empty
-    if (uniqueLetters.length === 0) {
-        container.innerHTML = `<div style="color:white; font-size:1.5rem; text-align:center;">⚠️ No questions found for this language! / لا توجد أسئلة لهذه اللغة!</div>`;
-        return;
-    }
-
-    // 5. Fill the grid array with 25 characters
-    // If there are fewer than 25 unique letters, it cycles through them
-    let gridLetters = [];
-    let i = 0;
-    while (gridLetters.length < 25) {
-        gridLetters.push(uniqueLetters[i % uniqueLetters.length]);
-        i++;
-    }
-
-    // Randomize the final 25-item array before rendering
-    // This ensures letters are scattered across the board
-    gridLetters.sort(() => Math.random() - 0.5);
-
-    // 6. Render the Board (5 rows, 5 cells per row)
-    let hexIndex = 0;
-    for (let r = 0; r < 5; r++) {
-        const row = document.createElement('div');
-        row.className = 'row';
-        for (let c = 0; c < 5; c++) {
-            const l = gridLetters[hexIndex];
-            const hex = document.createElement('div');
-            hex.className = 'hex';
-            hex.textContent = l;
-            hex.dataset.letter = l;
-            hex.dataset.index = hexIndex;
-
-            // Bind events for game logic
-            hex.onclick = () => openQuestion(hex, l);
-            hex.onmouseenter = () => playSound('hover');
-
-            row.appendChild(hex);
-            hexIndex++;
+        function renderBoard() {
+            const container = document.getElementById('grid-container'); if (!container) return; container.innerHTML = '';
+            goldHexIndex = Math.floor(Math.random() * 25);
+            let languageFilteredData = currentGameData.filter(q => { const isEnglish = /^[a-zA-Z]+$/.test(q.letter); return (currentLanguage === 'en') ? isEnglish : !isEnglish; });
+            let uniqueLetters = [...new Set(languageFilteredData.map(i => i.letter))];
+            if (currentLanguage === 'en') { uniqueLetters.sort(() => Math.random() - 0.5); } else { uniqueLetters.sort((a, b) => { let indexA = hijaiOrder.indexOf(a); let indexB = hijaiOrder.indexOf(b); if (indexA === -1) indexA = 999; if (indexB === -1) indexB = 999; return indexA - indexB; }); }
+            if (uniqueLetters.length === 0) { container.innerHTML = `<div style="color:white; font-size:1.5rem; text-align:center;">⚠️ No questions found for this language!</div>`; return; }
+            let gridLetters = []; let i = 0; while (gridLetters.length < 25) { gridLetters.push(uniqueLetters[i % uniqueLetters.length]); i++; }
+            gridLetters.sort(() => Math.random() - 0.5);
+            let hexIndex = 0;
+            for (let r = 0; r < 5; r++) {
+                const row = document.createElement('div'); row.className = 'row';
+                for (let c = 0; c < 5; c++) {
+                    const l = gridLetters[hexIndex]; const hex = document.createElement('div'); hex.className = 'hex'; hex.textContent = l; hex.dataset.letter = l; hex.dataset.index = hexIndex;
+                    hex.onclick = () => openQuestion(hex, l); hex.onmouseenter = () => playSound('hover');
+                    row.appendChild(hex); hexIndex++;
+                }
+                container.appendChild(row);
+            }
         }
-        container.appendChild(row);
-    }
-}
 
         function openJokerMenu(team) { if ((team === 'green' && greenJokerUsed) || (team === 'red' && redJokerUsed)) return; activeJokerTeam = team; document.getElementById('joker-menu-modal').style.display = 'flex'; }
         function closeJokerMenu() { document.getElementById('joker-menu-modal').style.display = 'none'; activeJokerTeam = null; }
 
         function selectJokerEffect(type) {
             if (!activeJokerTeam) return;
-            if (type === 'cat') { document.getElementById('joker-menu-modal').style.display = 'none'; document.getElementById('cat-modal').style.display = 'flex'; return; }
-            else if (type === 'remove') { jokerEffect = { type: 'remove', team: activeJokerTeam }; showToast(`تم تفعيل: حذف إجابة خاطئة`); }
+            if (type === 'remove') { jokerEffect = { type: 'remove', team: activeJokerTeam }; showToast(`تم تفعيل: حذف إجابة خاطئة`); }
             else if (type === 'time') { jokerEffect = { type: 'time', team: activeJokerTeam }; showToast(`تم تفعيل: وقت مفتوح`); }
-
-            if (activeJokerTeam === 'green') greenJokerUsed = true;
-            if (activeJokerTeam === 'red') redJokerUsed = true;
-            document.getElementById('green-joker-btn').style.opacity = greenJokerUsed ? '0.5' : '1';
-            document.getElementById('red-joker-btn').style.opacity = redJokerUsed ? '0.5' : '1';
+            if (activeJokerTeam === 'green') greenJokerUsed = true; if (activeJokerTeam === 'red') redJokerUsed = true;
+            document.getElementById('green-joker-btn').style.opacity = greenJokerUsed ? '0.5' : '1'; document.getElementById('red-joker-btn').style.opacity = redJokerUsed ? '0.5' : '1';
             closeJokerMenu();
         }
 
-        function closeCatModal() { document.getElementById('cat-modal').style.display = 'none'; activeJokerTeam = null; }
-        function selectCategory(cat) {
-            activeCategoryFilter = cat; jokerEffect = { type: 'cat', team: activeJokerTeam };
-            if (activeJokerTeam === 'green') greenJokerUsed = true; if (activeJokerTeam === 'red') redJokerUsed = true;
-            document.getElementById('green-joker-btn').style.opacity = greenJokerUsed ? '0.5' : '1';
-            document.getElementById('red-joker-btn').style.opacity = redJokerUsed ? '0.5' : '1';
-            showToast('تم تفعيل الفلتر! اختر الحرف الآن.'); document.getElementById('cat-modal').style.display = 'none';
+        function editQuestion(index) {
+            const q = currentGameData[index]; if (!q) return;
+            document.getElementById('form-title').textContent = "تعديل السؤال"; document.getElementById('is-new-question').value = "false"; document.getElementById('edit-index').value = index;
+            document.getElementById('edit-q-letter').value = q.letter; document.getElementById('edit-q-category').value = q.category || 'general'; document.getElementById('edit-q-text').value = q.question; document.getElementById('edit-q-answer').value = q.answer;
+            document.getElementById('edit-q-opt1').value = (q.options && q.options[0]) ? q.options[0] : ''; document.getElementById('edit-q-opt2').value = (q.options && q.options[1]) ? q.options[1] : ''; document.getElementById('edit-q-opt3').value = (q.options && q.options[2]) ? q.options[2] : '';
+            document.getElementById('list-ar-wrapper').style.display = 'none'; document.getElementById('list-en-wrapper').style.display = 'none'; document.getElementById('editor-tabs').style.display = 'none'; document.getElementById('editor-main-actions').style.display = 'none'; document.getElementById('edit-form-container').style.display = 'flex';
         }
-function editQuestion(index) {
-    const q = currentGameData[index];
-    if (!q) return;
-
-    document.getElementById('form-title').textContent = "تعديل السؤال";
-    document.getElementById('is-new-question').value = "false";
-    document.getElementById('edit-index').value = index;
-    
-    document.getElementById('edit-q-letter').value = q.letter;
-    document.getElementById('edit-q-category').value = q.category || 'general';
-    document.getElementById('edit-q-text').value = q.question;
-    document.getElementById('edit-q-answer').value = q.answer;
-    
-    // تعبئة الخيارات الخاطئة
-    document.getElementById('edit-q-opt1').value = (q.options && q.options[0]) ? q.options[0] : '';
-    document.getElementById('edit-q-opt2').value = (q.options && q.options[1]) ? q.options[1] : '';
-    document.getElementById('edit-q-opt3').value = (q.options && q.options[2]) ? q.options[2] : '';
-
-    // إخفاء قائمة الأسئلة وإظهار نموذج التعديل
-    document.getElementById('list-ar-wrapper').style.display = 'none';
-    document.getElementById('list-en-wrapper').style.display = 'none';
-    document.getElementById('editor-tabs').style.display = 'none';
-    document.getElementById('editor-main-actions').style.display = 'none';
-    document.getElementById('edit-form-container').style.display = 'flex';
-}
      
-function getNormalQuestion(letter) {
-    let possibilities = currentGameData.filter(item => {
-        const isEnglish = /^[a-zA-Z]+$/.test(item.letter);
-        const langMatch = (currentLanguage === 'en') ? isEnglish : !isEnglish;
-        return item.letter === letter && langMatch;
-    });
-    
-    if (activeCategoryFilter) {
-        const filtered = possibilities.filter(item => item.category === activeCategoryFilter);
-        if (filtered.length > 0) possibilities = filtered;
-        activeCategoryFilter = null; 
-    }
-
-    if (possibilities.length === 0) return null;
-    
-    let selected = possibilities[Math.floor(Math.random() * possibilities.length)];
-    
-    // --- NEW: Save this question ID as permanently used ---
-    let usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
-    if (selected.id) {
-        usedIds.push(selected.id);
-        localStorage.setItem('usedQuestionIds', JSON.stringify(usedIds));
-    }
-    
-    // Remove from current session pool
-    const mainIndex = currentGameData.indexOf(selected);
-    if (mainIndex > -1) { 
-        currentGameData.splice(mainIndex, 1); 
-    }
-    
-    return selected;
-}
+        function getNormalQuestion(letter) {
+            let possibilities = currentGameData.filter(item => { const isEnglish = /^[a-zA-Z]+$/.test(item.letter); const langMatch = (currentLanguage === 'en') ? isEnglish : !isEnglish; return item.letter === letter && langMatch; });
+            if (activeCategoryFilter) { const filtered = possibilities.filter(item => item.category === activeCategoryFilter); if (filtered.length > 0) possibilities = filtered; activeCategoryFilter = null; }
+            if (possibilities.length === 0) return null;
+            let selected = possibilities[Math.floor(Math.random() * possibilities.length)];
+            let usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
+            if (selected.id) { usedIds.push(selected.id); localStorage.setItem('usedQuestionIds', JSON.stringify(usedIds)); }
+            const mainIndex = currentGameData.indexOf(selected); if (mainIndex > -1) { currentGameData.splice(mainIndex, 1); } return selected;
+        }
 
         function startTimer() {
             let timeLeft = gameTimerDuration; const timerDisplay = document.getElementById('timer-display');
@@ -2462,8 +1586,7 @@ function getNormalQuestion(letter) {
             if (jokerEffect.team && jokerEffect.team !== team) return; if (!currentTarget) return;
             const index = parseInt(currentTarget.dataset.index); let pointsToAdd = 10;
             if (currentQuestionIsGold) { pointsToAdd = 50; triggerGoldAnimation(team); currentQuestionIsGold = false; }
-            adjustScore(team, pointsToAdd);
-            currentTarget.classList.remove('taken-green', 'taken-red');
+            adjustScore(team, pointsToAdd); currentTarget.classList.remove('taken-green', 'taken-red');
             if (team === 'green') { currentTarget.classList.add('taken-green'); boardState[index] = 1; } else { currentTarget.classList.add('taken-red'); boardState[index] = 2; }
             checkWin(team); closeModal();
         }
@@ -2476,218 +1599,79 @@ function getNormalQuestion(letter) {
             el.style.color = (Math.abs(points) >= 50) ? '#ffd700' : 'white'; document.body.appendChild(el); setTimeout(() => { el.remove(); }, 700);
         }
 
-        function triggerGoldAnimation(team) {
-            const overlay = document.getElementById('gold-celebration'); const winnerText = document.getElementById('gold-winner-text');
-            const teamName = team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر'; winnerText.textContent = `مبروك لـ ${teamName}!`;
-            overlay.style.display = 'flex'; setTimeout(() => { overlay.style.display = 'none'; }, 2000);
-        }
+        function triggerGoldAnimation(team) { const overlay = document.getElementById('gold-celebration'); const winnerText = document.getElementById('gold-winner-text'); const teamName = team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر'; winnerText.textContent = `مبروك لـ ${teamName}!`; overlay.style.display = 'flex'; setTimeout(() => { overlay.style.display = 'none'; }, 2000); }
+        function showWinScreen(team, isMatchWin = false) { isMatchOver = isMatchWin; const overlay = document.getElementById('game-over-overlay'); const winTitle = document.getElementById('win-title'); const winSub = document.getElementById('win-subtitle'); const btn = document.getElementById('next-action-btn'); const color = team === 'green' ? 'var(--neon-green)' : 'var(--neon-red)'; const teamName = team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر'; winTitle.textContent = isMatchWin ? `🏆 فوز ساحق! 🏆` : `فوز بالجولة!`; winSub.textContent = isMatchWin ? `${teamName} وصل لـ ${pointsToWin} نقطة!` : `+100 نقطة لـ ${teamName}`; winTitle.style.color = color; if (isMatchWin) { btn.textContent = "لعبة جديدة (تصفير)"; btn.onclick = () => location.reload(); } else { btn.textContent = "الجولة التالية"; btn.onclick = nextRound; } overlay.style.display = 'flex'; }
 
-        function showWinScreen(team, isMatchWin = false) {
-            isMatchOver = isMatchWin; const overlay = document.getElementById('game-over-overlay'); const winTitle = document.getElementById('win-title'); const winSub = document.getElementById('win-subtitle'); const btn = document.getElementById('next-action-btn');
-            const color = team === 'green' ? 'var(--neon-green)' : 'var(--neon-red)'; const teamName = team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر';
-            winTitle.textContent = isMatchWin ? `🏆 فوز ساحق! 🏆` : `فوز بالجولة!`; winSub.textContent = isMatchWin ? `${teamName} وصل لـ ${pointsToWin} نقطة!` : `+100 نقطة لـ ${teamName}`;
-            winTitle.style.color = color;
-            if (isMatchWin) { btn.textContent = "لعبة جديدة (تصفير)"; btn.onclick = () => location.reload(); } else { btn.textContent = "الجولة التالية"; btn.onclick = nextRound; }
-            overlay.style.display = 'flex';
-        }
-
-    
         function closeModal() {
-            
-                document.getElementById('modal-content').style.borderColor = "#ffd700"; // Reset to Gold
-                document.getElementById('modal-content').style.boxShadow = "";
-                document.getElementById('modal').style.display = 'none';
-                document.getElementById('time-up-overlay').classList.remove('show');
-                clearInterval(timerInterval);
-                isQuestionOpen = false;
-                jokerEffect = { type: null, team: null };
-                broadcast({ type: 'RESET' }); // إعادة تعيين الزر عند اللاعبين
-            }
-            function startGame() {
-        // إذا لم تكن هناك بيانات من Firebase، وقتها فقط نستخدم الملفات المحلية
-        if (currentGameData.length === 0) {
-            currentGameData = (currentLanguage === 'ar') ? [...defaultGameData] : [...defaultGameDataENG];
+            document.getElementById('modal-content').style.borderColor = "#ffd700"; document.getElementById('modal-content').style.boxShadow = "0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.05)"; document.getElementById('modal').style.display = 'none'; document.getElementById('time-up-overlay').classList.remove('show');
+            clearInterval(timerInterval); isQuestionOpen = false; jokerEffect = { type: null, team: null }; broadcast({ type: 'RESET' });
         }
-        
-        document.body.dir = (currentLanguage === 'ar') ? "rtl" : "ltr";
-        document.getElementById('main-menu').style.display = 'none';
-        document.getElementById('game-container').style.display = 'flex';
-        document.getElementById('game-container').style.opacity = '1';
-        renderBoard();
-    }
 
-            function getNeighbors(index) {
-                const r = Math.floor(index / 5); const c = index % 5; const neighbors = []; const isEven = (r % 2 === 0);
-                if (c > 0) neighbors.push(r * 5 + (c - 1)); if (c < 4) neighbors.push(r * 5 + (c + 1));
-                const offsets = isEven ? [{ dr: -1, dc: -1 }, { dr: -1, dc: 0 }, { dr: 1, dc: -1 }, { dr: 1, dc: 0 }] : [{ dr: -1, dc: 0 }, { dr: -1, dc: 1 }, { dr: 1, dc: 0 }, { dr: 1, dc: 1 }];
-                for (let o of offsets) { const nr = r + o.dr; const nc = c + o.dc; if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) neighbors.push(nr * 5 + nc); }
-                return neighbors;
+        function startGame() {
+            if (currentGameData.length === 0) { currentGameData = (currentLanguage === 'ar') ? [...defaultGameData] : [...defaultGameDataENG]; }
+            document.body.dir = (currentLanguage === 'ar') ? "rtl" : "ltr"; document.getElementById('main-menu').style.display = 'none'; document.getElementById('game-container').style.display = 'flex'; document.getElementById('game-container').style.opacity = '1'; renderBoard();
+        }
+
+        function getNeighbors(index) {
+            const r = Math.floor(index / 5); const c = index % 5; const neighbors = []; const isEven = (r % 2 === 0);
+            if (c > 0) neighbors.push(r * 5 + (c - 1)); if (c < 4) neighbors.push(r * 5 + (c + 1));
+            const offsets = isEven ? [{ dr: -1, dc: -1 }, { dr: -1, dc: 0 }, { dr: 1, dc: -1 }, { dr: 1, dc: 0 }] : [{ dr: -1, dc: 0 }, { dr: -1, dc: 1 }, { dr: 1, dc: 0 }, { dr: 1, dc: 1 }];
+            for (let o of offsets) { const nr = r + o.dr; const nc = c + o.dc; if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) neighbors.push(nr * 5 + nc); }
+            return neighbors;
+        }
+
+        function checkWin(team) {
+            if (isMatchOver) return false; const targetVal = (team === 'green') ? 1 : 2; const visited = new Set(); const queue = [];
+            if (team === 'green') { for (let c = 0; c < 5; c++) { const idx = 0 * 5 + c; if (boardState[idx] === targetVal) { queue.push(idx); visited.add(idx); } } }
+            else { for (let r = 0; r < 5; r++) { const idx = r * 5 + 0; if (boardState[idx] === targetVal) { queue.push(idx); visited.add(idx); } } }
+            while (queue.length > 0) {
+                const current = queue.shift(); const r = Math.floor(current / 5); const c = current % 5;
+                if ((team === 'green' && r === 4) || (team === 'red' && c === 4)) { adjustScore(team, 100); if (scores[team] >= pointsToWin) { return true; } else { showWinScreen(team, false); return true; } }
+                const neighbors = getNeighbors(current);
+                for (let nIdx of neighbors) { if (!visited.has(nIdx) && boardState[nIdx] === targetVal) { visited.add(nIdx); queue.push(nIdx); } }
             }
+            return false;
+        }
 
-            function checkWin(team) {
-                if (isMatchOver) return false; const targetVal = (team === 'green') ? 1 : 2; const visited = new Set(); const queue = [];
-                if (team === 'green') { for (let c = 0; c < 5; c++) { const idx = 0 * 5 + c; if (boardState[idx] === targetVal) { queue.push(idx); visited.add(idx); } } }
-                else { for (let r = 0; r < 5; r++) { const idx = r * 5 + 0; if (boardState[idx] === targetVal) { queue.push(idx); visited.add(idx); } } }
+        function openSettings() { document.getElementById('main-menu').style.display = 'none'; document.getElementById('settings-page').style.display = 'flex'; document.getElementById('timer-input').value = gameTimerDuration; document.getElementById('win-points-input').value = pointsToWin; }
+        function saveSettings() { const newTimer = document.getElementById('timer-input').value; const newPoints = document.getElementById('win-points-input').value; if (newTimer) gameTimerDuration = parseInt(newTimer); if (newPoints) pointsToWin = parseInt(newPoints); localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin })); document.getElementById('settings-page').style.display = 'none'; document.getElementById('main-menu').style.display = 'flex'; }
+        function openEditor() { document.getElementById('settings-page').style.display = 'none'; document.getElementById('editor-container').style.display = 'flex'; document.getElementById('editor-container').style.opacity = '1'; renderEditorList(); }
+        function closeEditor() { document.getElementById('editor-container').style.display = 'none'; document.getElementById('settings-page').style.display = 'flex'; }
 
-                while (queue.length > 0) {
-                    const current = queue.shift(); const r = Math.floor(current / 5); const c = current % 5;
-                    if ((team === 'green' && r === 4) || (team === 'red' && c === 4)) {
-                        adjustScore(team, 100); if (scores[team] >= pointsToWin) { return true; } else { showWinScreen(team, false); return true; }
-                    }
-                    const neighbors = getNeighbors(current);
-                    for (let nIdx of neighbors) { if (!visited.has(nIdx) && boardState[nIdx] === targetVal) { visited.add(nIdx); queue.push(nIdx); } }
-                }
-                return false;
-            }
+        function renderEditorList() {
+            const listAr = document.getElementById('list-ar-wrapper'); const listEn = document.getElementById('list-en-wrapper'); if (!listAr || !listEn) return;
+            listAr.innerHTML = ''; listEn.innerHTML = '';
+            currentGameData.forEach((q, index) => {
+                const d = document.createElement('div'); d.className = 'q-item';
+                d.innerHTML = `<div style="display:flex; align-items:center; gap:15px; overflow:hidden; flex:1;"><div class="q-letter">${q.letter}</div><div class="q-text">${q.question}</div></div><div style="display:flex; gap:8px;"><button class="q-edit-btn" onclick="editQuestion(${index})">✏️</button><button class="q-delete-btn" onclick="deleteQuestion(${index})">🗑️</button></div>`;
+                if (/^[a-zA-Z]+$/.test(q.letter)) listEn.appendChild(d); else listAr.appendChild(d);
+            });
+        }
 
-            function openSettings() { document.getElementById('main-menu').style.display = 'none'; document.getElementById('settings-page').style.display = 'flex'; document.getElementById('timer-input').value = gameTimerDuration; document.getElementById('win-points-input').value = pointsToWin; }
-            function saveSettings() {
-                const newTimer = document.getElementById('timer-input').value; const newPoints = document.getElementById('win-points-input').value;
-                if (newTimer) gameTimerDuration = parseInt(newTimer); if (newPoints) pointsToWin = parseInt(newPoints);
-                localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin }));
-                document.getElementById('settings-page').style.display = 'none'; document.getElementById('main-menu').style.display = 'flex';
-            }
+        function openAddQuestion() { document.getElementById('list-ar-wrapper').style.display = 'none'; document.getElementById('list-en-wrapper').style.display = 'none'; const tabs = document.getElementById('editor-tabs'); if (tabs) tabs.style.display = 'none'; document.getElementById('edit-form-container').style.display = 'flex'; document.getElementById('form-title').textContent = "إضافة سؤال جديد"; document.getElementById('is-new-question').value = "true"; document.getElementById('edit-q-letter').value = ""; document.getElementById('edit-q-text').value = ""; document.getElementById('edit-q-answer').value = ""; }
+        function cancelEdit() { document.getElementById('edit-form-container').style.display = 'none'; document.getElementById('editor-tabs').style.display = 'flex'; document.getElementById('editor-main-actions').style.display = 'flex'; renderEditorList(); switchEditorTab(currentLanguage === 'en' ? 'en' : 'ar'); }
 
-            function openEditor() { document.getElementById('settings-page').style.display = 'none'; document.getElementById('editor-container').style.display = 'flex'; document.getElementById('editor-container').style.opacity = '1'; renderEditorList(); }
-            function closeEditor() { document.getElementById('editor-container').style.display = 'none'; document.getElementById('settings-page').style.display = 'flex'; }
+        function toggleQRCode() {
+            const qrContainer = document.querySelector('.qr-container'); const backdrop = document.querySelector('.backdrop');
+            if (qrContainer.classList.contains('expanded')) { qrContainer.classList.remove('expanded'); backdrop.classList.remove('show'); document.body.style.overflow = ''; } 
+            else { qrContainer.classList.add('expanded'); backdrop.classList.add('show'); document.body.style.overflow = 'hidden'; }
+        }
 
-           function renderEditorList() {
-        const listAr = document.getElementById('list-ar-wrapper');
-        const listEn = document.getElementById('list-en-wrapper');
-        if (!listAr || !listEn) return;
+        function switchEditorTab(lang) {
+            const listAr = document.getElementById('list-ar-wrapper'); const listEn = document.getElementById('list-en-wrapper'); const btnAr = document.getElementById('btn-tab-ar'); const btnEn = document.getElementById('btn-tab-en');
+            if (lang === 'ar') { listAr.style.display = 'block'; listEn.style.display = 'none'; btnAr.style.background = 'gold'; btnAr.style.color = 'black'; btnEn.style.background = 'transparent'; btnEn.style.color = 'white'; } 
+            else { listAr.style.display = 'none'; listEn.style.display = 'block'; btnAr.style.background = 'transparent'; btnAr.style.color = 'white'; btnEn.style.background = 'gold'; btnEn.style.color = 'black'; }
+        }
 
-        listAr.innerHTML = ''; listEn.innerHTML = '';
-
-        currentGameData.forEach((q, index) => {
-            const d = document.createElement('div');
-            d.className = 'q-item';
-            d.innerHTML = `
-                <div style="display:flex; align-items:center; gap:15px; overflow:hidden; flex:1;">
-                    <div class="q-letter">${q.letter}</div>
-                    <div class="q-text">${q.question}</div>
-                </div>
-                <div style="display:flex; gap:8px;">
-                    <button class="q-edit-btn" onclick="editQuestion(${index})">✏️</button>
-                    <button class="q-delete-btn" onclick="deleteQuestion(${index})">🗑️</button>
-                </div>`;
-            
-            if (/^[a-zA-Z]+$/.test(q.letter)) listEn.appendChild(d);
-            else listAr.appendChild(d);
-        });
-    }
-
-            function openAddQuestion() {
-                // 1. إخفاء القوائم وأزرار التبويب لفتح النموذج
-                document.getElementById('list-ar-wrapper').style.display = 'none';
-                document.getElementById('list-en-wrapper').style.display = 'none';
-
-                const tabs = document.getElementById('editor-tabs');
-                if (tabs) tabs.style.display = 'none'; // التأكد من وجود العنصر قبل تغيير الـ style
-
-                // 2. إظهار نموذج الإضافة
-                document.getElementById('edit-form-container').style.display = 'flex';
-
-                // باقي الكود الخاص بتصفير الحقول...
-                document.getElementById('form-title').textContent = "إضافة سؤال جديد";
-                document.getElementById('is-new-question').value = "true";
-                document.getElementById('edit-q-letter').value = "";
-                document.getElementById('edit-q-text').value = "";
-                document.getElementById('edit-q-answer').value = "";
-            }
-
-           function cancelEdit() {
-    // 1. إخفاء نموذج التعديل
-    document.getElementById('edit-form-container').style.display = 'none';
-
-    // 2. إظهار العناصر المخفية (التبويبات، القائمة، وأزرار التحكم الرئيسية)
-    document.getElementById('editor-tabs').style.display = 'flex';
-    document.getElementById('editor-main-actions').style.display = 'flex'; // هذا السطر يظهر زر "رجوع للإعدادات"
-
-    // 3. تحديث القائمة والتبديل للتبويب الصحيح
-    renderEditorList();
-    switchEditorTab(currentLanguage === 'en' ? 'en' : 'ar');
-}
-
-            function toggleQRCode() {
-                const qrContainer = document.querySelector('.qr-container');
-                const backdrop = document.querySelector('.backdrop');
-
-                if (qrContainer.classList.contains('expanded')) {
-                    qrContainer.classList.remove('expanded');
-                    backdrop.classList.remove('show');
-                    document.body.style.overflow = '';
-                } else {
-                    qrContainer.classList.add('expanded');
-                    backdrop.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-            // دالة التبديل بين القائمتين
-            function switchEditorTab(lang) {
-                const listAr = document.getElementById('list-ar-wrapper');
-                const listEn = document.getElementById('list-en-wrapper');
-                const btnAr = document.getElementById('btn-tab-ar');
-                const btnEn = document.getElementById('btn-tab-en');
-
-                if (lang === 'ar') {
-                    listAr.style.display = 'block';
-                    listEn.style.display = 'none';
-                    btnAr.style.background = 'gold'; btnAr.style.color = 'black';
-                    btnEn.style.background = '#6c757d'; btnEn.style.color = 'white';
-                } else {
-                    listAr.style.display = 'none';
-                    listEn.style.display = 'block';
-                    btnAr.style.background = '#6c757d'; btnAr.style.color = 'white';
-                    btnEn.style.background = 'gold'; btnEn.style.color = 'black';
-                }
-            }
-
-            // دالة رسم القوائم المحدثة لتجنب الـ null error
-           
-            async function uploadToFirebase(lang) {
-                let dataToUpload;
-
-                // 1. Identify which local file to use
-                if (lang === 'en') {
-                    if (typeof defaultGameDataENG === 'undefined') {
-                        alert("Error: questionsENG.js file not loaded in HTML!");
-                        return;
-                    }
-                    dataToUpload = defaultGameDataENG;
-                } else {
-                    if (typeof defaultGameData === 'undefined') {
-                        alert("Error: questions.js file not loaded in HTML!");
-                        return;
-                    }
-                    dataToUpload = defaultGameData;
-                }
-
-                showToast(`Uploading ${dataToUpload.length} questions to Firebase...`);
-
-                // 2. Use a Batch Write (faster and more reliable)
-                const batch = db.batch();
-
-                dataToUpload.forEach((item) => {
-                    const docRef = questionsCollection.doc(); // Create a new document with a random ID
-                    // We add a 'lang' field so the database knows which is which
-                    batch.set(docRef, {
-                        ...item,
-                        lang: lang
-                    });
-                });
-
-                try {
-                    await batch.commit();
-                    showToast("✅ Sync Complete! Questions are now Online.");
-                    loadGameData(); // Refresh your editor list automatically
-                } catch (error) {
-                    console.error("Upload failed: ", error);
-                    showToast("❌ Upload failed. Check console.");
-                }
-            }
-
+        async function uploadToFirebase(lang) {
+            let dataToUpload;
+            if (lang === 'en') { if (typeof defaultGameDataENG === 'undefined') { alert("Error: questionsENG.js file not loaded in HTML!"); return; } dataToUpload = defaultGameDataENG; } 
+            else { if (typeof defaultGameData === 'undefined') { alert("Error: questions.js file not loaded in HTML!"); return; } dataToUpload = defaultGameData; }
+            showToast(`Uploading ${dataToUpload.length} questions to Firebase...`);
+            const batch = db.batch();
+            dataToUpload.forEach((item) => { const docRef = questionsCollection.doc(); batch.set(docRef, { ...item, lang: lang }); });
+            try { await batch.commit(); showToast("✅ Sync Complete! Questions are now Online."); loadGameData(); } catch (error) { console.error("Upload failed: ", error); showToast("❌ Upload failed. Check console."); }
+        }
     </script>
-    
 </body>
-        
 </html>
