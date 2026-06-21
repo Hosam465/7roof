@@ -84,14 +84,13 @@
             color: white;
         }
 
-      .main-brand-logo {
-    position: absolute;
-    top: 20px;
+     .main-brand-logo {
+    position: relative;
     width: 200px;
     height: auto;
     margin-bottom: 15px;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-      }
+}
 
         .lang-switch {
             display: flex;
@@ -389,17 +388,16 @@
             position: relative;
         }
 
-        h1 {
-            position: relative;
-            top: 100px;
-            margin-top: 100;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px gold;
-            font-size: clamp(2rem, 5vw, 3rem);
-            text-align: center;
-            z-index: 10;
-        }
-
+   h1 {
+    position: relative;
+    top: auto;
+    margin-top: 80px; /* Pushes the title just below the help buttons */
+    margin-bottom: 20px; /* Gives a little breathing room above the grid */
+    text-shadow: 0 0 20px gold;
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    z-index: 10;
+}
         .game-board {
             display: flex;
             align-items: center;
