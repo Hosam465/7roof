@@ -51,20 +51,21 @@
         }
 
         /* --- BACKGROUND IMAGE --- */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('worldcup.png');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-            z-index: -1;
-            pointer-events: none;
-        }
+       body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('worldcup.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+}
 
         .q-delete-btn {
             background: transparent;
@@ -83,14 +84,13 @@
             color: white;
         }
 
-        .main-brand-logo {
-            position: absolute;
-            top: 180px;
-            width: 200px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-        }
+      .main-brand-logo {
+    position: relative;
+    width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
 
         .lang-switch {
             display: flex;
@@ -1014,7 +1014,7 @@
     <audio id="sound_start" src="game-start-317318.mp3" preload="auto" volume="0.3"></audio>
     <audio id="sound_buzzer" src="correct-472358.mp3" preload="auto"></audio>
     <audio id="sound_hover" src="lesiakower-minimalist-button-hover-sound-effect-399749.mp3" preload="auto"></audio>  
-    <audio id="sound_wrong" src="wrong-answer-21-199825.mp3" preload="auto"></audio>
+<audio id="sound_wrong" src="wrongAnswer.mp3" preload="auto"></audio>
     <audio id="sound_gold" src="winner-game-sound-404167.mp3" preload="auto"></audio>
     <audio id="sound_round_win" src="winner-game-sound-404167.mp3" preload="auto"></audio>
 
