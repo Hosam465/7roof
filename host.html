@@ -388,13 +388,14 @@
             position: relative;
         }
 
-   h1 {
+ h1 {
     position: relative;
     top: auto;
-    margin-top: 80px; /* Pushes the title just below the help buttons */
-    margin-bottom: 20px; /* Gives a little breathing room above the grid */
+    margin-top: 80px;
+    margin-bottom: 20px;
     text-shadow: 0 0 20px gold;
-    font-size: clamp(2rem, 5vw, 3rem);
+    /* Increased the min, preferred, and max sizes here: */
+    font-size: clamp(3rem, 8vw, 5rem); 
     text-align: center;
     z-index: 10;
 }
@@ -851,7 +852,7 @@
             background: rgba(0, 0, 0, 0.6);
             padding: 15px;
             border-radius: 15px;
-            margin: 20px 0;
+            
             letter-spacing: 5px;
             border: 2px dashed #ffd700;
             user-select: all;
@@ -1014,7 +1015,7 @@
 
     <audio id="sound_start" src="game-start-317318.mp3" preload="auto" volume="0.3"></audio>
     <audio id="sound_buzzer" src="correct-472358.mp3" preload="auto"></audio>
-    <audio id="sound_hover" src="lesiakower-minimalist-button-hover-sound-effect-399749.mp3" preload="auto"></audio>  
+<audio id="sound_hover" src="hover.mp3" preload="auto" volume="0.2"></audio>
 <audio id="sound_wrong" src="wrongAnswer.mp3" preload="auto"></audio>
     <audio id="sound_gold" src="winner-game-sound-404167.mp3" preload="auto"></audio>
     <audio id="sound_round_win" src="winner-game-sound-404167.mp3" preload="auto"></audio>
