@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Buzzer - حروف وألوف</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0d1b2a;
+            --neon-green: #00ff44;
+            --neon-red: #ff0000;
+            --gold: #ffd700;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            color: white;
+            margin: 0;
+            /* التعديل هنا لتمكين التمرير */
+            min-height: 100vh; 
+            height: auto;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation; 
+        }
+
+        /* --- شاشة الدخول --- */
+        #login-screen {
+            width: 85%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 0; /* إضافة مسافة داخلية */
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            color: var(--gold);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-family: 'Cairo';
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .team-selector {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .team-option {
+            flex: 1;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .team-option.green-opt { color: #88ffaa; }
+        .team-option.red-opt { color: #ff8888; }
+
+        .team-option.selected.green-opt {
+            background: rgba(40, 167, 69, 0.3);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 68, 0.3);
+            transform: scale(1.05);
+            color: white;
+        }
+        .team-option.selected.red-opt {
+            background: rgba(220, 53, 69, 0.3);
+            border-color: var(--neon-red);
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
+            transform: scale(1.05);
+            color: white;
+        }
+
+        .btn-join {
+            background: linear-gradient(45deg, var(--gold), #ffaa00);
+            color: #000;
+            border: none;
+            padding: 15px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(255, 170, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        /* --- شاشة اللعبة --- */
+        #game-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* تغيير التوزيع للوسط */
+            min-height: 100vh;
+            width: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            gap: 40px; /* مسافة بين العناصر */
+        }
+
+        .header-info {
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .buzzer-btn {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.3);
+            cursor: default;
+            transition: all 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            background: radial-gradient(circle at 30% 30%, #444, #222);
+            box-shadow: 0 10px 0 #111, 0 20px 20px rgba(0,0,0,0.4);
+        }
+
+        .buzzer-btn.active {
+            color: white;
+            cursor: pointer;
+        }
+
+        .buzzer-btn.active.green-mode {
+            background: radial-gradient(circle at 30% 30%, #2ecc71, #218838);
+            box-shadow: 0 10px 0 #1e7e34, 0 0 40px rgba(46, 204, 113, 0.5);
+        }
+
+        .buzzer-btn.active.red-mode {
+            background: radial-gradient(circle at 30% 30%, #e74c3c, #c0392b);
+            box-shadow: 0 10px 0 #a93226, 0 0 40px rgba(231, 76, 60, 0.5);
+        }
+
+        .buzzer-btn.active:active {
+            transform: translateY(8px);
+            box-shadow: 0 2px 0 #111;
+        }
+
+        #status-text {
+            font-size: 1.2rem;
+            text-align: center;
+            min-height: 50px;
+            font-weight: bold;
+            color: #888;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="logo">حروف وألوف</div>
+        
+        <div class="input-group">
+            <input type="text" id="game-id" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="كود اللعبة">
+        </div>
+        
+        <div class="input-group">
+            <input type="text" id="player-name" placeholder="اكتب اسمك">
+        </div>
+
+        <div class="team-selector">
+            <div class="team-option green-opt" onclick="selectTeam('green')" id="btn-team-green">الفريق الأخضر</div>
+            <div class="team-option red-opt" onclick="selectTeam('red')" id="btn-team-red">الفريق الأحمر</div>
+        </div>
+
+        <button class="btn-join" id="join-btn" onclick="joinGame()">دخول اللعبة</button>
+        <div id="error-msg" style="color: #ff6b6b; text-align: center; display: none; margin-bottom: 20px;"></div>
+    </div>
+
+    <div id="game-screen">
+        <div class="header-info">
+            <h2 id="disp-name" style="margin:0">اللاعب</h2>
+            <div id="disp-team" style="font-size:0.9rem">جاري التحميل...</div>
+        </div>
+
+        <button id="buzzer" class="buzzer-btn" onclick="pressBuzzer()">انتظر</button>
+
+        <div id="status-text">في انتظار المضيف...</div>
+    </div>
+
+    <script>
+        // بقية كود الـ JavaScript الخاص بك كما هو بدون تغيير
+        var myName = "";
+        var myTeam = null;
+        var gameId = "";
+        var isLocked = true;
+        var db;
+
+        document.getElementById('game-id').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyBWShBcWNHm64xliJ-OlEm_P-0RFRY-x2s",
+            authDomain: "hroof-837b6.firebaseapp.com",
+            projectId: "hroof-837b6",
+            storageBucket: "hroof-837b6.firebasestorage.app",
+            messagingSenderId: "1061358003828",
+            appId: "1:1061358003828:web:e85a22b79440a660905321",
+            measurementId: "G-4B1CHV1F4R"
+        };
+
+        if (typeof firebase !== 'undefined') {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            db = firebase.firestore();
+        }
+
+        function selectTeam(team) {
+            myTeam = team;
+            document.querySelectorAll('.team-option').forEach(function(el) {
+                el.classList.remove('selected');
+            });
+            var targetBtn = document.getElementById('btn-team-' + team);
+            if (targetBtn) targetBtn.classList.add('selected');
+        }
+
+        function joinGame() {
+            gameId = document.getElementById('game-id').value.trim();
+            myName = document.getElementById('player-name').value.trim();
+            var errorDiv = document.getElementById('error-msg');
+            var joinBtn = document.getElementById('join-btn');
+
+            if (!gameId || !myName || !myTeam) {
+                errorDiv.textContent = 'أكمل البيانات واختر الفريق';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            joinBtn.textContent = 'جاري الدخول...';
+            joinBtn.disabled = true;
+
+            var sessionRef = db.collection('sessions').doc(gameId);
+            sessionRef.get().then(function(doc) {
+                if (doc.exists) {
+                    sessionRef.collection('players').add({
+                        name: myName,
+                        team: myTeam,
+                        joinedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(function(playerDocRef) {
+                        playerDocRef.onSnapshot(function(docSnap) {
+                            if (!docSnap.exists) {
+                                alert("لقد تم طردك من الغرفة بواسطة المضيف.");
+                                location.reload();
+                            }
+                        });
+                    });
+
+                    sessionRef.onSnapshot(function(docSnapshot) {
+                        if (docSnapshot.exists) {
+                            handleGameState(docSnapshot.data()); 
+                            setupGameScreen();
+                        }
+                    });
+                } else {
+                    errorDiv.textContent = 'كود اللعبة غير موجود';
+                    errorDiv.style.display = 'block';
+                    joinBtn.disabled = false;
+                    joinBtn.textContent = 'دخول اللعبة';
+                }
+            });
+        }
+
+        function setupGameScreen() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            document.getElementById('disp-name').textContent = myName;
+            
+            var badge = document.getElementById('disp-team');
+            var bzr = document.getElementById('buzzer');
+            
+            if(myTeam === 'green') {
+                badge.textContent = 'الفريق الأخضر';
+                badge.style.color = 'var(--neon-green)';
+                bzr.classList.add('green-mode');
+            } else {
+                badge.textContent = 'الفريق الأحمر';
+                badge.style.color = 'var(--neon-red)';
+                bzr.classList.add('red-mode');
+            }
+        }
+
+        function handleGameState(data) {
+            var btn = document.getElementById('buzzer');
+            var status = document.getElementById('status-text');
+            if (!data) return;
+
+            switch(data.state) {
+                case 'QUESTION_OPEN':
+                    isLocked = false;
+                    btn.classList.add('active');
+                    btn.textContent = 'اضغط!';
+                    status.textContent = 'السؤال مفتوح! جاوب بسرعة';
+                    status.style.color = '#fff';
+                    break;
+                case 'LOCKED':
+                    isLocked = true;
+                    btn.classList.remove('active');
+                    if (data.winnerName === myName) {
+                        btn.textContent = 'أنت!';
+                        status.innerHTML = '<span style="color:gold">أنت الأسرع! دورك بالإجابة</span>';
+                    } else {
+                        btn.textContent = 'مغلق';
+                        status.innerHTML = 'المجيب الآن: <span style="color:#ff6b6b">' + (data.winnerName || 'لاعب آخر') + '</span>';
+                    }
+                    break;
+                default:
+                    isLocked = true;
+                    btn.classList.remove('active');
+                    btn.textContent = 'انتظر';
+                    status.textContent = 'في انتظار السؤال القادم...';
+                    status.style.color = '#888';
+                    break;
+            }
+        }
+
+        async function pressBuzzer() {
+            if (isLocked || !gameId || !myTeam) return;
+            isLocked = true;
+            try {
+                await db.collection('sessions').doc(gameId).collection('buzzes').add({
+                    name: myName,
+                    team: myTeam,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                if (navigator.vibrate) navigator.vibrate(50);
+            } catch (e) {
+                isLocked = false; 
+            }
+        }
+    </script>
+</body>
+</html>
