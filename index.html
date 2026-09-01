@@ -10,16 +10,22 @@
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <style>
         :root {
-            --bg-dark: #0d1b2a;
+            --bg-dark: #0a0a0a;
             --neon-green: #00ff44;
             --neon-red: #ff0000;
-            --gold: #ffd700;
+            --gold: #e5002b;
         }
 
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(160, 0, 15, 0.4) 0%, rgba(5, 5, 5, 0.9) 65%),
+                url('sab1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: white;
             margin: 0;
             /* التعديل هنا لتمكين التمرير */
@@ -41,8 +47,21 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            padding: 20px 0; /* إضافة مسافة داخلية */
+            padding: 30px 22px;
+            background: rgba(10, 10, 10, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.5s ease-out;
+        }
+
+        .brand-logo {
+            display: block;
+            width: 160px;
+            height: auto;
+            margin: 0 auto 15px auto;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
         }
 
         .logo {
@@ -111,8 +130,8 @@
         }
 
         .btn-join {
-            background: linear-gradient(45deg, var(--gold), #ffaa00);
-            color: #000;
+            background: linear-gradient(45deg, var(--gold), #8a0018);
+            color: #fff;
             border: none;
             padding: 15px;
             font-size: 1.3rem;
@@ -198,6 +217,7 @@
 <body>
 
     <div id="login-screen">
+        <img src="sab.png" alt="SAB" class="brand-logo">
         <div class="logo">حروف وألوف</div>
         
         <div class="input-group">
@@ -349,7 +369,7 @@
                     btn.classList.remove('active');
                     if (data.winnerName === myName) {
                         btn.textContent = 'أنت!';
-                        status.innerHTML = '<span style="color:gold">أنت الأسرع! دورك بالإجابة</span>';
+                        status.innerHTML = '<span style="color:#e5002b">أنت الأسرع! دورك بالإجابة</span>';
                     } else {
                         btn.textContent = 'مغلق';
                         status.innerHTML = 'المجيب الآن: <span style="color:#ff6b6b">' + (data.winnerName || 'لاعب آخر') + '</span>';
