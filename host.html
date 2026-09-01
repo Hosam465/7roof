@@ -1323,8 +1323,8 @@
             currentData = q; currentTarget = element;
             document.getElementById('modal-letter').textContent = "الحرف: " + q.letter;
             const questionEl = document.getElementById('modal-question');
-            questionEl.textContent = q.question;
-            questionEl.style.display = 'block'; 
+            questionEl.style.display = 'block';
+            startTypewriter(questionEl, q.question);
             currentQuestionIsGold = (index === goldHexIndex);
 
             const mcqView = document.getElementById('mcq-view'); 
@@ -1380,6 +1380,7 @@
 
         let currentGameData = []; let boardState = new Array(25).fill(0); let currentTarget = null; let currentData = null; let isQuestionOpen = false;
         let timerInterval; let gameTimerDuration = 10; let pointsToWin = 500; let activeCategoryFilter = null;
+        let typewriterInterval = null;
         let greenJokerUsed = false; let redJokerUsed = false; let activeJokerTeam = null; let jokerEffect = { type: null, team: null };
         let goldHexIndex = -1; let currentQuestionIsGold = false; let scores = { green: 0, red: 0 }; let isMatchOver = false; let lastHoverSoundTime = 0;
         let peer = null; let connections = []; let currentLanguage = 'ar';
@@ -1494,10 +1495,10 @@
         function handleBuzzerClick(buzzData) {
             if (isQuestionOpen) {
                 if (jokerEffect.team && buzzData.team !== jokerEffect.team) return;
-                isQuestionOpen = false; const winMsg = document.getElementById('buzzer-winner'); const questionText = document.getElementById('modal-question');
+                isQuestionOpen = false; const winMsg = document.getElementById('buzzer-winner');
                 const pTeam = buzzData.team; const pName = buzzData.name; const teamColor = (pTeam === 'green') ? 'var(--neon-green)' : 'var(--neon-red)'; const teamLabel = (pTeam === 'green') ? 'الأخضر' : 'الأحمر';
                 if (winMsg) { winMsg.innerHTML = `🚨 <span style="color:${teamColor}">${pName}</span> (فريق ${teamLabel}) ضغط أولاً!`; winMsg.style.display = 'block'; }
-                if (questionText) { questionText.style.display = 'none'; }
+                stopTypewriter();
                 playSound('buzzer'); broadcast({ type: 'LOCKED', winner: pName, winnerTeam: pTeam });
             }
         }
@@ -1586,6 +1587,26 @@
             const mainIndex = currentGameData.indexOf(selected); if (mainIndex > -1) { currentGameData.splice(mainIndex, 1); } return selected;
         }
 
+        function startTypewriter(el, text) {
+            clearInterval(typewriterInterval);
+            el.textContent = '';
+            let i = 0;
+            const speed = 45;
+            typewriterInterval = setInterval(() => {
+                i++;
+                el.textContent = text.slice(0, i);
+                if (i >= text.length) {
+                    clearInterval(typewriterInterval);
+                    typewriterInterval = null;
+                }
+            }, speed);
+        }
+
+        function stopTypewriter() {
+            clearInterval(typewriterInterval);
+            typewriterInterval = null;
+        }
+
         function startTimer() {
             let timeLeft = gameTimerDuration; const timerDisplay = document.getElementById('timer-display');
             timerDisplay.textContent = timeLeft; timerDisplay.style.color = 'white'; timerDisplay.style.borderColor = '#ffffff';
@@ -1597,7 +1618,7 @@
             }, 1000);
         }
 
-        function showTimeUpMessage() { const el = document.getElementById('time-up-overlay'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
+        function showTimeUpMessage() { stopTypewriter(); const el = document.getElementById('time-up-overlay'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
 
         function resolveQuestion(team) {
             if (jokerEffect.team && jokerEffect.team !== team) return; if (!currentTarget) return;
@@ -1621,7 +1642,7 @@
 
         function closeModal() {
             document.getElementById('modal-content').style.borderColor = "#ffffff"; document.getElementById('modal-content').style.boxShadow = "0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.05)"; document.getElementById('modal').style.display = 'none'; document.getElementById('time-up-overlay').classList.remove('show');
-            clearInterval(timerInterval); isQuestionOpen = false; jokerEffect = { type: null, team: null }; broadcast({ type: 'RESET' });
+            clearInterval(timerInterval); stopTypewriter(); isQuestionOpen = false; jokerEffect = { type: null, team: null }; broadcast({ type: 'RESET' });
         }
 
         function startGame() {

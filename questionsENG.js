@@ -1,4 +1,4 @@
-const defaultGameData = [
+const defaultGameDataENG = [
     // --- Letter A ---
     { letter: 'A', question: 'A South American country whose capital is Buenos Aires?', answer: 'Argentina', type: 'mcq', category: 'geo', options: ['Australia', 'Austria', 'Angola'] },
     { letter: 'A', question: 'The frozen continent where the South Pole is located?', answer: 'Antarctica', type: 'mcq', category: 'geo', options: ['Africa', 'Asia', 'America'] },
