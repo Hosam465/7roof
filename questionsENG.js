@@ -199,5 +199,55 @@ const defaultGameDataENG = [
     { letter: 'Y', question: 'Major Saudi industrial city and Red Sea port, located near Medina?', answer: 'Yanbu', type: 'mcq', category: 'saudi', options: ['Yamama', 'Yaroslavl', 'Yalta'] },
 
     // --- Letter Z ---
-    { letter: 'Z', question: 'The sacred well located within the Grand Mosque in Mecca?', answer: 'Zamzam', type: 'mcq', category: 'saudi', options: ['Zanzibar Spring', 'Zambezi Well', 'Zagros Spring'] }
+    { letter: 'Z', question: 'The sacred well located within the Grand Mosque in Mecca?', answer: 'Zamzam', type: 'mcq', category: 'saudi', options: ['Zanzibar Spring', 'Zambezi Well', 'Zagros Spring'] },
+
+    // ============================================================
+    // Second wave: more Saudi National Day & general Saudi Arabia trivia
+    // ============================================================
+
+    // --- Letter A ---
+    { letter: 'A', question: 'The world’s largest natural palm oasis, a UNESCO World Heritage Site in Saudi Arabia’s Eastern Province?', answer: 'Al-Ahsa', type: 'mcq', category: 'saudi', options: ['Al-Jouf', 'Al-Kharj', 'Al-Baha'] },
+    { letter: 'A', question: 'The Saudi national ___, which opens with the words "Sari’i lil-Majdi wal-’Ulya"?', answer: 'Anthem', type: 'mcq', category: 'national_day', options: ['Agreement', 'Assembly', 'Almanac'] },
+
+    // --- Letter C ---
+    { letter: 'C', question: 'The title held by Mohammed bin Salman, the architect of Saudi Vision 2030?', answer: 'Crown Prince', type: 'mcq', category: 'saudi', options: ['Chief Minister', 'Chancellor', 'Consul'] },
+
+    // --- Letter D ---
+    { letter: 'D', question: 'The capital city of Saudi Arabia’s oil-rich Eastern Province?', answer: 'Dammam', type: 'mcq', category: 'saudi', options: ['Doha', 'Dubai', 'Damascus'] },
+
+    // --- Letter E ---
+    { letter: 'E', question: 'A dramatic cliff formation near Riyadh, nicknamed for the way the land appears to drop away?', answer: 'Edge of the World', type: 'mcq', category: 'saudi', options: ['End of the Earth', 'Endless Horizon', 'Exit Point'] },
+
+    // --- Letter F ---
+    { letter: 'F', question: 'Saudi King who greatly expanded education and modernization, reigning from 1964 to 1975?', answer: 'Faisal', type: 'mcq', category: 'saudi', options: ['Fahd', 'Farouk', 'Fahad'] },
+
+    // --- Letter H ---
+    { letter: 'H', question: 'Historic oasis city within Al-Ahsa, one of the oldest continuously inhabited places in Arabia?', answer: 'Hofuf', type: 'mcq', category: 'saudi', options: ['Homs', 'Hebron', 'Harar'] },
+
+    // --- Letter I ---
+    { letter: 'I', question: 'The simple white, unstitched garment worn by Muslim pilgrims during Hajj and Umrah?', answer: 'Ihram', type: 'mcq', category: 'saudi', options: ['Igloo', 'Icon', 'Idiom'] },
+
+    // --- Letter J ---
+    { letter: 'J', question: 'Southwestern Saudi region on the Red Sea, known for its ancient terraced mountain farms?', answer: 'Jazan', type: 'mcq', category: 'saudi', options: ['Jubail', 'Jouf', 'Jeddah'] },
+
+    // --- Letter K ---
+    { letter: 'K', question: 'Saudi King who reigned from 1975 to 1982?', answer: 'Khalid', type: 'mcq', category: 'saudi', options: ['Khalifa', 'Karim', 'Kamal'] },
+
+    // --- Letter M ---
+    { letter: 'M', question: 'The second holiest city in Islam, home to the Prophet’s Mosque?', answer: 'Medina', type: 'mcq', category: 'saudi', options: ['Muscat', 'Manama', 'Mosul'] },
+
+    // --- Letter N ---
+    { letter: 'N', question: 'Southern Saudi region famous for ancient terraced farms and mudbrick heritage forts?', answer: 'Najran', type: 'mcq', category: 'saudi', options: ['Nairobi', 'Nassau', 'Nassiriyah'] },
+
+    // --- Letter R ---
+    { letter: 'R', question: 'The official currency of Saudi Arabia?', answer: 'Riyal', type: 'mcq', category: 'saudi', options: ['Rupee', 'Ringgit', 'Rand'] },
+
+    // --- Letter S ---
+    { letter: 'S', question: 'Islamic law, which forms the basis of the legal system in Saudi Arabia?', answer: 'Sharia', type: 'mcq', category: 'saudi', options: ['Shura', 'Sunnah', 'Salat'] },
+
+    // --- Letter T ---
+    { letter: 'T', question: 'Northwestern Saudi region bordering Jordan, home to the futuristic Neom project?', answer: 'Tabuk', type: 'mcq', category: 'saudi', options: ['Tehran', 'Tripoli', 'Tunis'] },
+
+    // --- Letter Z ---
+    { letter: 'Z', question: 'The Arabic term for a religious visit, such as visiting the Prophet’s Mosque in Medina?', answer: 'Ziyarah', type: 'mcq', category: 'saudi', options: ['Zakat', 'Zawiya', 'Zamalek'] }
 ];
