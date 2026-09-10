@@ -103,5 +103,101 @@ const defaultGameDataENG = [
 
     // --- Letter Z ---
     { letter: 'Z', question: 'The striped African animal that looks like a horse?', answer: 'Zebra', type: 'mcq', category: 'general', options: ['Zebra', 'Zebu', 'Zatyr'] },
-    { letter: 'Z', question: 'The capital city of Croatia?', answer: 'Zagreb', type: 'mcq', category: 'geo', options: ['Zurich', 'Zambia', 'Zanzibar'] }
+    { letter: 'Z', question: 'The capital city of Croatia?', answer: 'Zagreb', type: 'mcq', category: 'geo', options: ['Zurich', 'Zambia', 'Zanzibar'] },
+
+    // ============================================================
+    // Saudi National Day (national_day) & general Saudi Arabia (saudi)
+    // ============================================================
+
+    // --- Letter A ---
+    { letter: 'A', question: 'What word describes the yearly commemoration of the Kingdom’s unification, celebrated every September 23rd?', answer: 'Anniversary', type: 'mcq', category: 'national_day', options: ['Announcement', 'Assembly', 'Achievement'] },
+    { letter: 'A', question: 'The world’s largest and most valuable oil company, headquartered in Dhahran?', answer: 'Aramco', type: 'mcq', category: 'saudi', options: ['Adnoc', 'Opec', 'Amoco'] },
+    { letter: 'A', question: 'Ancient Saudi heritage site and home to the Nabataean tombs of Hegra?', answer: 'AlUla', type: 'mcq', category: 'saudi', options: ['Amman', 'Aswan', 'Atlantis'] },
+
+    // --- Letter B ---
+    { letter: 'B', question: 'Another word for a flag, widely displayed across the Kingdom on National Day?', answer: 'Banner', type: 'mcq', category: 'national_day', options: ['Border', 'Badge', 'Bureau'] },
+    { letter: 'B', question: 'Traditional nomadic desert-dwelling people historically associated with the Arabian Peninsula?', answer: 'Bedouin', type: 'mcq', category: 'saudi', options: ['Berber', 'Bantu', 'Bavarian'] },
+
+    // --- Letter C ---
+    { letter: 'C', question: 'The general word for the festivities, parades and fireworks held every September 23rd?', answer: 'Celebration', type: 'mcq', category: 'national_day', options: ['Curfew', 'Census', 'Conference'] },
+    { letter: 'C', question: 'Desert animal famously raced in traditional Saudi festivals, nicknamed the "ship of the desert"?', answer: 'Camel', type: 'mcq', category: 'saudi', options: ['Coyote', 'Cobra', 'Cormorant'] },
+
+    // --- Letter D ---
+    { letter: 'D', question: 'A formal royal order — like the one King Abdulaziz issued in 1932 to unify the Kingdom under one name?', answer: 'Decree', type: 'mcq', category: 'national_day', options: ['Debate', 'Deposit', 'Delegate'] },
+    { letter: 'D', question: 'Historic town near Riyadh considered the birthplace of the Saudi state, and a UNESCO World Heritage Site?', answer: 'Diriyah', type: 'mcq', category: 'saudi', options: ['Dammam', 'Dhahran', 'Dumat Al-Jandal'] },
+
+    // --- Letter E ---
+    { letter: 'E', question: 'Oil-rich Saudi region bordering the Arabian Gulf, home to Dammam and Dhahran?', answer: 'Eastern Province', type: 'mcq', category: 'saudi', options: ['Empty Quarter', 'Elba Region', 'Euphrates Valley'] },
+
+    // --- Letter F ---
+    { letter: 'F', question: 'The green banner bearing the Shahada and a sword, raised across the Kingdom on National Day?', answer: 'Flag', type: 'mcq', category: 'national_day', options: ['Festival', 'Fireworks show', 'Fanfare'] },
+    { letter: 'F', question: 'Bird of prey central to traditional Arabian hunting heritage and falconry festivals?', answer: 'Falcon', type: 'mcq', category: 'saudi', options: ['Flamingo', 'Finch', 'Fulmar'] },
+
+    // --- Letter G ---
+    { letter: 'G', question: 'The predominant color of the Saudi flag, widely worn during National Day celebrations?', answer: 'Green', type: 'mcq', category: 'national_day', options: ['Gold', 'Gray', 'Purple'] },
+    { letter: 'G', question: 'The largest mosque in the world, surrounding the Kaaba in Mecca?', answer: 'Grand Mosque', type: 'mcq', category: 'saudi', options: ['Green Dome', 'Golden Mosque', 'Great Mosque of Medina'] },
+
+    // --- Letter H ---
+    { letter: 'H', question: 'Traditional dances like Al-Ardah and traditional dress showcased on National Day represent Saudi ___?', answer: 'Heritage', type: 'mcq', category: 'national_day', options: ['Hierarchy', 'Horizon', 'Harvest'] },
+    { letter: 'H', question: 'The annual Islamic pilgrimage to Mecca, one of the Five Pillars of Islam?', answer: 'Hajj', type: 'mcq', category: 'saudi', options: ['Hijra', 'Halal', 'Hadith'] },
+
+    // --- Letter I ---
+    { letter: 'I', question: 'The King Abdulaziz Center for World Culture, a landmark cultural institution in Dhahran?', answer: 'Ithra', type: 'mcq', category: 'saudi', options: ['Icarus', 'Ibex', 'Indus'] },
+
+    // --- Letter J ---
+    { letter: 'J', question: 'Major Red Sea port city known as the gateway to Mecca?', answer: 'Jeddah', type: 'mcq', category: 'saudi', options: ['Jazan', 'Jubail', 'Jouf'] },
+
+    // --- Letter K ---
+    { letter: 'K', question: 'What type of state, ruled by a monarch, was the name announced by King Abdulaziz in 1932?', answer: 'Kingdom', type: 'mcq', category: 'national_day', options: ['Republic', 'Caliphate', 'Federation'] },
+    { letter: 'K', question: 'The cube-shaped building in Mecca that Muslims face during prayer?', answer: 'Kaaba', type: 'mcq', category: 'saudi', options: ['Kasbah', 'Karnak', 'Kremlin'] },
+
+    // --- Letter L ---
+    { letter: 'L', question: 'A value strongly emphasized during National Day, meaning devotion to one’s homeland and leadership?', answer: 'Loyalty', type: 'mcq', category: 'national_day', options: ['Luxury', 'Leisure', 'Litigation'] },
+
+    // --- Letter M ---
+    { letter: 'M', question: 'The system of government in Saudi Arabia, ruled by a King?', answer: 'Monarchy', type: 'mcq', category: 'national_day', options: ['Meritocracy', 'Municipality', 'Mandate'] },
+    { letter: 'M', question: 'The holiest city in Islam and birthplace of the Prophet Muhammad?', answer: 'Mecca', type: 'mcq', category: 'saudi', options: ['Medina', 'Muscat', 'Manama'] },
+
+    // --- Letter N ---
+    { letter: 'N', question: 'What is September 23rd officially known as in Saudi Arabia?', answer: 'National Day', type: 'mcq', category: 'national_day', options: ['Founding Day', 'Flag Day', 'Labor Day'] },
+    { letter: 'N', question: 'Saudi Arabia’s futuristic megacity project being built on the Red Sea coast?', answer: 'Neom', type: 'mcq', category: 'saudi', options: ['Nairobi', 'Nassau', 'Nagoya'] },
+
+    // --- Letter O ---
+    { letter: 'O', question: 'Saudi Arabia’s most valuable natural resource and main historical export?', answer: 'Oil', type: 'mcq', category: 'saudi', options: ['Ore', 'Onyx', 'Opal'] },
+
+    // --- Letter P ---
+    { letter: 'P', question: 'Along with two crossed swords, which tree appears on the Saudi national emblem?', answer: 'Palm Tree', type: 'mcq', category: 'national_day', options: ['Pine Tree', 'Papyrus Plant', 'Poppy Flower'] },
+    { letter: 'P', question: 'The general English term for the religious journeys of Hajj and Umrah to Mecca?', answer: 'Pilgrimage', type: 'mcq', category: 'saudi', options: ['Procession', 'Parade', 'Pageant'] },
+
+    // --- Letter Q ---
+    { letter: 'Q', question: 'Saudi region famous for date farming, with Buraydah as its capital?', answer: 'Qassim', type: 'mcq', category: 'saudi', options: ['Qatif', 'Quwaiy', 'Qunfudhah'] },
+
+    // --- Letter R ---
+    { letter: 'R', question: 'The capital city of Saudi Arabia?', answer: 'Riyadh', type: 'mcq', category: 'saudi', options: ['Rabigh', 'Ras Tanura', 'Rafha'] },
+    { letter: 'R', question: 'The sea bordering Saudi Arabia’s western coast, home to Jeddah and Neom?', answer: 'Red Sea', type: 'mcq', category: 'saudi', options: ['Ross Sea', 'Rhine Sea', 'Rift Sea'] },
+
+    // --- Letter S ---
+    { letter: 'S', question: 'The Gregorian calendar month in which Saudi National Day (the 23rd) falls?', answer: 'September', type: 'mcq', category: 'national_day', options: ['August', 'October', 'July'] },
+    { letter: 'S', question: 'Along with a palm tree, what weapon appears on the Saudi flag and national emblem?', answer: 'Sword', type: 'mcq', category: 'national_day', options: ['Spear', 'Shield', 'Staff'] },
+    { letter: 'S', question: 'The name of the current King of Saudi Arabia?', answer: 'Salman', type: 'mcq', category: 'saudi', options: ['Saud', 'Sultan', 'Saad'] },
+
+    // --- Letter T ---
+    { letter: 'T', question: 'What word describes the customary dances, clothing and foods showcased during National Day?', answer: 'Tradition', type: 'mcq', category: 'national_day', options: ['Transition', 'Taxation', 'Translation'] },
+    { letter: 'T', question: 'Mountain city near Mecca, famous for its roses and annual rose festival?', answer: 'Taif', type: 'mcq', category: 'saudi', options: ['Tabuk', 'Turaif', 'Tanumah'] },
+
+    // --- Letter U ---
+    { letter: 'U', question: 'What major historical event, achieved in 1932, is commemorated by Saudi National Day?', answer: 'Unification', type: 'mcq', category: 'national_day', options: ['Urbanization', 'Utilization', 'Universalization'] },
+    { letter: 'U', question: 'The "minor pilgrimage" to Mecca that can be performed at any time of the year?', answer: 'Umrah', type: 'mcq', category: 'saudi', options: ['Ummah', 'Uqbah', 'Uthman'] },
+
+    // --- Letter V ---
+    { letter: 'V', question: 'Saudi Arabia’s ambitious economic and social reform program launched in 2016?', answer: 'Vision 2030', type: 'mcq', category: 'saudi', options: ['Venture 2020', 'Voyage 2040', 'Vanguard 2025'] },
+
+    // --- Letter W ---
+    { letter: 'W', question: 'UNESCO status held by AlUla’s ancient city of Hegra — the first of its kind in Saudi Arabia?', answer: 'World Heritage Site', type: 'mcq', category: 'saudi', options: ['Wonder of the World', 'War Memorial', 'Wildlife Reserve'] },
+
+    // --- Letter Y ---
+    { letter: 'Y', question: 'Major Saudi industrial city and Red Sea port, located near Medina?', answer: 'Yanbu', type: 'mcq', category: 'saudi', options: ['Yamama', 'Yaroslavl', 'Yalta'] },
+
+    // --- Letter Z ---
+    { letter: 'Z', question: 'The sacred well located within the Grand Mosque in Mecca?', answer: 'Zamzam', type: 'mcq', category: 'saudi', options: ['Zanzibar Spring', 'Zambezi Well', 'Zagros Spring'] }
 ];

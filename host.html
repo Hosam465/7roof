@@ -1581,6 +1581,11 @@
             let possibilities = currentGameData.filter(item => { const isEnglish = /^[a-zA-Z]+$/.test(item.letter); const langMatch = (currentLanguage === 'en') ? isEnglish : !isEnglish; return item.letter === letter && langMatch; });
             if (activeCategoryFilter) { const filtered = possibilities.filter(item => item.category === activeCategoryFilter); if (filtered.length > 0) possibilities = filtered; activeCategoryFilter = null; }
             if (possibilities.length === 0) return null;
+            const categoryPriority = ['national_day', 'saudi'];
+            for (const cat of categoryPriority) {
+                const prioritized = possibilities.filter(item => item.category === cat);
+                if (prioritized.length > 0) { possibilities = prioritized; break; }
+            }
             let selected = possibilities[Math.floor(Math.random() * possibilities.length)];
             let usedIds = JSON.parse(localStorage.getItem('usedQuestionIds') || "[]");
             if (selected.id) { usedIds.push(selected.id); localStorage.setItem('usedQuestionIds', JSON.stringify(usedIds)); }
