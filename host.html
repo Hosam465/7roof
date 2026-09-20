@@ -1494,7 +1494,7 @@
                     };
                     mcqView.appendChild(d);
                 });
-                publishSession({ question: { seq: seq, letter: q.letter, text: q.question, options: opts }, reveal: null });
+                publishSession({ question: { seq: seq, letter: q.letter, text: q.question, options: opts, allowedTeam: jokerEffect.team || null }, reveal: null });
             }
 
             const btnGreen = document.getElementById('btn-green-correct'); const btnRed = document.getElementById('btn-red-correct');
@@ -1526,7 +1526,7 @@
         let currentGameData = []; let boardState = new Array(25).fill(0); let currentTarget = null; let currentData = null; let isQuestionOpen = false;
         let timerInterval; let gameTimerDuration = 10; let pointsToWin = 500; let activeCategoryFilter = null;
         let typewriterInterval = null;
-        let qSeq = 0; let lastIpadPickSeq = -1;
+        let qSeq = 0; let lastIpadPickSeq = -1; let handledActionSeq = -1;
         let greenJokerUsed = false; let redJokerUsed = false; let activeJokerTeam = null; let jokerEffect = { type: null, team: null };
         let goldHexIndex = -1; let currentQuestionIsGold = false; let scores = { green: 0, red: 0 }; let isMatchOver = false; let lastHoverSoundTime = 0;
         let peer = null; let connections = []; let currentLanguage = 'ar';
@@ -1734,7 +1734,7 @@
         async function initHost() {
             gameId = generateId(); document.getElementById('host-id-display').textContent = gameId; document.getElementById('game-screen-code').textContent = gameId;
             const sessionRef = db.collection('sessions').doc(gameId);
-            await sessionRef.set({ state: 'WAITING', winnerName: '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() });
+            await sessionRef.set({ state: 'WAITING', winnerName: '', teams: teamSettings, lastUpdate: firebase.firestore.FieldValue.serverTimestamp() });
             sessionRef.collection('players').onSnapshot((snapshot) => { connections = []; snapshot.forEach(doc => { connections.push({ id: doc.id, ...doc.data() }); }); updatePlayersUI(); });
             sessionRef.collection('buzzes').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
                 if (!snapshot.empty && isQuestionOpen) {
@@ -1752,6 +1752,20 @@
                     const optEl = document.getElementById('mcq-view').children[p.index];
                     if (!optEl) return;
                     lastIpadPickSeq = p.seq; optEl.click();
+                });
+            });
+            sessionRef.collection('actions').onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach(ch => {
+                    if (ch.type !== 'added') return;
+                    const a = ch.doc.data();
+                    if (a.seq !== qSeq || a.seq === handledActionSeq) return;
+                    if (document.getElementById('modal').style.display !== 'flex') return;
+                    if (a.type === 'award' && (a.team === 'green' || a.team === 'red')) {
+                        handledActionSeq = a.seq; resolveQuestion(a.team);
+                        if (document.getElementById('modal').style.display === 'flex') handledActionSeq = -1;
+                    } else if (a.type === 'cancel') {
+                        handledActionSeq = a.seq; closeModal();
+                    }
                 });
             });
             const ipadUrl = new URL('ipad.html?code=' + gameId, location.href).href;
@@ -1794,7 +1808,7 @@
         function broadcast(msg) {
             if (!gameId) return; let firebaseState = "";
             if (msg.type === 'QUESTION_OPEN') firebaseState = 'QUESTION_OPEN'; else if (msg.type === 'LOCKED') firebaseState = 'LOCKED'; else if (msg.type === 'RESET') firebaseState = 'RESET';
-            const payload = { state: firebaseState, winnerName: msg.winner || '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() };
+            const payload = { state: firebaseState, winnerName: msg.winner || '', winnerTeam: msg.winnerTeam || '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() };
             if (msg.type === 'RESET') { payload.question = null; payload.reveal = null; }
             db.collection('sessions').doc(gameId).update(payload);
         }
@@ -1973,6 +1987,7 @@
             teamSettings.green.name = greenName || 'الفريق الأخضر'; teamSettings.red.name = redName || 'الفريق الأحمر';
             teamSettings.green.color = document.getElementById('team-green-color').value; teamSettings.red.color = document.getElementById('team-red-color').value;
             applyTeamSettings(); applyBrandLogo(); applyBrandLogo2();
+            publishSession({ teams: teamSettings });
             let saved = true;
             try { localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin, teamSettings, brandLogo, brandLogo2, questionMode })); } catch (e) { saved = false; }
             document.getElementById('settings-page').style.display = 'none'; document.getElementById('main-menu').style.display = 'flex';

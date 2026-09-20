@@ -147,7 +147,43 @@
 
         #feedback { text-align: center; font-size: 1.3rem; font-weight: bold; min-height: 32px; margin-top: 14px; }
 
-        @media (max-width: 560px) { #options { grid-template-columns: 1fr; } }
+        #award-box { margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+        .award-title { text-align: center; font-size: 1.3rem; font-weight: 900; margin-bottom: 14px; }
+        #teams-row { display: flex; gap: 16px; margin-bottom: 4px; }
+        .team-btn {
+            flex: 1;
+            min-height: 84px;
+            padding: 12px;
+            font-family: 'Cairo';
+            font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+            font-weight: 900;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border: 3px solid var(--team-color, rgba(255, 255, 255, 0.3));
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.15s, box-shadow 0.15s;
+        }
+        .team-btn:active { transform: scale(0.98); }
+        .team-btn.selected { background: var(--team-color); box-shadow: 0 0 22px var(--team-color); }
+        .team-btn:disabled { opacity: 0.5; cursor: default; }
+        #award-btn { margin-top: 16px; }
+        .link-btn {
+            display: block;
+            margin: 16px auto 0;
+            padding: 10px 22px;
+            font-family: 'Cairo';
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .link-btn:disabled { opacity: 0.4; cursor: default; }
+
+        @media (max-width: 560px) { #options { grid-template-columns: 1fr; } #teams-row { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -176,6 +212,16 @@
             <div id="options"></div>
             <button class="primary-btn" id="confirm-btn" onclick="confirmPick()" disabled>تأكيد الإجابة</button>
             <div id="feedback"></div>
+
+            <div id="award-box">
+                <div class="award-title">منح النقطة لفريق</div>
+                <div id="teams-row">
+                    <button class="team-btn" id="team-green" onclick="selectTeam('green')"></button>
+                    <button class="team-btn" id="team-red" onclick="selectTeam('red')"></button>
+                </div>
+                <button class="primary-btn" id="award-btn" onclick="awardPoint()" disabled>تأكيد منح النقطة</button>
+                <button class="link-btn" id="cancel-q-btn" onclick="cancelQuestion()">إلغاء السؤال</button>
+            </div>
         </div>
     </div>
 
@@ -198,6 +244,10 @@
         var currentSeq = null;
         var selectedIndex = null;
         var sent = false;
+        var selectedTeam = null;
+        var teamTouched = false;
+        var awardSent = false;
+        var teamsInfo = { green: { name: 'الفريق الأخضر', color: '#00ff44' }, red: { name: 'الفريق الأحمر', color: '#ff0000' } };
 
         function $(id) { return document.getElementById(id); }
 
@@ -247,9 +297,17 @@
         }
 
         function render(data) {
+            if (data.teams && data.teams.green && data.teams.red) teamsInfo = data.teams;
+            ['green', 'red'].forEach(function (t) {
+                $('team-' + t).textContent = teamsInfo[t].name;
+                $('team-' + t).style.setProperty('--team-color', teamsInfo[t].color);
+            });
+
             var banner = $('winner-banner');
             if (data.state === 'LOCKED' && data.winnerName) {
-                banner.textContent = '🚨 ' + data.winnerName + ' ضغط أولاً!';
+                var wt = data.winnerTeam && teamsInfo[data.winnerTeam] ? ' (' + teamsInfo[data.winnerTeam].name + ')' : '';
+                banner.textContent = '🚨 ' + data.winnerName + wt + ' ضغط أولاً!';
+                banner.style.borderColor = data.winnerTeam && teamsInfo[data.winnerTeam] ? teamsInfo[data.winnerTeam].color : '';
                 banner.style.display = 'block';
             } else {
                 banner.style.display = 'none';
@@ -258,6 +316,7 @@
             var q = data.question;
             if (!q) {
                 currentSeq = null; selectedIndex = null; sent = false;
+                selectedTeam = null; teamTouched = false; awardSent = false;
                 $('question-view').style.display = 'none';
                 $('waiting').style.display = 'block';
                 return;
@@ -266,8 +325,13 @@
             $('waiting').style.display = 'none';
             $('question-view').style.display = 'block';
 
+            var allowed = q.allowedTeam || null;
+            $('team-green').style.display = (allowed && allowed !== 'green') ? 'none' : 'block';
+            $('team-red').style.display = (allowed && allowed !== 'red') ? 'none' : 'block';
+
             if (q.seq !== currentSeq) {
                 currentSeq = q.seq; selectedIndex = null; sent = false;
+                selectedTeam = null; teamTouched = false; awardSent = false;
                 $('letter-chip').textContent = q.letter || '';
                 $('q-text').textContent = q.text || '';
                 $('q-text').dir = 'auto';
@@ -285,7 +349,48 @@
             }
 
             applyReveal(data.reveal);
+            if (!teamTouched && !awardSent) {
+                if (allowed) selectedTeam = allowed;
+                else if (data.winnerTeam) selectedTeam = data.winnerTeam;
+            }
             updateControls();
+        }
+
+        function selectTeam(t) {
+            if (awardSent) return;
+            teamTouched = true;
+            selectedTeam = t;
+            updateControls();
+        }
+
+        function sendAction(payload, onFail) {
+            payload.seq = currentSeq;
+            payload.ts = firebase.firestore.FieldValue.serverTimestamp();
+            db.collection('sessions').doc(gameId).collection('actions').add(payload).catch(onFail);
+        }
+
+        function awardPoint() {
+            if (awardSent || !selectedTeam || !gameId || currentSeq === null) return;
+            awardSent = true;
+            $('feedback').textContent = 'تم إرسال الفريق: ' + teamsInfo[selectedTeam].name;
+            updateControls();
+            sendAction({ type: 'award', team: selectedTeam }, function () {
+                awardSent = false;
+                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
+                updateControls();
+            });
+        }
+
+        function cancelQuestion() {
+            if (awardSent || !gameId || currentSeq === null) return;
+            if (!confirm('إلغاء السؤال بدون منح نقاط؟')) return;
+            awardSent = true;
+            updateControls();
+            sendAction({ type: 'cancel' }, function () {
+                awardSent = false;
+                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
+                updateControls();
+            });
         }
 
         function applyReveal(reveal) {
@@ -312,6 +417,12 @@
                 btns[i].disabled = sent;
             }
             $('confirm-btn').disabled = sent || selectedIndex === null;
+            ['green', 'red'].forEach(function (t) {
+                $('team-' + t).classList.toggle('selected', selectedTeam === t);
+                $('team-' + t).disabled = awardSent;
+            });
+            $('award-btn').disabled = awardSent || !selectedTeam;
+            $('cancel-q-btn').disabled = awardSent;
         }
 
         function confirmPick() {
