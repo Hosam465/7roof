@@ -249,5 +249,35 @@ const defaultGameDataENG = [
     { letter: 'T', question: 'Northwestern Saudi region bordering Jordan, home to the futuristic Neom project?', answer: 'Tabuk', type: 'mcq', category: 'saudi', options: ['Tehran', 'Tripoli', 'Tunis'] },
 
     // --- Letter Z ---
-    { letter: 'Z', question: 'The Arabic term for a religious visit, such as visiting the Prophet’s Mosque in Medina?', answer: 'Ziyarah', type: 'mcq', category: 'saudi', options: ['Zakat', 'Zawiya', 'Zamalek'] }
+    { letter: 'Z', question: 'The Arabic term for a religious visit, such as visiting the Prophet’s Mosque in Medina?', answer: 'Ziyarah', type: 'mcq', category: 'saudi', options: ['Zakat', 'Zawiya', 'Zamalek'] },
+
+    // ============================================================
+    // Football questions (category: sport)
+    // ============================================================
+
+    { letter: 'A', question: 'Which country won the 2022 FIFA World Cup in Qatar?', answer: 'Argentina', type: 'mcq', category: 'sport', options: ['Australia', 'Algeria', 'Austria'] },
+    { letter: 'B', question: 'Which Spanish club is nicknamed "Blaugrana" and plays at Camp Nou?', answer: 'Barcelona', type: 'mcq', category: 'sport', options: ['Bayern Munich', 'Benfica', 'Brighton'] },
+    { letter: 'C', question: 'Which superstar is nicknamed "CR7"?', answer: 'Cristiano Ronaldo', type: 'mcq', category: 'sport', options: ['Carlos Tevez', 'Cesc Fabregas', 'Casemiro'] },
+    { letter: 'D', question: 'Which Argentine legend scored the famous "Hand of God" goal in 1986?', answer: 'Diego Maradona', type: 'mcq', category: 'sport', options: ['Dani Alves', 'David Beckham', 'Didier Drogba'] },
+    { letter: 'E', question: 'Which country hosted and won the 1966 FIFA World Cup?', answer: 'England', type: 'mcq', category: 'sport', options: ['Egypt', 'Ecuador', 'Estonia'] },
+    { letter: 'F', question: 'Which country won the 2018 FIFA World Cup in Russia?', answer: 'France', type: 'mcq', category: 'sport', options: ['Finland', 'Fiji', 'Faroe Islands'] },
+    { letter: 'G', question: 'Which country won the 2014 World Cup thanks to a Mario Götze goal in the final?', answer: 'Germany', type: 'mcq', category: 'sport', options: ['Ghana', 'Greece', 'Georgia'] },
+    { letter: 'H', question: 'Which Norwegian striker set a Premier League scoring record in his first season at Manchester City?', answer: 'Haaland', type: 'mcq', category: 'sport', options: ['Hazard', 'Henderson', 'Hummels'] },
+    { letter: 'I', question: 'Which Spanish midfielder scored the winning goal in the 2010 World Cup final?', answer: 'Iniesta', type: 'mcq', category: 'sport', options: ['Isco', 'Illarramendi', 'Iturbe'] },
+    { letter: 'J', question: 'Which Italian club, based in Turin, is nicknamed "The Old Lady"?', answer: 'Juventus', type: 'mcq', category: 'sport', options: ['Jaguares', 'Jeonbuk', 'Juve Stabia'] },
+    { letter: 'K', question: 'Which English striker won the Golden Boot at the 2018 World Cup?', answer: 'Kane', type: 'mcq', category: 'sport', options: ['Kroos', 'Kante', 'Kovacic'] },
+    { letter: 'L', question: 'Who captained Argentina to the 2022 World Cup title?', answer: 'Lionel Messi', type: 'mcq', category: 'sport', options: ['Luis Suarez', 'Lautaro Martinez', 'Luka Modric'] },
+    { letter: 'M', question: 'Which French forward scored a hat-trick in the 2022 World Cup final?', answer: 'Mbappe', type: 'mcq', category: 'sport', options: ['Messi', 'Modric', 'Mane'] },
+    { letter: 'N', question: 'Which Brazilian forward passed Pele to become his country’s all-time top scorer?', answer: 'Neymar', type: 'mcq', category: 'sport', options: ['Nedved', 'Neuer', 'Nani'] },
+    { letter: 'O', question: 'Which Manchester stadium is nicknamed "The Theatre of Dreams"?', answer: 'Old Trafford', type: 'mcq', category: 'sport', options: ['Olympiastadion', 'Olimpico', 'Oriel Park'] },
+    { letter: 'P', question: 'Which Brazilian legend won three World Cups as a player?', answer: 'Pele', type: 'mcq', category: 'sport', options: ['Puskas', 'Platini', 'Pirlo'] },
+    { letter: 'R', question: 'Which Spanish club has won the most European Cup / Champions League titles?', answer: 'Real Madrid', type: 'mcq', category: 'sport', options: ['Rayo Vallecano', 'Real Betis', 'Real Sociedad'] },
+    { letter: 'S', question: 'Which country won the 2010 FIFA World Cup in South Africa?', answer: 'Spain', type: 'mcq', category: 'sport', options: ['Sweden', 'Senegal', 'Switzerland'] },
+    { letter: 'T', question: 'Which North London club is nicknamed "Spurs"?', answer: 'Tottenham', type: 'mcq', category: 'sport', options: ['Torino', 'Toulouse', 'Twente'] },
+    { letter: 'U', question: 'Which South American country won the very first World Cup in 1930?', answer: 'Uruguay', type: 'mcq', category: 'sport', options: ['USA', 'Ukraine', 'Uganda'] },
+    { letter: 'V', question: 'Which Brazilian winger at Real Madrid is nicknamed "Vini Jr."?', answer: 'Vinicius', type: 'mcq', category: 'sport', options: ['Valverde', 'Vlahovic', 'Van Dijk'] },
+    { letter: 'W', question: 'Which English club plays at Molineux and is nicknamed "Wolves"?', answer: 'Wolverhampton', type: 'mcq', category: 'sport', options: ['Watford', 'West Brom', 'Wigan'] },
+    { letter: 'X', question: 'Which Barcelona midfield legend, master of tiki-taka, later managed the club?', answer: 'Xavi', type: 'mcq', category: 'sport', options: ['Xabi Alonso', 'Xherdan Shaqiri', 'Xande Silva'] },
+    { letter: 'Y', question: 'Which teenage Spanish winger starred as Spain won Euro 2024?', answer: 'Yamal', type: 'mcq', category: 'sport', options: ['Yaya', 'Yashin', 'Yorke'] },
+    { letter: 'Z', question: 'Which French legend scored twice in the 1998 World Cup final?', answer: 'Zidane', type: 'mcq', category: 'sport', options: ['Zola', 'Zanetti', 'Zamorano'] }
 ];

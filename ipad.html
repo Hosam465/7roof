@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>الإجابات - حروف وألوف</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00a651;
+            --accent-dark: #005f2e;
+            --ok: #28a745;
+            --bad: #dc3545;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            color: white;
+            background-color: #050806;
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(0, 70, 25, 0.15) 0%, rgba(5, 8, 6, 0.7) 65%),
+                url('host-bg.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(10, 10, 10, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        #login-screen { max-width: 420px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
+        #login-screen img { width: 170px; align-self: center; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25)); }
+        #login-screen h1 { margin: 0; font-size: 2rem; text-shadow: 0 0 18px rgba(0, 166, 81, 0.6); }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Cairo';
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: 8px;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 16px;
+            outline: none;
+        }
+        input[type="text"]:focus { border-color: var(--accent); }
+
+        .primary-btn {
+            width: 100%;
+            padding: 18px;
+            font-family: 'Cairo';
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: white;
+            background: linear-gradient(45deg, var(--accent), var(--accent-dark));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+        .primary-btn:disabled { opacity: 0.4; cursor: default; }
+
+        #error-msg { color: #ff8a8a; min-height: 24px; font-weight: bold; }
+
+        #main-screen { display: none; }
+
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; font-weight: bold; opacity: 0.9; }
+        .topbar .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); margin-left: 8px; }
+        .topbar button { font-family: 'Cairo'; font-weight: bold; color: white; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 8px 16px; cursor: pointer; }
+
+        #winner-banner {
+            display: none;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            padding: 12px;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            background: rgba(0, 166, 81, 0.2);
+            border: 2px solid var(--accent);
+        }
+
+        #waiting { text-align: center; font-size: 1.8rem; font-weight: 700; padding: 60px 10px; opacity: 0.85; }
+
+        #question-view { display: none; }
+
+        .letter-chip {
+            display: inline-block;
+            padding: 6px 22px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            border-radius: 30px;
+            background: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        #q-text { font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 900; line-height: 1.35; margin: 4px 0 22px 0; }
+
+        #options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .opt {
+            min-height: 96px;
+            padding: 16px;
+            font-family: 'Cairo';
+            font-size: clamp(1.4rem, 3vw, 2.1rem);
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.15s, border-color 0.15s;
+        }
+        .opt:active { transform: scale(0.98); }
+        .opt.selected { background: rgba(0, 166, 81, 0.28); border-color: var(--accent); box-shadow: 0 0 20px rgba(0, 166, 81, 0.45); }
+        .opt.correct { background: rgba(40, 167, 69, 0.85); border-color: var(--ok); }
+        .opt.wrong { background: rgba(220, 53, 69, 0.85); border-color: var(--bad); }
+        .opt:disabled { cursor: default; }
+
+        #confirm-btn { margin-top: 20px; }
+
+        #feedback { text-align: center; font-size: 1.3rem; font-weight: bold; min-height: 32px; margin-top: 14px; }
+
+        @media (max-width: 560px) { #options { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="card">
+        <img src="sab.png" alt="SAB">
+        <h1>صفحة الإجابات</h1>
+        <input type="text" id="code-input" inputmode="numeric" maxlength="4" placeholder="كود اللعبة" autocomplete="off">
+        <button class="primary-btn" id="connect-btn" onclick="connectFromInput()">اتصال</button>
+        <div id="error-msg"></div>
+    </div>
+
+    <div id="main-screen" class="card">
+        <div class="topbar">
+            <div><span class="dot"></span>كود اللعبة: <span id="code-label"></span></div>
+            <button onclick="disconnect()">تغيير الكود</button>
+        </div>
+
+        <div id="winner-banner"></div>
+
+        <div id="waiting">بانتظار السؤال من المضيف...</div>
+
+        <div id="question-view">
+            <div class="letter-chip" id="letter-chip"></div>
+            <div id="q-text"></div>
+            <div id="options"></div>
+            <button class="primary-btn" id="confirm-btn" onclick="confirmPick()" disabled>تأكيد الإجابة</button>
+            <div id="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyBWShBcWNHm64xliJ-OlEm_P-0RFRY-x2s",
+            authDomain: "hroof-837b6.firebaseapp.com",
+            projectId: "hroof-837b6",
+            storageBucket: "hroof-837b6.firebasestorage.app",
+            messagingSenderId: "1061358003828",
+            appId: "1:1061358003828:web:e85a22b79440a660905321",
+            measurementId: "G-4B1CHV1F4R"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        var gameId = null;
+        var unsubscribe = null;
+        var currentSeq = null;
+        var selectedIndex = null;
+        var sent = false;
+
+        function $(id) { return document.getElementById(id); }
+
+        $('code-input').addEventListener('input', function () { this.value = this.value.replace(/[^0-9]/g, ''); });
+        $('code-input').addEventListener('keydown', function (e) { if (e.key === 'Enter') connectFromInput(); });
+
+        function connectFromInput() {
+            var code = $('code-input').value.trim();
+            if (code.length !== 4) { $('error-msg').textContent = 'أدخل كود اللعبة المكون من 4 أرقام'; return; }
+            connect(code);
+        }
+
+        function connect(code) {
+            $('error-msg').textContent = '';
+            $('connect-btn').disabled = true;
+            var first = true;
+            if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+            unsubscribe = db.collection('sessions').doc(code).onSnapshot(function (doc) {
+                if (first) {
+                    first = false;
+                    $('connect-btn').disabled = false;
+                    if (!doc.exists) {
+                        $('error-msg').textContent = 'كود اللعبة غير موجود';
+                        if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+                        return;
+                    }
+                    gameId = code;
+                    try { localStorage.setItem('ipadCode', code); } catch (e) {}
+                    $('code-label').textContent = code;
+                    $('login-screen').style.display = 'none';
+                    $('main-screen').style.display = 'block';
+                }
+                if (doc.exists) render(doc.data());
+            }, function () {
+                $('connect-btn').disabled = false;
+                $('error-msg').textContent = 'تعذر الاتصال، تأكد من الإنترنت';
+            });
+        }
+
+        function disconnect() {
+            if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+            gameId = null; currentSeq = null; selectedIndex = null; sent = false;
+            try { localStorage.removeItem('ipadCode'); } catch (e) {}
+            $('main-screen').style.display = 'none';
+            $('login-screen').style.display = 'flex';
+            $('code-input').value = '';
+        }
+
+        function render(data) {
+            var banner = $('winner-banner');
+            if (data.state === 'LOCKED' && data.winnerName) {
+                banner.textContent = '🚨 ' + data.winnerName + ' ضغط أولاً!';
+                banner.style.display = 'block';
+            } else {
+                banner.style.display = 'none';
+            }
+
+            var q = data.question;
+            if (!q) {
+                currentSeq = null; selectedIndex = null; sent = false;
+                $('question-view').style.display = 'none';
+                $('waiting').style.display = 'block';
+                return;
+            }
+
+            $('waiting').style.display = 'none';
+            $('question-view').style.display = 'block';
+
+            if (q.seq !== currentSeq) {
+                currentSeq = q.seq; selectedIndex = null; sent = false;
+                $('letter-chip').textContent = q.letter || '';
+                $('q-text').textContent = q.text || '';
+                $('q-text').dir = 'auto';
+                var box = $('options');
+                box.innerHTML = '';
+                (q.options || []).forEach(function (text, i) {
+                    var b = document.createElement('button');
+                    b.className = 'opt';
+                    b.dir = 'auto';
+                    b.textContent = text;
+                    b.onclick = function () { selectOption(i); };
+                    box.appendChild(b);
+                });
+                $('feedback').textContent = '';
+            }
+
+            applyReveal(data.reveal);
+            updateControls();
+        }
+
+        function applyReveal(reveal) {
+            var btns = $('options').children;
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('correct', 'wrong');
+            if (reveal && reveal.seq === currentSeq) {
+                sent = true;
+                if (btns[reveal.correctIndex]) btns[reveal.correctIndex].classList.add('correct');
+                if (reveal.picked !== reveal.correctIndex && btns[reveal.picked]) btns[reveal.picked].classList.add('wrong');
+                $('feedback').textContent = reveal.picked === reveal.correctIndex ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة';
+            }
+        }
+
+        function selectOption(i) {
+            if (sent) return;
+            selectedIndex = i;
+            updateControls();
+        }
+
+        function updateControls() {
+            var btns = $('options').children;
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.toggle('selected', !sent && i === selectedIndex);
+                btns[i].disabled = sent;
+            }
+            $('confirm-btn').disabled = sent || selectedIndex === null;
+        }
+
+        function confirmPick() {
+            if (sent || selectedIndex === null || !gameId || currentSeq === null) return;
+            sent = true;
+            var idx = selectedIndex;
+            $('feedback').textContent = 'تم إرسال الإجابة... بانتظار المضيف';
+            updateControls();
+            db.collection('sessions').doc(gameId).collection('picks').add({
+                seq: currentSeq,
+                index: idx,
+                ts: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch(function () {
+                sent = false;
+                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
+                updateControls();
+            });
+        }
+
+        (function autoConnect() {
+            var code = new URLSearchParams(location.search).get('code');
+            if (!code) { try { code = localStorage.getItem('ipadCode'); } catch (e) {} }
+            if (code && /^\d{4}$/.test(code)) { $('code-input').value = code; connect(code); }
+        })();
+    </script>
+</body>
+</html>

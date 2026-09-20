@@ -13,7 +13,7 @@
             --bg-dark: #0a0a0a;
             --neon-green: #00ff44;
             --neon-red: #ff0000;
-            --gold: #e5002b;
+            --gold: #00a651;
         }
 
         body {
@@ -130,7 +130,7 @@
         }
 
         .btn-join {
-            background: linear-gradient(45deg, var(--gold), #8a0018);
+            background: linear-gradient(45deg, var(--gold), #005f2e);
             color: #fff;
             border: none;
             padding: 15px;
@@ -369,10 +369,10 @@
                     btn.classList.remove('active');
                     if (data.winnerName === myName) {
                         btn.textContent = 'أنت!';
-                        status.innerHTML = '<span style="color:#e5002b">أنت الأسرع! دورك بالإجابة</span>';
+                        status.innerHTML = '<span style="color:#00a651">أنت الأسرع! دورك بالإجابة</span>';
                     } else {
                         btn.textContent = 'مغلق';
-                        status.innerHTML = 'المجيب الآن: <span style="color:#ff6b6b">' + (data.winnerName || 'لاعب آخر') + '</span>';
+                        status.innerHTML = 'المجيب الآن: <span style="color:#5be584">' + (data.winnerName || 'لاعب آخر') + '</span>';
                     }
                     break;
                 default:

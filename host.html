@@ -18,7 +18,7 @@
             --bg-dark: #0a0a0a;
             --bg-light: #161616;
             --hex-bg: #ffffff;
-            --hex-hover: #e5002b;
+            --hex-hover: #00a651;
             --game-green: #28a745;
             --game-red: #dc3545;
             --neon-green: #00ff44;
@@ -43,7 +43,7 @@
             overflow-x: hidden;
             background-color: var(--bg-dark);
             background-image:
-                radial-gradient(circle at 50% 50%, rgba(229, 0, 43, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 166, 81, 0.07) 0%, transparent 50%),
                 linear-gradient(var(--bg-dark), var(--bg-light));
             color: white;
             position: relative;
@@ -116,7 +116,7 @@
         }
 
         .lang-switch .lang-btn.active {
-            background: #e5002b;
+            background: #00a651;
             color: white;
         }
 
@@ -136,8 +136,8 @@
             background: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border-radius: 15px;
-            border: 2px solid rgba(229, 0, 43, 0.55);
-            box-shadow: 0 0 20px rgba(229, 0, 43, 0.25);
+            border: 2px solid rgba(0, 166, 81, 0.55);
+            box-shadow: 0 0 20px rgba(0, 166, 81, 0.25);
             text-align: center;
             z-index: 150;
             margin-top: 30px;
@@ -149,7 +149,7 @@
 
         .qr-container:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 28px rgba(229, 0, 43, 0.45);
+            box-shadow: 0 0 28px rgba(0, 166, 81, 0.45);
         }
 
         .qr-container img {
@@ -401,7 +401,7 @@
     top: auto;
     margin-top: 80px;
     margin-bottom: 20px;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.85), 0 0 45px rgba(229, 0, 43, 0.55);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.85), 0 0 45px rgba(0, 166, 81, 0.55);
     /* Increased the min, preferred, and max sizes here: */
     font-size: clamp(3rem, 8vw, 5rem); 
     text-align: center;
@@ -475,7 +475,7 @@
             background-color: var(--hex-hover);
             transform: scale(1.15) translateY(-5px);
             z-index: 100;
-            box-shadow: 0 0 20px #e5002b;
+            box-shadow: 0 0 20px #00a651;
         }
 
         .hex.taken-green {
@@ -538,7 +538,7 @@
 
         .joker-btn:hover {
             transform: scale(1.03);
-            border-color: #e5002b;
+            border-color: #00a651;
         }
 
         #bottom-code-bar {
@@ -684,7 +684,7 @@
             font-weight: bold;
             font-size: 1.2rem;
             display: none;
-            border: 2px solid #e5002b;
+            border: 2px solid #00a651;
             animation: flash 0.5s;
         }
 
@@ -738,8 +738,8 @@
 
         .mcq-option:hover {
             transform: scale(1.01);
-            background: rgba(229, 0, 43, 0.18);
-            border-color: #e5002b;
+            background: rgba(0, 166, 81, 0.18);
+            border-color: #00a651;
         }
 
         .mcq-option.correct {
@@ -851,26 +851,26 @@
         .menu-title {
             font-size: clamp(3rem, 10vw, 5rem);
             margin: 0 0 20px 0;
-            text-shadow: 0 0 20px gold, 0 0 45px rgba(229, 0, 43, 0.45);
+            text-shadow: 0 0 20px gold, 0 0 45px rgba(0, 166, 81, 0.45);
         }
 
         #host-id-display {
             font-family: monospace;
             font-size: clamp(2rem, 5vw, 3rem);
-            color: #e5002b;
+            color: #00a651;
             background: rgba(0, 0, 0, 0.6);
             padding: 15px;
             border-radius: 15px;
 
             letter-spacing: 5px;
-            border: 2px dashed #e5002b;
+            border: 2px dashed #00a651;
             user-select: all;
             cursor: pointer;
             word-break: break-all;
         }
 
         .btn {
-            background: linear-gradient(45deg, #e5002b, #8a0018);
+            background: linear-gradient(45deg, #00a651, #005f2e);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -958,6 +958,40 @@
 
         .logo-preview-box img { max-width: 100%; max-height: 100%; }
 
+        .top-left-logo {
+            position: fixed;
+            top: 12px;
+            left: 14px;
+            max-width: 220px;
+            max-height: 90px;
+            object-fit: contain;
+            z-index: 2500;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+            pointer-events: none;
+        }
+
+        .mode-switch { display: flex; background: rgba(0, 0, 0, 0.5); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.4); overflow: hidden; }
+        .mode-switch button { flex: 1; padding: 12px 8px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; font-size: 1rem; background: transparent; color: white; transition: background 0.15s; }
+        .mode-switch button.active { background: #00a651; }
+
+        .ipad-link {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.75);
+            cursor: pointer;
+            direction: ltr;
+            word-break: break-all;
+        }
+
+        .ipad-link:hover { color: #00a651; }
+
+        body.has-logo2 #red-sidebar { padding-top: 120px; }
+
+        @media (max-width: 700px) {
+            .top-left-logo { max-width: 110px; max-height: 45px; top: 6px; left: 8px; }
+            body.has-logo2 #red-sidebar { padding-top: 10px; }
+        }
+
         .logo-upload-btn {
             cursor: pointer;
             background: rgba(255, 255, 255, 0.15);
@@ -1005,7 +1039,7 @@
         .tile-reset { background: linear-gradient(45deg, rgba(220, 53, 69, 0.6), rgba(167, 29, 42, 0.6)); }
 
         .save-btn {
-            background: #e5002b; width: 100%; padding: 15px; font-size: 1.3rem;
+            background: #00a651; width: 100%; padding: 15px; font-size: 1.3rem;
             border-radius: 50px; border: none; color: white; font-weight: bold;
             cursor: pointer; margin-top: 10px;
         }
@@ -1018,18 +1052,18 @@
         .questions-list { flex: 1; overflow-y: auto; margin: 0; padding-right: 10px; }
         .questions-list::-webkit-scrollbar { width: 10px; }
         .questions-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
-        .questions-list::-webkit-scrollbar-thumb { background: #e5002b; border-radius: 10px; }
+        .questions-list::-webkit-scrollbar-thumb { background: #00a651; border-radius: 10px; }
 
         .q-item {
             background: rgba(255, 255, 255, 0.05);
             padding: 15px; margin-bottom: 10px; border-radius: 15px;
-            border-right: 6px solid #e5002b; display: flex; justify-content: space-between; align-items: center;
+            border-right: 6px solid #00a651; display: flex; justify-content: space-between; align-items: center;
             transition: transform 0.15s, background 0.15s; border-left: 1px solid rgba(255,255,255,0.1);
         }
         .q-item:hover { transform: translateX(-3px); background: rgba(255, 255, 255, 0.15); }
 
         .q-letter {
-            background: #e5002b; color: white; width: 40px; height: 40px; border-radius: 50%;
+            background: #00a651; color: white; width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; margin-left: 15px; flex-shrink: 0;
         }
 
@@ -1041,13 +1075,13 @@
         .q-answer { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; margin-left: 15px; white-space: nowrap; font-weight: bold; }
 
         .q-edit-btn {
-            background: transparent; border: 2px solid #e5002b; color: #e5002b; padding: 5px 15px;
+            background: transparent; border: 2px solid #00a651; color: #00a651; padding: 5px 15px;
             border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; font-family: 'Cairo'; white-space: nowrap;
         }
-        .q-edit-btn:hover { background: #e5002b; color: white; }
+        .q-edit-btn:hover { background: #00a651; color: white; }
 
         .add-q-btn {
-            background: linear-gradient(45deg, #e5002b, #8a0018); color: white; border: none; padding: 10px 20px;
+            background: linear-gradient(45deg, #00a651, #005f2e); color: white; border: none; padding: 10px 20px;
             border-radius: 20px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; display: flex; align-items: center; gap: 5px;
         }
 
@@ -1061,7 +1095,7 @@
 
         /* CUSTOM CONFIRM MODAL */
         .confirm-btn-yes { background: #ffffff; color: black; border: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; margin: 10px; }
-        .confirm-btn-no { background: #e5002b; color: white; border: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; margin: 10px; }
+        .confirm-btn-no { background: #3a3a3a; color: white; border: 1px solid rgba(255,255,255,0.4); padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; margin: 10px; }
         
         /* Responsive Overrides */
         @media (max-width: 1200px) { :root { --sidebar-width: 180px; } .game-board { transform: scale(0.75); } }
@@ -1108,6 +1142,8 @@
         <div id="gold-winner-text" style="color: white; font-size: 1.5rem; margin-top: 10px;"></div>
     </div>
 
+    <img id="logo2" class="top-left-logo" alt="" style="display:none;">
+
     <div id="toast-notification"></div>
 
     <div id="game-over-overlay">
@@ -1150,6 +1186,7 @@
             <h1 class="menu-title">حروف وألوف</h1>
             <p style="font-size: 1.1rem; color: #ccc;"><br></p>
             <div id="host-id-display" onclick="copyId()">...</div>
+            <div id="ipad-link" class="ipad-link" onclick="copyIpadLink()"></div>
 
             <div class="qr-container" onclick="toggleQRCode()">
                 <img src="7roof.png" alt="QR Code للمشاركة" id="qr-image">
@@ -1157,7 +1194,7 @@
             </div>
             <div id="lobby-bar"></div>
 
-            <button class="btn" onclick="openSettings()" style="background: linear-gradient(45deg, #2b2b2b, #0a0a0a); color: white; border: 1px solid rgba(229,0,43,0.6);">⚙️ الإعدادات</button>
+            <button class="btn" onclick="openSettings()" style="background: linear-gradient(45deg, #2b2b2b, #0a0a0a); color: white; border: 1px solid rgba(0, 166, 81, 0.6);">⚙️ الإعدادات</button>
             <button class="btn" onclick="startGame()">ابدأ اللعب</button>
         </div>
     </div>
@@ -1165,7 +1202,7 @@
     <div class="backdrop" onclick="toggleQRCode()"></div>
 
     <div id="settings-page">
-        <button class="settings-btn-tile" style="background: rgba(120, 0, 20, 0.85); margin-bottom: 20px;" onclick="resetUsedList()">
+        <button class="settings-btn-tile" style="background: rgba(0, 95, 46, 0.85); margin-bottom: 20px;" onclick="resetUsedList()">
             🔄 إعادة تدوير الأسئلة المستعملة
         </button>
         <div class="settings-box">
@@ -1182,10 +1219,20 @@
                     <input type="number" id="win-points-input" class="settings-input" value="500">
                 </div>
 
+                <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 10px;">
+                    <span class="settings-label">نوع الأسئلة</span>
+                    <div class="mode-switch">
+                        <button type="button" id="mode-football" onclick="setQuestionMode('football')">⚽ كرة القدم</button>
+                        <button type="button" id="mode-national_day" class="active" onclick="setQuestionMode('national_day')">🎉 اليوم الوطني</button>
+                        <button type="button" id="mode-general" onclick="setQuestionMode('general')">🌍 عامة</button>
+                    </div>
+                    <span style="font-size: 0.85rem; opacity: 0.7;">اليوم الوطني: أسئلة اليوم الوطني ثم السعودية ثم باقي الأسئلة. وإذا نفدت أسئلة النوع المختار لحرف ما تُستخدم بقية الأسئلة.</span>
+                </div>
+
                 <div class="settings-row">
                     <span class="settings-label">لغة الأسئلة</span>
                     <div style="display: flex; background: rgba(0,0,0,0.5); border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); overflow: hidden;">
-                        <button id="set-ar" style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: #e5002b; color: white;" onclick="setLanguage('ar')">العربية</button>
+                        <button id="set-ar" style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: #00a651; color: white;" onclick="setLanguage('ar')">العربية</button>
                         <button id="set-en" style="padding: 10px 20px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; background: transparent; color: white;" onclick="setLanguage('en')">English</button>
                     </div>
                 </div>
@@ -1216,6 +1263,15 @@
                         <label for="logo-upload-input" class="logo-upload-btn">📤 رفع شعار جديد</label>
                         <input type="file" id="logo-upload-input" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)">
                         <button type="button" class="logo-reset-btn" onclick="resetLogo()">↺ افتراضي</button>
+                    </div>
+                </div>
+                <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 12px; margin: 18px 0 0 0;">
+                    <span class="settings-label">شعار إضافي (أعلى يسار الصفحة)</span>
+                    <div class="logo-upload-row">
+                        <div class="logo-preview-box"><img id="logo2-preview-img" alt="" style="display:none;"><span id="logo2-empty" style="opacity:0.5; font-size:0.8rem;">لا يوجد</span></div>
+                        <label for="logo2-upload-input" class="logo-upload-btn">📤 إضافة شعار</label>
+                        <input type="file" id="logo2-upload-input" accept="image/*" style="display:none;" onchange="handleLogo2Upload(event)">
+                        <button type="button" class="logo-reset-btn" onclick="removeLogo2()">✕ إزالة</button>
                     </div>
                 </div>
             </div>
@@ -1257,7 +1313,7 @@
         <div class="modal" style="width: 600px;">
             <h2 style="font-size: 2.5rem; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">اختر نوع المساعدة</h2>
             <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
-                <button class="joker-option-btn" style="background: rgba(220, 53, 69, 0.8);" onclick="selectJokerEffect('remove')">🚫 حذف إجابة خاطئة</button>
+                <button class="joker-option-btn" style="background: rgba(0, 120, 60, 0.85);" onclick="selectJokerEffect('remove')">🚫 حذف إجابة خاطئة</button>
                 <button class="joker-option-btn" style="background: rgba(255, 255, 255, 0.92); color: black;" onclick="selectJokerEffect('time')">⏳ وقت مفتوح للإجابة</button>
             </div>
             <button style="margin-top: 30px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 20px; cursor: pointer; backdrop-filter: blur(5px);" onclick="closeJokerMenu()">إلغاء</button>
@@ -1287,7 +1343,7 @@
 
     <div id="editor-container">
         <div style="display: flex; gap: 10px; justify-content: center; width: 100%; margin: 10px 0;">
-            <button class="btn" style="background: rgba(229, 0, 43, 0.85); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; margin: 0;" onclick="uploadToFirebase('ar')">Upload Arabic</button>
+            <button class="btn" style="background: rgba(0, 166, 81, 0.85); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; margin: 0;" onclick="uploadToFirebase('ar')">Upload Arabic</button>
             <button class="btn" style="background: rgba(20, 20, 20, 0.9); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; margin: 0;" onclick="uploadToFirebase('en')">Upload English</button>
         </div>
         <div class="editor-box">
@@ -1298,7 +1354,7 @@
             </div>
 
             <div id="editor-tabs" style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
-                <button id="btn-tab-ar" class="btn" style="width: auto; padding: 10px 25px; background: #e5002b; color: white;" onclick="switchEditorTab('ar')">الأسئلة العربية</button>
+                <button id="btn-tab-ar" class="btn" style="width: auto; padding: 10px 25px; background: #00a651; color: white;" onclick="switchEditorTab('ar')">الأسئلة العربية</button>
                 <button id="btn-tab-en" class="btn" style="width: auto; padding: 10px 25px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4);" onclick="switchEditorTab('en')">English Questions</button>
             </div>
 
@@ -1344,7 +1400,7 @@
                 </div>
 
                 <div class="edit-actions">
-                    <button class="btn" style="background:#e5002b; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px;" onclick="saveQuestion()">حفظ</button>
+                    <button class="btn" style="background:#00a651; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px;" onclick="saveQuestion()">حفظ</button>
                     <button class="btn" style="background:rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); padding: 10px 20px;" onclick="cancelEdit()">إلغاء</button>
                 </div>
             </div>
@@ -1422,20 +1478,23 @@
                     const wrongIndex = opts.findIndex(o => o !== q.answer); 
                     if (wrongIndex > -1) opts.splice(wrongIndex, 1); 
                 }
-                opts.forEach(o => {
-                    const d = document.createElement('div'); 
-                    d.className = 'mcq-option'; 
+                const seq = ++qSeq; const correctIdx = opts.indexOf(q.answer);
+                opts.forEach((o, idx) => {
+                    const d = document.createElement('div');
+                    d.className = 'mcq-option';
                     d.innerHTML = `<span>${o}</span>`;
                     d.onclick = function() {
                         questionEl.style.display = 'block';
-                        if (o === q.answer) { 
-                            this.classList.add('correct'); playSound('correct'); 
-                        } else { 
-                            this.classList.add('wrong'); playSound('wrong'); 
+                        if (o === q.answer) {
+                            this.classList.add('correct'); playSound('correct');
+                        } else {
+                            this.classList.add('wrong'); playSound('wrong');
                         }
+                        publishSession({ reveal: { seq: seq, picked: idx, correctIndex: correctIdx } });
                     };
                     mcqView.appendChild(d);
                 });
+                publishSession({ question: { seq: seq, letter: q.letter, text: q.question, options: opts }, reveal: null });
             }
 
             const btnGreen = document.getElementById('btn-green-correct'); const btnRed = document.getElementById('btn-red-correct');
@@ -1467,6 +1526,7 @@
         let currentGameData = []; let boardState = new Array(25).fill(0); let currentTarget = null; let currentData = null; let isQuestionOpen = false;
         let timerInterval; let gameTimerDuration = 10; let pointsToWin = 500; let activeCategoryFilter = null;
         let typewriterInterval = null;
+        let qSeq = 0; let lastIpadPickSeq = -1;
         let greenJokerUsed = false; let redJokerUsed = false; let activeJokerTeam = null; let jokerEffect = { type: null, team: null };
         let goldHexIndex = -1; let currentQuestionIsGold = false; let scores = { green: 0, red: 0 }; let isMatchOver = false; let lastHoverSoundTime = 0;
         let peer = null; let connections = []; let currentLanguage = 'ar';
@@ -1476,17 +1536,31 @@
             red: { name: 'الفريق الأحمر', color: '#ff0000' }
         };
         let brandLogo = null;
+        let brandLogo2 = null;
+        let questionMode = 'national_day';
+
+        function setQuestionMode(mode) {
+            questionMode = mode;
+            ['football', 'national_day', 'general'].forEach(m => {
+                const b = document.getElementById('mode-' + m); if (b) b.classList.toggle('active', m === mode);
+            });
+        }
 
         function loadSettings() {
-            const saved = JSON.parse(localStorage.getItem('gameSettings') || 'null');
+            let saved = null;
+            try { saved = JSON.parse(localStorage.getItem('gameSettings') || 'null'); } catch (e) { saved = null; }
             if (saved) {
                 if (saved.timer) gameTimerDuration = saved.timer;
                 if (saved.winPoints) pointsToWin = saved.winPoints;
                 if (saved.teamSettings) teamSettings = saved.teamSettings;
                 if (saved.brandLogo) brandLogo = saved.brandLogo;
+                if (saved.brandLogo2) brandLogo2 = saved.brandLogo2;
+                if (saved.questionMode) questionMode = saved.questionMode;
             }
+            setQuestionMode(questionMode);
             applyTeamSettings();
             applyBrandLogo();
+            applyBrandLogo2();
         }
 
         function applyTeamSettings() {
@@ -1509,21 +1583,59 @@
             const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = src;
         }
 
-        function handleLogoUpload(event) {
-            const file = event.target.files[0];
+        function applyBrandLogo2() {
+            const img = document.getElementById('logo2');
+            if (img) { if (brandLogo2) { img.src = brandLogo2; img.style.display = 'block'; } else { img.removeAttribute('src'); img.style.display = 'none'; } }
+            document.body.classList.toggle('has-logo2', !!brandLogo2);
+            updateLogo2Preview();
+        }
+
+        function updateLogo2Preview() {
+            const prev = document.getElementById('logo2-preview-img'); const empty = document.getElementById('logo2-empty');
+            if (prev) { if (brandLogo2) { prev.src = brandLogo2; prev.style.display = 'block'; } else { prev.removeAttribute('src'); prev.style.display = 'none'; } }
+            if (empty) empty.style.display = brandLogo2 ? 'none' : 'block';
+        }
+
+        // Downscale uploads so two logos always fit in localStorage
+        function readLogoFile(file, done) {
             if (!file) return;
             if (!file.type.startsWith('image/')) { showToast('الرجاء اختيار ملف صورة'); return; }
             const reader = new FileReader();
             reader.onload = function (e) {
-                brandLogo = e.target.result;
-                const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = brandLogo;
+                const img = new Image();
+                img.onload = function () {
+                    const w = img.naturalWidth || 300, h = img.naturalHeight || 300;
+                    const scale = Math.min(1, 500 / Math.max(w, h));
+                    const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * scale)); c.height = Math.max(1, Math.round(h * scale));
+                    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+                    done(c.toDataURL('image/png'));
+                };
+                img.onerror = function () { showToast('تعذر قراءة الصورة'); };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
+        }
+
+        function handleLogoUpload(event) {
+            readLogoFile(event.target.files[0], function (data) {
+                brandLogo = data;
+                const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = brandLogo;
+            });
         }
 
         function resetLogo() {
             brandLogo = null;
             const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = 'sab.png';
+        }
+
+        function handleLogo2Upload(event) {
+            readLogoFile(event.target.files[0], function (data) { brandLogo2 = data; updateLogo2Preview(); });
+        }
+
+        function removeLogo2() {
+            brandLogo2 = null;
+            const input = document.getElementById('logo2-upload-input'); if (input) input.value = '';
+            updateLogo2Preview();
         }
 
         window.onload = function () { loadSettings(); initHost(); loadGameData(); };
@@ -1536,10 +1648,10 @@
             const btnAr = document.getElementById('set-ar');
             const btnEn = document.getElementById('set-en');
             if(lang === 'ar') {
-                btnAr.style.background = '#e5002b'; btnAr.style.color = 'white';
+                btnAr.style.background = '#00a651'; btnAr.style.color = 'white';
                 btnEn.style.background = 'transparent'; btnEn.style.color = 'white';
             } else {
-                btnEn.style.background = '#e5002b'; btnEn.style.color = 'white';
+                btnEn.style.background = '#00a651'; btnEn.style.color = 'white';
                 btnAr.style.background = 'transparent'; btnAr.style.color = 'white';
             }
             showToast(lang === 'ar' ? "اللغة: العربية" : "Language: English");
@@ -1631,6 +1743,20 @@
                     if (isPlayerActive) { handleBuzzerClick(firstBuzzData); } else { firstBuzzDoc.ref.delete(); }
                 }
             });
+            sessionRef.collection('picks').onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach(ch => {
+                    if (ch.type !== 'added') return;
+                    const p = ch.doc.data();
+                    if (p.seq !== qSeq || p.seq === lastIpadPickSeq) return;
+                    if (document.getElementById('modal').style.display !== 'flex') return;
+                    const optEl = document.getElementById('mcq-view').children[p.index];
+                    if (!optEl) return;
+                    lastIpadPickSeq = p.seq; optEl.click();
+                });
+            });
+            const ipadUrl = new URL('ipad.html?code=' + gameId, location.href).href;
+            const ipadLink = document.getElementById('ipad-link');
+            if (ipadLink) { ipadLink.dataset.url = ipadUrl; ipadLink.textContent = '📱 رابط الآيباد: ipad.html?code=' + gameId + ' (اضغط للنسخ)'; }
         }
 
         function handleBuzzerClick(buzzData) {
@@ -1668,7 +1794,19 @@
         function broadcast(msg) {
             if (!gameId) return; let firebaseState = "";
             if (msg.type === 'QUESTION_OPEN') firebaseState = 'QUESTION_OPEN'; else if (msg.type === 'LOCKED') firebaseState = 'LOCKED'; else if (msg.type === 'RESET') firebaseState = 'RESET';
-            db.collection('sessions').doc(gameId).update({ state: firebaseState, winnerName: msg.winner || '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() });
+            const payload = { state: firebaseState, winnerName: msg.winner || '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() };
+            if (msg.type === 'RESET') { payload.question = null; payload.reveal = null; }
+            db.collection('sessions').doc(gameId).update(payload);
+        }
+
+        function publishSession(fields) {
+            if (!gameId) return;
+            db.collection('sessions').doc(gameId).update(fields).catch(e => console.warn('session update failed', e));
+        }
+
+        function copyIpadLink() {
+            const el = document.getElementById('ipad-link'); if (!el || !el.dataset.url) return;
+            navigator.clipboard.writeText(el.dataset.url).then(() => showToast('تم نسخ رابط الآيباد!'));
         }
 
         function adjustScore(team, amount) {
@@ -1722,9 +1860,12 @@
             let possibilities = currentGameData.filter(item => { const isEnglish = /^[a-zA-Z]+$/.test(item.letter); const langMatch = (currentLanguage === 'en') ? isEnglish : !isEnglish; return item.letter === letter && langMatch; });
             if (activeCategoryFilter) { const filtered = possibilities.filter(item => item.category === activeCategoryFilter); if (filtered.length > 0) possibilities = filtered; activeCategoryFilter = null; }
             if (possibilities.length === 0) return null;
-            const categoryPriority = ['national_day', 'saudi'];
-            for (const cat of categoryPriority) {
-                const prioritized = possibilities.filter(item => item.category === cat);
+            const themed = ['sport', 'national_day', 'saudi'];
+            const tiers = questionMode === 'football' ? [q => q.category === 'sport']
+                : questionMode === 'general' ? [q => !themed.includes(q.category)]
+                : [q => q.category === 'national_day', q => q.category === 'saudi'];
+            for (const tier of tiers) {
+                const prioritized = possibilities.filter(tier);
                 if (prioritized.length > 0) { possibilities = prioritized; break; }
             }
             let selected = possibilities[Math.floor(Math.random() * possibilities.length)];
@@ -1823,6 +1964,7 @@
             document.getElementById('team-green-name').value = teamSettings.green.name; document.getElementById('team-green-color').value = teamSettings.green.color;
             document.getElementById('team-red-name').value = teamSettings.red.name; document.getElementById('team-red-color').value = teamSettings.red.color;
             document.getElementById('logo-preview-img').src = brandLogo || 'sab.png';
+            updateLogo2Preview(); setQuestionMode(questionMode);
         }
         function saveSettings() {
             const newTimer = document.getElementById('timer-input').value; const newPoints = document.getElementById('win-points-input').value;
@@ -1830,10 +1972,11 @@
             const greenName = document.getElementById('team-green-name').value.trim(); const redName = document.getElementById('team-red-name').value.trim();
             teamSettings.green.name = greenName || 'الفريق الأخضر'; teamSettings.red.name = redName || 'الفريق الأحمر';
             teamSettings.green.color = document.getElementById('team-green-color').value; teamSettings.red.color = document.getElementById('team-red-color').value;
-            applyTeamSettings(); applyBrandLogo();
-            localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin, teamSettings, brandLogo }));
+            applyTeamSettings(); applyBrandLogo(); applyBrandLogo2();
+            let saved = true;
+            try { localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin, teamSettings, brandLogo, brandLogo2, questionMode })); } catch (e) { saved = false; }
             document.getElementById('settings-page').style.display = 'none'; document.getElementById('main-menu').style.display = 'flex';
-            showToast('تم حفظ الإعدادات!');
+            showToast(saved ? 'تم حفظ الإعدادات!' : 'تعذر حفظ الإعدادات (الشعار كبير جداً)');
         }
         function openEditor() { document.getElementById('settings-page').style.display = 'none'; document.getElementById('editor-container').style.display = 'flex'; document.getElementById('editor-container').style.opacity = '1'; renderEditorList(); }
         function closeEditor() { document.getElementById('editor-container').style.display = 'none'; document.getElementById('settings-page').style.display = 'flex'; }
@@ -1859,8 +2002,8 @@
 
         function switchEditorTab(lang) {
             const listAr = document.getElementById('list-ar-wrapper'); const listEn = document.getElementById('list-en-wrapper'); const btnAr = document.getElementById('btn-tab-ar'); const btnEn = document.getElementById('btn-tab-en');
-            if (lang === 'ar') { listAr.style.display = 'block'; listEn.style.display = 'none'; btnAr.style.background = '#e5002b'; btnAr.style.color = 'white'; btnEn.style.background = 'transparent'; btnEn.style.color = 'white'; }
-            else { listAr.style.display = 'none'; listEn.style.display = 'block'; btnAr.style.background = 'transparent'; btnAr.style.color = 'white'; btnEn.style.background = '#e5002b'; btnEn.style.color = 'white'; }
+            if (lang === 'ar') { listAr.style.display = 'block'; listEn.style.display = 'none'; btnAr.style.background = '#00a651'; btnAr.style.color = 'white'; btnEn.style.background = 'transparent'; btnEn.style.color = 'white'; }
+            else { listAr.style.display = 'none'; listEn.style.display = 'block'; btnAr.style.background = 'transparent'; btnAr.style.color = 'white'; btnEn.style.background = '#00a651'; btnEn.style.color = 'white'; }
         }
 
         async function uploadToFirebase(lang) {

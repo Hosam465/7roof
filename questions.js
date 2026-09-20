@@ -420,5 +420,124 @@
     { letter: 'و', question: 'مدينة ساحلية سعودية على البحر الأحمر تقع بالقرب من مشروع نيوم؟', answer: 'الوجه', type: 'mcq', category: 'saudi', options: ['وادي فاطمة', 'الوشم', 'ينبع البحر'] },
 
     // --- حرف الياء (ي) ---
-    { letter: 'ي', question: 'الشعار الذي يرافق غالباً عبارات اليوم الوطني ويعني الشعور بالفخر والانتماء؟', answer: 'يفتخر', type: 'mcq', category: 'national_day', options: ['يتردد', 'ينعزل', 'يتراجع'] }
+    { letter: 'ي', question: 'الشعار الذي يرافق غالباً عبارات اليوم الوطني ويعني الشعور بالفخر والانتماء؟', answer: 'يفتخر', type: 'mcq', category: 'national_day', options: ['يتردد', 'ينعزل', 'يتراجع'] },
+
+    // ============================================================
+    // أسئلة عامة (جغرافيا / علوم / تاريخ)
+    // ============================================================
+
+    // --- أ ---
+    { letter: 'أ', question: 'أكبر قارات العالم مساحة؟', answer: 'آسيا', type: 'mcq', category: 'geo', options: ['أفريقيا', 'أوروبا', 'أستراليا'] },
+    { letter: 'أ', question: 'المعدن الخفيف الذي رمزه Al وتُصنع منه علب المشروبات؟', answer: 'ألومنيوم', type: 'mcq', category: 'science', options: ['أرغون', 'أنتيمون', 'أكتينيوم'] },
+
+    // --- إ ---
+    { letter: 'إ', question: 'الدولة الأفريقية التي عاصمتها أديس أبابا؟', answer: 'إثيوبيا', type: 'mcq', category: 'geo', options: ['إريتريا', 'إيران', 'إندونيسيا'] },
+    { letter: 'إ', question: 'الدولة الأوروبية التي عاصمتها روما؟', answer: 'إيطاليا', type: 'mcq', category: 'geo', options: ['إسبانيا', 'إيرلندا', 'إستونيا'] },
+
+    // --- ا ---
+    { letter: 'ا', question: 'الدولة الآسيوية التي تلقب بأرض الشمس المشرقة؟', answer: 'اليابان', type: 'mcq', category: 'geo', options: ['الإمارات', 'الأرجنتين', 'اليونان'] },
+    { letter: 'ا', question: 'الطبيب والفيلسوف المسلم صاحب كتاب "القانون في الطب"؟', answer: 'ابن سينا', type: 'mcq', category: 'history', options: ['ابن رشد', 'ابن خلدون', 'ابن الهيثم'] },
+
+    // --- ب ---
+    { letter: 'ب', question: 'عاصمة ألمانيا؟', answer: 'برلين', type: 'mcq', category: 'geo', options: ['بروكسل', 'براغ', 'بودابست'] },
+    { letter: 'ب', question: 'أكبر دول أمريكا الجنوبية مساحة وعاصمتها برازيليا؟', answer: 'البرازيل', type: 'mcq', category: 'geo', options: ['بوليفيا', 'بيرو', 'باراغواي'] },
+
+    // --- ت ---
+    { letter: 'ت', question: 'الدولة التي عاصمتها أنقرة وتقع بين آسيا وأوروبا؟', answer: 'تركيا', type: 'mcq', category: 'geo', options: ['تونس', 'تايلاند', 'تشيلي'] },
+    { letter: 'ت', question: 'الأداة التي تُستخدم لرؤية الأجرام البعيدة في السماء؟', answer: 'تلسكوب', type: 'mcq', category: 'science', options: ['ترمومتر', 'تلفاز', 'ترانزستور'] },
+
+    // --- ث ---
+    { letter: 'ث', question: 'عدد أضلاع المثلث؟', answer: 'ثلاثة', type: 'mcq', category: 'general', options: ['ثمانية', 'ثلاثون', 'ستة'] },
+    { letter: 'ث', question: 'الحيوان الذي يُضرب به المثل في المكر؟', answer: 'ثعلب', type: 'mcq', category: 'general', options: ['ثور', 'ثعبان', 'ثيتل'] },
+
+    // --- ج ---
+    { letter: 'ج', question: 'أكبر جزيرة في العالم وتتبع الدنمارك؟', answer: 'جرينلاند', type: 'mcq', category: 'geo', options: ['جامايكا', 'جاوة', 'جيرسي'] },
+    { letter: 'ج', question: 'أعلى قمة جبلية في العالم فوق سطح البحر؟', answer: 'جبل إيفرست', type: 'mcq', category: 'geo', options: ['جبل كليمنجارو', 'جبل فوجي', 'جبل طارق'] },
+
+    // --- ح ---
+    { letter: 'ح', question: 'أكبر حيوان في العالم ويعيش في البحار والمحيطات؟', answer: 'حوت', type: 'mcq', category: 'science', options: ['حصان', 'حمار', 'حلزون'] },
+    { letter: 'ح', question: 'المعدن الذي يصدأ عند تعرضه للماء والهواء؟', answer: 'حديد', type: 'mcq', category: 'science', options: ['ذهب', 'نحاس', 'فضة'] },
+
+    // --- خ ---
+    { letter: 'خ', question: 'عاصمة السودان؟', answer: 'الخرطوم', type: 'mcq', category: 'geo', options: ['أم درمان', 'بورتسودان', 'كسلا'] },
+    { letter: 'خ', question: 'العالم المسلم الذي يُنسب إليه علم الجبر؟', answer: 'الخوارزمي', type: 'mcq', category: 'history', options: ['الرازي', 'الكندي', 'الفارابي'] },
+
+    // --- د ---
+    { letter: 'د', question: 'عاصمة سوريا؟', answer: 'دمشق', type: 'mcq', category: 'geo', options: ['دبي', 'دكار', 'دلهي'] },
+    { letter: 'د', question: 'المدينة التي يقع فيها برج خليفة، أطول برج في العالم؟', answer: 'دبي', type: 'mcq', category: 'geo', options: ['دمشق', 'الدوحة', 'دكا'] },
+
+    // --- ذ ---
+    { letter: 'ذ', question: 'المعدن النفيس الأصفر الذي رمزه الكيميائي Au؟', answer: 'ذهب', type: 'mcq', category: 'science', options: ['فضة', 'نحاس', 'بلاتين'] },
+
+    // --- ر ---
+    { letter: 'ر', question: 'عاصمة المغرب؟', answer: 'الرباط', type: 'mcq', category: 'geo', options: ['روما', 'ريغا', 'رابغ'] },
+
+    // --- ز ---
+    { letter: 'ز', question: 'أطول حيوان بري في العالم؟', answer: 'زرافة', type: 'mcq', category: 'science', options: ['زيبرا', 'فيل', 'جمل'] },
+    { letter: 'ز', question: 'الكوكب المشهور بحلقاته الجميلة؟', answer: 'زحل', type: 'mcq', category: 'science', options: ['المريخ', 'الزهرة', 'أورانوس'] },
+
+    // --- س ---
+    { letter: 'س', question: 'عاصمة كوريا الجنوبية؟', answer: 'سيول', type: 'mcq', category: 'geo', options: ['سنغافورة', 'سيدني', 'ستوكهولم'] },
+    { letter: 'س', question: 'الأداة التي تُستخدم لقياس الوقت؟', answer: 'ساعة', type: 'mcq', category: 'general', options: ['سماعة', 'سبورة', 'سلة'] },
+
+    // --- ش ---
+    { letter: 'ش', question: 'النجم الذي تدور حوله الأرض وباقي كواكب المجموعة الشمسية؟', answer: 'شمس', type: 'mcq', category: 'science', options: ['شعرى', 'شهاب', 'شفق'] },
+    { letter: 'ش', question: 'الأوعية الدموية التي تحمل الدم بعيداً عن القلب؟', answer: 'شرايين', type: 'mcq', category: 'science', options: ['شعيرات', 'شفاه', 'شعب'] },
+
+    // --- ص ---
+    { letter: 'ص', question: 'أكبر صحراء حارة في العالم؟', answer: 'الصحراء الكبرى', type: 'mcq', category: 'geo', options: ['صحراء غوبي', 'صحراء النقب', 'صحراء كالاهاري'] },
+    { letter: 'ص', question: 'القائد الذي حرّر بيت المقدس عام 1187م؟', answer: 'صلاح الدين الأيوبي', type: 'mcq', category: 'history', options: ['سيف الدين قطز', 'الظاهر بيبرس', 'طارق بن زياد'] },
+
+    // --- ض ---
+    { letter: 'ض', question: 'الحيوان البرمائي الذي يمر بمرحلة الشرغوف قبل أن يكتمل نموه؟', answer: 'ضفدع', type: 'mcq', category: 'science', options: ['ضب', 'ضبع', 'ضأن'] },
+
+    // --- ط ---
+    { letter: 'ط', question: 'عاصمة إيران؟', answer: 'طهران', type: 'mcq', category: 'geo', options: ['طرابلس', 'طوكيو', 'طشقند'] },
+    { letter: 'ط', question: 'الطائر المشهور بريشه الملون وذيله الطويل المزخرف؟', answer: 'طاووس', type: 'mcq', category: 'science', options: ['طنان', 'طوقان', 'طيهوج'] },
+
+    // --- ظ ---
+    { letter: 'ظ', question: 'عاصمة دولة الإمارات العربية المتحدة؟', answer: 'أبوظبي', type: 'mcq', category: 'geo', options: ['دبي', 'الشارقة', 'عجمان'] },
+
+    // --- ع ---
+    { letter: 'ع', question: 'عاصمة الأردن؟', answer: 'عمّان', type: 'mcq', category: 'geo', options: ['عدن', 'عكا', 'عنتيبي'] },
+    { letter: 'ع', question: 'أصغر كواكب المجموعة الشمسية وأقربها إلى الشمس؟', answer: 'عطارد', type: 'mcq', category: 'science', options: ['المريخ', 'الزهرة', 'نبتون'] },
+
+    // --- غ ---
+    { letter: 'غ', question: 'الدولة الأفريقية التي عاصمتها أكرا؟', answer: 'غانا', type: 'mcq', category: 'geo', options: ['غامبيا', 'غينيا', 'غابون'] },
+
+    // --- ف ---
+    { letter: 'ف', question: 'الدولة الأوروبية التي عاصمتها هلسنكي؟', answer: 'فنلندا', type: 'mcq', category: 'geo', options: ['فرنسا', 'فيجي', 'فيتنام'] },
+    { letter: 'ف', question: 'اللقب الذي كان يُطلق على ملوك مصر القديمة؟', answer: 'فرعون', type: 'mcq', category: 'history', options: ['فارس', 'فيلسوف', 'فقيه'] },
+
+    // --- ق ---
+    { letter: 'ق', question: 'عاصمة جمهورية مصر العربية؟', answer: 'القاهرة', type: 'mcq', category: 'geo', options: ['قنا', 'قفصة', 'قسنطينة'] },
+    { letter: 'ق', question: 'التابع الطبيعي الوحيد للأرض؟', answer: 'قمر', type: 'mcq', category: 'science', options: ['قرص', 'قطب', 'قوس'] },
+
+    // --- ك ---
+    { letter: 'ك', question: 'الحيوان الأسترالي الذي يحمل صغاره في كيس على بطنه؟', answer: 'كنغر', type: 'mcq', category: 'science', options: ['كوالا', 'كسلان', 'كلب'] },
+    { letter: 'ك', question: 'شكل الطاقة الذي يجري عبر الأسلاك ويُشغّل الأجهزة المنزلية؟', answer: 'كهرباء', type: 'mcq', category: 'science', options: ['كربون', 'كبريت', 'كالسيوم'] },
+
+    // --- ل ---
+    { letter: 'ل', question: 'عاصمة المملكة المتحدة (بريطانيا)؟', answer: 'لندن', type: 'mcq', category: 'geo', options: ['لشبونة', 'ليون', 'لاهاي'] },
+    { letter: 'ل', question: 'الفاكهة الحمضية الصفراء الغنية بفيتامين C؟', answer: 'ليمون', type: 'mcq', category: 'general', options: ['لوز', 'لفت', 'لبلاب'] },
+
+    // --- م ---
+    { letter: 'م', question: 'عاصمة إسبانيا؟', answer: 'مدريد', type: 'mcq', category: 'geo', options: ['موسكو', 'مانيلا', 'ميونخ'] },
+    { letter: 'م', question: 'الكوكب المعروف بالكوكب الأحمر؟', answer: 'المريخ', type: 'mcq', category: 'science', options: ['المشتري', 'الزهرة', 'زحل'] },
+
+    // --- ن ---
+    { letter: 'ن', question: 'عاصمة كينيا؟', answer: 'نيروبي', type: 'mcq', category: 'geo', options: ['نيامي', 'نيقوسيا', 'نواكشوط'] },
+    { letter: 'ن', question: 'الحشرة التي تصنع العسل؟', answer: 'نحل', type: 'mcq', category: 'science', options: ['نمل', 'نمر', 'نسر'] },
+
+    // --- هـ ---
+    { letter: 'هـ', question: 'الدولة الآسيوية التي عاصمتها نيودلهي؟', answer: 'الهند', type: 'mcq', category: 'geo', options: ['الصين', 'اليابان', 'باكستان'] },
+    { letter: 'هـ', question: 'الغاز الخامل الذي تُنفخ به بالونات الاحتفالات فتطير؟', answer: 'هيليوم', type: 'mcq', category: 'science', options: ['هيدروجين', 'نيتروجين', 'أكسجين'] },
+
+    // --- و ---
+    { letter: 'و', question: 'عاصمة الولايات المتحدة الأمريكية؟', answer: 'واشنطن', type: 'mcq', category: 'geo', options: ['وارسو', 'ويلينغتون', 'ونيبغ'] },
+    { letter: 'و', question: 'الزهرة التي تلقب بملكة الأزهار؟', answer: 'وردة', type: 'mcq', category: 'general', options: ['ورقة', 'وريد', 'وتد'] },
+
+    // --- ي ---
+    { letter: 'ي', question: 'الدولة العربية التي عاصمتها صنعاء؟', answer: 'اليمن', type: 'mcq', category: 'geo', options: ['يوغندا', 'اليونان', 'يوغسلافيا'] },
+    { letter: 'ي', question: 'الدولة الأوروبية مهد الألعاب الأولمبية القديمة؟', answer: 'اليونان', type: 'mcq', category: 'history', options: ['إيطاليا', 'اليابان', 'يوغسلافيا'] }
 ];
