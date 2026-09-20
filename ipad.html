@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>الإجابات - حروف وألوف</title>
+    <title>الآيباد - حروف وألوف</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
@@ -50,18 +50,17 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
-        #login-screen { max-width: 420px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
+        #login-screen { max-width: 460px; text-align: center; display: flex; flex-direction: column; gap: 14px; }
         #login-screen img { width: 170px; align-self: center; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25)); }
         #login-screen h1 { margin: 0; font-size: 2rem; text-shadow: 0 0 18px rgba(0, 166, 81, 0.6); }
 
         input[type="text"] {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             font-family: 'Cairo';
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             font-weight: 900;
             text-align: center;
-            letter-spacing: 8px;
             color: white;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.25);
@@ -69,6 +68,7 @@
             outline: none;
         }
         input[type="text"]:focus { border-color: var(--accent); }
+        #code-input { font-size: 1.6rem; letter-spacing: 8px; }
 
         .primary-btn {
             width: 100%;
@@ -87,11 +87,32 @@
 
         #error-msg { color: #ff8a8a; min-height: 24px; font-weight: bold; }
 
+        .team-pick-label { font-weight: 900; font-size: 1.1rem; }
+        .team-row { display: flex; gap: 14px; }
+        .team-btn {
+            flex: 1;
+            min-height: 78px;
+            padding: 12px;
+            font-family: 'Cairo';
+            font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+            font-weight: 900;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border: 3px solid var(--team-color, rgba(255, 255, 255, 0.3));
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.15s, box-shadow 0.15s;
+        }
+        .team-btn:active { transform: scale(0.98); }
+        .team-btn.selected { background: var(--team-color); box-shadow: 0 0 22px var(--team-color); }
+        .team-btn:disabled { opacity: 0.5; cursor: default; }
+
         #main-screen { display: none; }
 
-        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; font-weight: bold; opacity: 0.9; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; font-weight: bold; }
         .topbar .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); margin-left: 8px; }
         .topbar button { font-family: 'Cairo'; font-weight: bold; color: white; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 8px 16px; cursor: pointer; }
+        #my-team-chip { padding: 6px 18px; border-radius: 30px; border: 2px solid var(--team-color); background: rgba(255, 255, 255, 0.08); font-weight: 900; }
 
         #winner-banner {
             display: none;
@@ -119,7 +140,7 @@
             margin-bottom: 12px;
         }
 
-        #q-text { font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 900; line-height: 1.35; margin: 4px 0 22px 0; }
+        #q-text { font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 900; line-height: 1.35; margin: 4px 0 22px 0; min-height: 2.7em; }
 
         #options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
@@ -147,27 +168,11 @@
 
         #feedback { text-align: center; font-size: 1.3rem; font-weight: bold; min-height: 32px; margin-top: 14px; }
 
-        #award-box { margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
-        .award-title { text-align: center; font-size: 1.3rem; font-weight: 900; margin-bottom: 14px; }
-        #teams-row { display: flex; gap: 16px; margin-bottom: 4px; }
-        .team-btn {
-            flex: 1;
-            min-height: 84px;
-            padding: 12px;
-            font-family: 'Cairo';
-            font-size: clamp(1.3rem, 2.8vw, 1.9rem);
-            font-weight: 900;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            border: 3px solid var(--team-color, rgba(255, 255, 255, 0.3));
-            border-radius: 20px;
-            cursor: pointer;
-            transition: transform 0.1s, background 0.15s, box-shadow 0.15s;
-        }
-        .team-btn:active { transform: scale(0.98); }
-        .team-btn.selected { background: var(--team-color); box-shadow: 0 0 22px var(--team-color); }
-        .team-btn:disabled { opacity: 0.5; cursor: default; }
-        #award-btn { margin-top: 16px; }
+        #extras { margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+        #extras summary { cursor: pointer; font-weight: bold; opacity: 0.85; padding: 6px 0; }
+        #manual-award { margin-top: 12px; }
+        #manual-award .team-btn { min-height: 64px; }
+        #award-btn { margin-top: 12px; padding: 14px; font-size: 1.1rem; }
         .link-btn {
             display: block;
             margin: 16px auto 0;
@@ -183,23 +188,30 @@
         }
         .link-btn:disabled { opacity: 0.4; cursor: default; }
 
-        @media (max-width: 560px) { #options { grid-template-columns: 1fr; } #teams-row { flex-direction: column; } }
+        @media (max-width: 560px) { #options { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="card">
         <img src="sab.png" alt="SAB">
-        <h1>صفحة الإجابات</h1>
+        <h1>انضم من الآيباد</h1>
         <input type="text" id="code-input" inputmode="numeric" maxlength="4" placeholder="كود اللعبة" autocomplete="off">
-        <button class="primary-btn" id="connect-btn" onclick="connectFromInput()">اتصال</button>
+        <input type="text" id="name-input" maxlength="20" placeholder="الاسم" value="آيباد" autocomplete="off">
+        <div class="team-pick-label">اختر فريقك</div>
+        <div class="team-row">
+            <button type="button" class="team-btn" id="login-team-green" onclick="pickLoginTeam('green')">الفريق الأخضر</button>
+            <button type="button" class="team-btn" id="login-team-red" onclick="pickLoginTeam('red')">الفريق الأحمر</button>
+        </div>
+        <button class="primary-btn" id="connect-btn" onclick="connectFromInput()">دخول</button>
         <div id="error-msg"></div>
     </div>
 
     <div id="main-screen" class="card">
         <div class="topbar">
             <div><span class="dot"></span>كود اللعبة: <span id="code-label"></span></div>
-            <button onclick="disconnect()">تغيير الكود</button>
+            <div id="my-team-chip"></div>
+            <button onclick="leaveGame()">خروج</button>
         </div>
 
         <div id="winner-banner"></div>
@@ -213,13 +225,17 @@
             <button class="primary-btn" id="confirm-btn" onclick="confirmPick()" disabled>تأكيد الإجابة</button>
             <div id="feedback"></div>
 
-            <div id="award-box">
-                <div class="award-title">منح النقطة لفريق</div>
-                <div id="teams-row">
-                    <button class="team-btn" id="team-green" onclick="selectTeam('green')"></button>
-                    <button class="team-btn" id="team-red" onclick="selectTeam('red')"></button>
-                </div>
-                <button class="primary-btn" id="award-btn" onclick="awardPoint()" disabled>تأكيد منح النقطة</button>
+            <div id="extras">
+                <details>
+                    <summary>خيارات إضافية</summary>
+                    <div id="manual-award">
+                        <div class="team-row">
+                            <button class="team-btn" id="team-green" onclick="selectTeam('green')"></button>
+                            <button class="team-btn" id="team-red" onclick="selectTeam('red')"></button>
+                        </div>
+                        <button class="primary-btn" id="award-btn" onclick="awardPoint()" disabled>منح النقطة لهذا الفريق يدوياً</button>
+                    </div>
+                </details>
                 <button class="link-btn" id="cancel-q-btn" onclick="cancelQuestion()">إلغاء السؤال</button>
             </div>
         </div>
@@ -239,24 +255,77 @@
         firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
 
+        var TYPE_SPEED_MS = 90;
+
         var gameId = null;
+        var myName = 'آيباد';
+        var myTeam = null;
+        var myPlayerRef = null;
         var unsubscribe = null;
+        var unsubscribePlayer = null;
         var currentSeq = null;
         var selectedIndex = null;
         var sent = false;
         var selectedTeam = null;
         var teamTouched = false;
         var awardSent = false;
+        var typeTimer = null;
+        var typedText = '';
+        var typedCount = 0;
+        var typedFrozen = false;
         var teamsInfo = { green: { name: 'الفريق الأخضر', color: '#00ff44' }, red: { name: 'الفريق الأحمر', color: '#ff0000' } };
 
         function $(id) { return document.getElementById(id); }
+        function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+        function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+        function unstore(k) { try { localStorage.removeItem(k); } catch (e) {} }
 
-        $('code-input').addEventListener('input', function () { this.value = this.value.replace(/[^0-9]/g, ''); });
-        $('code-input').addEventListener('keydown', function (e) { if (e.key === 'Enter') connectFromInput(); });
+        // ---------- team labels ----------
+        function applyTeams(info) {
+            if (!info || !info.green || !info.red) return;
+            teamsInfo = info;
+            ['green', 'red'].forEach(function (t) {
+                $('login-team-' + t).textContent = teamsInfo[t].name;
+                $('login-team-' + t).style.setProperty('--team-color', teamsInfo[t].color);
+                $('team-' + t).textContent = teamsInfo[t].name;
+                $('team-' + t).style.setProperty('--team-color', teamsInfo[t].color);
+            });
+            updateMyTeamChip();
+        }
 
+        function updateMyTeamChip() {
+            var chip = $('my-team-chip');
+            if (!myTeam) { chip.textContent = ''; return; }
+            chip.textContent = teamsInfo[myTeam].name;
+            chip.style.setProperty('--team-color', teamsInfo[myTeam].color);
+        }
+
+        function pickLoginTeam(t) {
+            myTeam = t;
+            ['green', 'red'].forEach(function (x) { $('login-team-' + x).classList.toggle('selected', x === t); });
+        }
+
+        function fetchTeamsFor(code) {
+            db.collection('sessions').doc(code).get().then(function (doc) {
+                if (doc.exists && doc.data().teams) applyTeams(doc.data().teams);
+            }).catch(function () {});
+        }
+
+        applyTeams(teamsInfo);
+
+        $('code-input').addEventListener('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.length === 4) fetchTeamsFor(this.value);
+        });
+
+        // ---------- join ----------
         function connectFromInput() {
             var code = $('code-input').value.trim();
+            var name = $('name-input').value.trim();
             if (code.length !== 4) { $('error-msg').textContent = 'أدخل كود اللعبة المكون من 4 أرقام'; return; }
+            if (!name) { $('error-msg').textContent = 'اكتب الاسم'; return; }
+            if (!myTeam) { $('error-msg').textContent = 'اختر فريقك'; return; }
+            myName = name;
             connect(code);
         }
 
@@ -275,10 +344,11 @@
                         return;
                     }
                     gameId = code;
-                    try { localStorage.setItem('ipadCode', code); } catch (e) {}
+                    store('ipadCode', code); store('ipadTeam', myTeam); store('ipadName', myName);
                     $('code-label').textContent = code;
                     $('login-screen').style.display = 'none';
                     $('main-screen').style.display = 'block';
+                    joinAsPlayer(code);
                 }
                 if (doc.exists) render(doc.data());
             }, function () {
@@ -287,21 +357,69 @@
             });
         }
 
-        function disconnect() {
+        function joinAsPlayer(code) {
+            var sessionRef = db.collection('sessions').doc(code);
+            var savedId = load('ipadPlayerId_' + code);
+            var attach = function (ref) {
+                myPlayerRef = ref;
+                store('ipadPlayerId_' + code, ref.id);
+                if (unsubscribePlayer) unsubscribePlayer();
+                unsubscribePlayer = ref.onSnapshot(function (d) {
+                    if (!d.exists && gameId === code) { alert('تمت إزالتك من الفريق بواسطة المضيف.'); leaveGame(true); }
+                });
+            };
+            var create = function () {
+                sessionRef.collection('players').add({ name: myName, team: myTeam, joinedAt: firebase.firestore.FieldValue.serverTimestamp() })
+                    .then(attach).catch(function () {});
+            };
+            if (savedId) {
+                var ref = sessionRef.collection('players').doc(savedId);
+                ref.get().then(function (d) {
+                    if (d.exists) { ref.update({ name: myName, team: myTeam }).then(function () { attach(ref); }); } else { create(); }
+                }).catch(create);
+            } else {
+                create();
+            }
+            updateMyTeamChip();
+        }
+
+        function leaveGame(fromKick) {
+            if (unsubscribePlayer) { unsubscribePlayer(); unsubscribePlayer = null; }
+            if (myPlayerRef && !fromKick) { myPlayerRef.delete().catch(function () {}); }
+            if (gameId) unstore('ipadPlayerId_' + gameId);
+            myPlayerRef = null;
             if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+            stopTyping();
             gameId = null; currentSeq = null; selectedIndex = null; sent = false;
-            try { localStorage.removeItem('ipadCode'); } catch (e) {}
+            unstore('ipadCode');
             $('main-screen').style.display = 'none';
             $('login-screen').style.display = 'flex';
             $('code-input').value = '';
         }
 
+        // ---------- letter-by-letter question ----------
+        function startTyping(text) {
+            stopTyping();
+            typedText = text; typedCount = 0; typedFrozen = false;
+            $('q-text').textContent = '';
+            typeTimer = setInterval(function () {
+                typedCount++;
+                $('q-text').textContent = typedText.slice(0, typedCount);
+                if (typedCount >= typedText.length) stopTyping();
+            }, TYPE_SPEED_MS);
+        }
+
+        function stopTyping() { if (typeTimer) { clearInterval(typeTimer); typeTimer = null; } }
+
+        function freezeTyping(chars) {
+            stopTyping();
+            typedFrozen = true;
+            $('q-text').textContent = typedText.slice(0, chars);
+        }
+
+        // ---------- render session state ----------
         function render(data) {
-            if (data.teams && data.teams.green && data.teams.red) teamsInfo = data.teams;
-            ['green', 'red'].forEach(function (t) {
-                $('team-' + t).textContent = teamsInfo[t].name;
-                $('team-' + t).style.setProperty('--team-color', teamsInfo[t].color);
-            });
+            applyTeams(data.teams);
 
             var banner = $('winner-banner');
             if (data.state === 'LOCKED' && data.winnerName) {
@@ -315,6 +433,7 @@
 
             var q = data.question;
             if (!q) {
+                stopTyping();
                 currentSeq = null; selectedIndex = null; sent = false;
                 selectedTeam = null; teamTouched = false; awardSent = false;
                 $('question-view').style.display = 'none';
@@ -333,8 +452,9 @@
                 currentSeq = q.seq; selectedIndex = null; sent = false;
                 selectedTeam = null; teamTouched = false; awardSent = false;
                 $('letter-chip').textContent = q.letter || '';
-                $('q-text').textContent = q.text || '';
                 $('q-text').dir = 'auto';
+                typedText = q.text || '';
+                if (typeof data.frozenChars === 'number') { freezeTyping(data.frozenChars); } else { startTyping(typedText); }
                 var box = $('options');
                 box.innerHTML = '';
                 (q.options || []).forEach(function (text, i) {
@@ -346,14 +466,71 @@
                     box.appendChild(b);
                 });
                 $('feedback').textContent = '';
+            } else if (typeof data.frozenChars === 'number' && !typedFrozen) {
+                freezeTyping(data.frozenChars);
             }
 
-            applyReveal(data.reveal);
+            applyReveal(data.reveal, data.winnerTeam);
             if (!teamTouched && !awardSent) {
                 if (allowed) selectedTeam = allowed;
                 else if (data.winnerTeam) selectedTeam = data.winnerTeam;
             }
             updateControls();
+        }
+
+        function applyReveal(reveal, winnerTeam) {
+            var btns = $('options').children;
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('correct', 'wrong');
+            if (reveal && reveal.seq === currentSeq) {
+                sent = true;
+                if (btns[reveal.correctIndex]) btns[reveal.correctIndex].classList.add('correct');
+                if (reveal.picked !== reveal.correctIndex && btns[reveal.picked]) btns[reveal.picked].classList.add('wrong');
+                var scoringTeam = winnerTeam || myTeam;
+                $('feedback').textContent = reveal.picked === reveal.correctIndex
+                    ? '✅ إجابة صحيحة — النقطة لـ ' + teamsInfo[scoringTeam].name
+                    : '❌ إجابة خاطئة';
+            }
+        }
+
+        function selectOption(i) {
+            if (sent) return;
+            selectedIndex = i;
+            updateControls();
+        }
+
+        function updateControls() {
+            var btns = $('options').children;
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.toggle('selected', !sent && i === selectedIndex);
+                btns[i].disabled = sent;
+            }
+            $('confirm-btn').disabled = sent || selectedIndex === null;
+            ['green', 'red'].forEach(function (t) {
+                $('team-' + t).classList.toggle('selected', selectedTeam === t);
+                $('team-' + t).disabled = awardSent;
+            });
+            $('award-btn').disabled = awardSent || !selectedTeam;
+            $('cancel-q-btn').disabled = awardSent;
+        }
+
+        // ---------- actions sent to the host ----------
+        function confirmPick() {
+            if (sent || selectedIndex === null || !gameId || currentSeq === null) return;
+            sent = true;
+            var idx = selectedIndex;
+            $('feedback').textContent = 'تم إرسال الإجابة... بانتظار المضيف';
+            updateControls();
+            db.collection('sessions').doc(gameId).collection('picks').add({
+                seq: currentSeq,
+                index: idx,
+                team: myTeam,
+                name: myName,
+                ts: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch(function () {
+                sent = false;
+                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
+                updateControls();
+            });
         }
 
         function selectTeam(t) {
@@ -393,59 +570,16 @@
             });
         }
 
-        function applyReveal(reveal) {
-            var btns = $('options').children;
-            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('correct', 'wrong');
-            if (reveal && reveal.seq === currentSeq) {
-                sent = true;
-                if (btns[reveal.correctIndex]) btns[reveal.correctIndex].classList.add('correct');
-                if (reveal.picked !== reveal.correctIndex && btns[reveal.picked]) btns[reveal.picked].classList.add('wrong');
-                $('feedback').textContent = reveal.picked === reveal.correctIndex ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة';
-            }
-        }
-
-        function selectOption(i) {
-            if (sent) return;
-            selectedIndex = i;
-            updateControls();
-        }
-
-        function updateControls() {
-            var btns = $('options').children;
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].classList.toggle('selected', !sent && i === selectedIndex);
-                btns[i].disabled = sent;
-            }
-            $('confirm-btn').disabled = sent || selectedIndex === null;
-            ['green', 'red'].forEach(function (t) {
-                $('team-' + t).classList.toggle('selected', selectedTeam === t);
-                $('team-' + t).disabled = awardSent;
-            });
-            $('award-btn').disabled = awardSent || !selectedTeam;
-            $('cancel-q-btn').disabled = awardSent;
-        }
-
-        function confirmPick() {
-            if (sent || selectedIndex === null || !gameId || currentSeq === null) return;
-            sent = true;
-            var idx = selectedIndex;
-            $('feedback').textContent = 'تم إرسال الإجابة... بانتظار المضيف';
-            updateControls();
-            db.collection('sessions').doc(gameId).collection('picks').add({
-                seq: currentSeq,
-                index: idx,
-                ts: firebase.firestore.FieldValue.serverTimestamp()
-            }).catch(function () {
-                sent = false;
-                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
-                updateControls();
-            });
-        }
-
+        // ---------- auto reconnect ----------
         (function autoConnect() {
-            var code = new URLSearchParams(location.search).get('code');
-            if (!code) { try { code = localStorage.getItem('ipadCode'); } catch (e) {} }
-            if (code && /^\d{4}$/.test(code)) { $('code-input').value = code; connect(code); }
+            var code = new URLSearchParams(location.search).get('code') || load('ipadCode');
+            var savedTeam = load('ipadTeam'); var savedName = load('ipadName');
+            if (savedName) $('name-input').value = savedName;
+            if (savedTeam === 'green' || savedTeam === 'red') pickLoginTeam(savedTeam);
+            if (!code || !/^\d{4}$/.test(code)) return;
+            $('code-input').value = code;
+            fetchTeamsFor(code);
+            if (myTeam) { myName = $('name-input').value.trim() || 'آيباد'; connect(code); }
         })();
     </script>
 </body>
