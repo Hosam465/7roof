@@ -168,25 +168,19 @@
 
         #feedback { text-align: center; font-size: 1.3rem; font-weight: bold; min-height: 32px; margin-top: 14px; }
 
-        #extras { margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
-        #extras summary { cursor: pointer; font-weight: bold; opacity: 0.85; padding: 6px 0; }
-        #manual-award { margin-top: 12px; }
-        #manual-award .team-btn { min-height: 64px; }
-        #award-btn { margin-top: 12px; padding: 14px; font-size: 1.1rem; }
-        .link-btn {
-            display: block;
-            margin: 16px auto 0;
-            padding: 10px 22px;
-            font-family: 'Cairo';
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            cursor: pointer;
+        #answer-status {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 900;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .link-btn:disabled { opacity: 0.4; cursor: default; }
+        #answer-status.ready { background: rgba(0, 166, 81, 0.25); border-color: var(--accent); }
+        #answer-status.blocked { background: rgba(220, 53, 69, 0.18); border-color: rgba(220, 53, 69, 0.6); }
+        #answer-status:empty { display: none; }
 
         @media (max-width: 560px) { #options { grid-template-columns: 1fr; } }
     </style>
@@ -221,23 +215,10 @@
         <div id="question-view">
             <div class="letter-chip" id="letter-chip"></div>
             <div id="q-text"></div>
+            <div id="answer-status"></div>
             <div id="options"></div>
             <button class="primary-btn" id="confirm-btn" onclick="confirmPick()" disabled>تأكيد الإجابة</button>
             <div id="feedback"></div>
-
-            <div id="extras">
-                <details>
-                    <summary>خيارات إضافية</summary>
-                    <div id="manual-award">
-                        <div class="team-row">
-                            <button class="team-btn" id="team-green" onclick="selectTeam('green')"></button>
-                            <button class="team-btn" id="team-red" onclick="selectTeam('red')"></button>
-                        </div>
-                        <button class="primary-btn" id="award-btn" onclick="awardPoint()" disabled>منح النقطة لهذا الفريق يدوياً</button>
-                    </div>
-                </details>
-                <button class="link-btn" id="cancel-q-btn" onclick="cancelQuestion()">إلغاء السؤال</button>
-            </div>
         </div>
     </div>
 
@@ -266,9 +247,7 @@
         var currentSeq = null;
         var selectedIndex = null;
         var sent = false;
-        var selectedTeam = null;
-        var teamTouched = false;
-        var awardSent = false;
+        var buzz = { locked: false, team: '' };
         var typeTimer = null;
         var typedText = '';
         var typedCount = 0;
@@ -287,8 +266,6 @@
             ['green', 'red'].forEach(function (t) {
                 $('login-team-' + t).textContent = teamsInfo[t].name;
                 $('login-team-' + t).style.setProperty('--team-color', teamsInfo[t].color);
-                $('team-' + t).textContent = teamsInfo[t].name;
-                $('team-' + t).style.setProperty('--team-color', teamsInfo[t].color);
             });
             updateMyTeamChip();
         }
@@ -431,11 +408,13 @@
                 banner.style.display = 'none';
             }
 
+            buzz.locked = data.state === 'LOCKED' && !!data.winnerTeam;
+            buzz.team = data.winnerTeam || '';
+
             var q = data.question;
             if (!q) {
                 stopTyping();
                 currentSeq = null; selectedIndex = null; sent = false;
-                selectedTeam = null; teamTouched = false; awardSent = false;
                 $('question-view').style.display = 'none';
                 $('waiting').style.display = 'block';
                 return;
@@ -444,13 +423,8 @@
             $('waiting').style.display = 'none';
             $('question-view').style.display = 'block';
 
-            var allowed = q.allowedTeam || null;
-            $('team-green').style.display = (allowed && allowed !== 'green') ? 'none' : 'block';
-            $('team-red').style.display = (allowed && allowed !== 'red') ? 'none' : 'block';
-
             if (q.seq !== currentSeq) {
                 currentSeq = q.seq; selectedIndex = null; sent = false;
-                selectedTeam = null; teamTouched = false; awardSent = false;
                 $('letter-chip').textContent = q.letter || '';
                 $('q-text').dir = 'auto';
                 typedText = q.text || '';
@@ -471,12 +445,10 @@
             }
 
             applyReveal(data.reveal, data.winnerTeam);
-            if (!teamTouched && !awardSent) {
-                if (allowed) selectedTeam = allowed;
-                else if (data.winnerTeam) selectedTeam = data.winnerTeam;
-            }
             updateControls();
         }
+
+        function canAnswer() { return buzz.locked && buzz.team === myTeam; }
 
         function applyReveal(reveal, winnerTeam) {
             var btns = $('options').children;
@@ -493,29 +465,39 @@
         }
 
         function selectOption(i) {
-            if (sent) return;
+            if (sent || !canAnswer()) return;
             selectedIndex = i;
             updateControls();
         }
 
         function updateControls() {
+            var can = canAnswer();
+            if (!can && !sent) selectedIndex = null;
             var btns = $('options').children;
             for (var i = 0; i < btns.length; i++) {
-                btns[i].classList.toggle('selected', !sent && i === selectedIndex);
-                btns[i].disabled = sent;
+                btns[i].classList.toggle('selected', !sent && can && i === selectedIndex);
+                btns[i].disabled = sent || !can;
             }
-            $('confirm-btn').disabled = sent || selectedIndex === null;
-            ['green', 'red'].forEach(function (t) {
-                $('team-' + t).classList.toggle('selected', selectedTeam === t);
-                $('team-' + t).disabled = awardSent;
-            });
-            $('award-btn').disabled = awardSent || !selectedTeam;
-            $('cancel-q-btn').disabled = awardSent;
+            $('confirm-btn').disabled = sent || !can || selectedIndex === null;
+
+            var st = $('answer-status');
+            if (sent) {
+                st.textContent = ''; st.className = '';
+            } else if (can) {
+                st.textContent = '🔔 فريقك ضغط أولاً — اختر الإجابة';
+                st.className = 'ready';
+            } else if (buzz.locked && teamsInfo[buzz.team]) {
+                st.textContent = '🔒 ' + teamsInfo[buzz.team].name + ' ضغط أولاً — لا يمكنك الإجابة';
+                st.className = 'blocked';
+            } else {
+                st.textContent = '⏳ بانتظار ضغط الجرس من فريقك...';
+                st.className = '';
+            }
         }
 
         // ---------- actions sent to the host ----------
         function confirmPick() {
-            if (sent || selectedIndex === null || !gameId || currentSeq === null) return;
+            if (sent || !canAnswer() || selectedIndex === null || !gameId || currentSeq === null) return;
             sent = true;
             var idx = selectedIndex;
             $('feedback').textContent = 'تم إرسال الإجابة... بانتظار المضيف';
@@ -528,43 +510,6 @@
                 ts: firebase.firestore.FieldValue.serverTimestamp()
             }).catch(function () {
                 sent = false;
-                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
-                updateControls();
-            });
-        }
-
-        function selectTeam(t) {
-            if (awardSent) return;
-            teamTouched = true;
-            selectedTeam = t;
-            updateControls();
-        }
-
-        function sendAction(payload, onFail) {
-            payload.seq = currentSeq;
-            payload.ts = firebase.firestore.FieldValue.serverTimestamp();
-            db.collection('sessions').doc(gameId).collection('actions').add(payload).catch(onFail);
-        }
-
-        function awardPoint() {
-            if (awardSent || !selectedTeam || !gameId || currentSeq === null) return;
-            awardSent = true;
-            $('feedback').textContent = 'تم إرسال الفريق: ' + teamsInfo[selectedTeam].name;
-            updateControls();
-            sendAction({ type: 'award', team: selectedTeam }, function () {
-                awardSent = false;
-                $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
-                updateControls();
-            });
-        }
-
-        function cancelQuestion() {
-            if (awardSent || !gameId || currentSeq === null) return;
-            if (!confirm('إلغاء السؤال بدون منح نقاط؟')) return;
-            awardSent = true;
-            updateControls();
-            sendAction({ type: 'cancel' }, function () {
-                awardSent = false;
                 $('feedback').textContent = 'فشل الإرسال، حاول مرة أخرى';
                 updateControls();
             });
