@@ -248,6 +248,7 @@
         var selectedIndex = null;
         var sent = false;
         var buzz = { locked: false, team: '' };
+        var timeUp = false;
         var typeTimer = null;
         var typedText = '';
         var typedCount = 0;
@@ -410,6 +411,7 @@
 
             buzz.locked = data.state === 'LOCKED' && !!data.winnerTeam;
             buzz.team = data.winnerTeam || '';
+            timeUp = !!data.timeUp || data.state === 'TIMEUP';
 
             var q = data.question;
             if (!q) {
@@ -448,7 +450,7 @@
             updateControls();
         }
 
-        function canAnswer() { return buzz.locked && buzz.team === myTeam; }
+        function canAnswer() { return !timeUp && buzz.locked && buzz.team === myTeam; }
 
         function applyReveal(reveal, winnerTeam) {
             var btns = $('options').children;
@@ -483,6 +485,9 @@
             var st = $('answer-status');
             if (sent) {
                 st.textContent = ''; st.className = '';
+            } else if (timeUp) {
+                st.textContent = '⏰ انتهى الوقت — لا يمكن الإجابة';
+                st.className = 'blocked';
             } else if (can) {
                 st.textContent = '🔔 فريقك ضغط أولاً — اختر الإجابة';
                 st.className = 'ready';

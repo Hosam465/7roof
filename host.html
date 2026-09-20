@@ -974,6 +974,8 @@
         .mode-switch button { flex: 1; padding: 12px 8px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; font-size: 1rem; background: transparent; color: white; transition: background 0.15s; }
         .mode-switch button.active { background: #00a651; }
 
+        .mcq-option.locked-out { opacity: 0.45; cursor: not-allowed; }
+
         .ipad-link {
             margin-top: 12px;
             font-size: 0.85rem;
@@ -1462,7 +1464,7 @@
 
             if (!q) { showToast('نفدت الأسئلة لهذا الحرف!'); return; }
 
-            currentData = q; currentTarget = element; lastBuzzTeam = '';
+            currentData = q; currentTarget = element; lastBuzzTeam = ''; timeExpired = false;
             document.getElementById('modal-letter').textContent = "الحرف: " + q.letter;
             const questionEl = document.getElementById('modal-question');
             questionEl.style.display = 'block';
@@ -1484,6 +1486,7 @@
                     d.className = 'mcq-option';
                     d.innerHTML = `<span>${o}</span>`;
                     d.onclick = function() {
+                        if (timeExpired) return;
                         questionEl.style.display = 'block';
                         if (o === q.answer) {
                             this.classList.add('correct'); playSound('correct');
@@ -1494,7 +1497,7 @@
                     };
                     mcqView.appendChild(d);
                 });
-                publishSession({ question: { seq: seq, letter: q.letter, text: q.question, options: opts }, reveal: null, frozenChars: null });
+                publishSession({ question: { seq: seq, letter: q.letter, text: q.question, options: opts }, reveal: null, frozenChars: null, timeUp: false });
             }
 
             const btnGreen = document.getElementById('btn-green-correct'); const btnRed = document.getElementById('btn-red-correct');
@@ -1526,7 +1529,7 @@
         let currentGameData = []; let boardState = new Array(25).fill(0); let currentTarget = null; let currentData = null; let isQuestionOpen = false;
         let timerInterval; let gameTimerDuration = 10; let pointsToWin = 500; let activeCategoryFilter = null;
         let typewriterInterval = null;
-        let qSeq = 0; let lastIpadPickSeq = -1; let lastBuzzTeam = '';
+        let qSeq = 0; let lastIpadPickSeq = -1; let lastBuzzTeam = ''; let timeExpired = false;
         let greenJokerUsed = false; let redJokerUsed = false; let activeJokerTeam = null; let jokerEffect = { type: null, team: null };
         let goldHexIndex = -1; let currentQuestionIsGold = false; let scores = { green: 0, red: 0 }; let isMatchOver = false; let lastHoverSoundTime = 0;
         let peer = null; let connections = []; let currentLanguage = 'ar';
@@ -1750,7 +1753,7 @@
                     if (p.seq !== qSeq || p.seq === lastIpadPickSeq) return;
                     if (document.getElementById('modal').style.display !== 'flex') return;
                     // the iPad may only answer after its own team's buzzer was pressed first
-                    if (!lastBuzzTeam || p.team !== lastBuzzTeam) return;
+                    if (timeExpired || !lastBuzzTeam || p.team !== lastBuzzTeam) return;
                     const optEl = document.getElementById('mcq-view').children[p.index];
                     if (!optEl) return;
                     lastIpadPickSeq = p.seq; optEl.click();
@@ -1802,9 +1805,10 @@
 
         function broadcast(msg) {
             if (!gameId) return; let firebaseState = "";
-            if (msg.type === 'QUESTION_OPEN') firebaseState = 'QUESTION_OPEN'; else if (msg.type === 'LOCKED') firebaseState = 'LOCKED'; else if (msg.type === 'RESET') firebaseState = 'RESET';
+            if (msg.type === 'QUESTION_OPEN') firebaseState = 'QUESTION_OPEN'; else if (msg.type === 'LOCKED') firebaseState = 'LOCKED'; else if (msg.type === 'RESET') firebaseState = 'RESET'; else if (msg.type === 'TIMEUP') firebaseState = 'TIMEUP';
             const payload = { state: firebaseState, winnerName: msg.winner || '', winnerTeam: msg.winnerTeam || '', lastUpdate: firebase.firestore.FieldValue.serverTimestamp() };
-            if (msg.type === 'RESET') { payload.question = null; payload.reveal = null; payload.frozenChars = null; lastBuzzTeam = ''; }
+            if (msg.type === 'TIMEUP') payload.timeUp = true;
+            if (msg.type === 'RESET') { payload.question = null; payload.reveal = null; payload.frozenChars = null; payload.timeUp = false; lastBuzzTeam = ''; timeExpired = false; }
             db.collection('sessions').doc(gameId).update(payload);
         }
 
@@ -1914,7 +1918,11 @@
             }, 1000);
         }
 
-        function showTimeUpMessage() { stopTypewriter(); publishSession({ frozenChars: document.getElementById('modal-question').textContent.length }); const el = document.getElementById('time-up-overlay'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
+        function showTimeUpMessage() {
+            timeExpired = true; isQuestionOpen = false;
+            document.querySelectorAll('#mcq-view .mcq-option').forEach(o => o.classList.add('locked-out'));
+            broadcast({ type: 'TIMEUP' });
+            stopTypewriter(); publishSession({ frozenChars: document.getElementById('modal-question').textContent.length }); const el = document.getElementById('time-up-overlay'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
 
         function resolveQuestion(team) {
             if (jokerEffect.team && jokerEffect.team !== team) return; if (!currentTarget) return;
