@@ -7,6 +7,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="branding.js"></script>
     <style>
         :root {
             --accent: #00a651;
@@ -51,7 +52,9 @@
         }
 
         #login-screen { max-width: 460px; text-align: center; display: flex; flex-direction: column; gap: 14px; }
-        #login-screen img { width: 170px; align-self: center; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25)); }
+        .logo-row { display: flex; direction: ltr; justify-content: center; align-items: center; gap: 16px; min-height: 90px; }
+        .logo-row img { width: 170px; max-width: 100%; height: auto; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25)); }
+        body.has-logo2 .logo-row img { width: 130px; }
         #login-screen h1 { margin: 0; font-size: 2rem; text-shadow: 0 0 18px rgba(0, 166, 81, 0.6); }
 
         input[type="text"] {
@@ -188,7 +191,10 @@
 <body>
 
     <div id="login-screen" class="card">
-        <img src="sab.png" alt="SAB">
+        <div class="logo-row">
+            <img data-brand="2" alt="" style="display:none;">
+            <img data-brand="1" alt="Logo" style="visibility:hidden;">
+        </div>
         <h1>انضم من الآيباد</h1>
         <input type="text" id="code-input" inputmode="numeric" maxlength="4" placeholder="كود اللعبة" autocomplete="off">
         <input type="text" id="name-input" maxlength="20" placeholder="الاسم" value="آيباد" autocomplete="off">
@@ -235,6 +241,7 @@
 
         firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
+        Branding.init(db);
 
         var TYPE_SPEED_MS = 90;
 

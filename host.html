@@ -7,6 +7,7 @@
     <title>حروف وألوف - Host</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
+    <script src="branding.js"></script>
     <script src="questions.js"></script>
     <script src="questionsENG.js"></script>
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
@@ -123,11 +124,12 @@
         .game-header-logo {
             position: absolute;
             top: 15px;
-            right: 280px;
-            width: 260px;
+            right: calc(var(--sidebar-width) + 12px);
+            width: min(170px, 14vw);
             height: auto;
             z-index: 1000;
             opacity: 0.85;
+            pointer-events: none;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
 
@@ -958,17 +960,23 @@
 
         .logo-preview-box img { max-width: 100%; max-height: 100%; }
 
-        .top-left-logo {
-            position: fixed;
-            top: 12px;
-            left: 14px;
-            max-width: 220px;
-            max-height: 90px;
-            object-fit: contain;
-            z-index: 2500;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-            pointer-events: none;
+        .logo-row {
+            display: flex;
+            direction: ltr;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 20px;
+            min-height: 110px;
         }
+
+        .logo-row .main-brand-logo { margin-bottom: 0; max-width: 100%; }
+
+        body.has-logo2 .logo-row .main-brand-logo { width: 190px; }
+
+        .game-header-logo-2 { right: auto; left: calc(var(--sidebar-width) + 12px); }
+
+        body.has-logo2 .game-header-logo { width: min(150px, 13vw); }
 
         .mode-switch { display: flex; background: rgba(0, 0, 0, 0.5); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.4); overflow: hidden; }
         .mode-switch button { flex: 1; padding: 12px 8px; border: none; cursor: pointer; font-family: 'Cairo'; font-weight: bold; font-size: 1rem; background: transparent; color: white; transition: background 0.15s; }
@@ -986,13 +994,6 @@
         }
 
         .ipad-link:hover { color: #00a651; }
-
-        body.has-logo2 #red-sidebar { padding-top: 120px; }
-
-        @media (max-width: 700px) {
-            .top-left-logo { max-width: 110px; max-height: 45px; top: 6px; left: 8px; }
-            body.has-logo2 #red-sidebar { padding-top: 10px; }
-        }
 
         .logo-upload-btn {
             cursor: pointer;
@@ -1144,8 +1145,6 @@
         <div id="gold-winner-text" style="color: white; font-size: 1.5rem; margin-top: 10px;"></div>
     </div>
 
-    <img id="logo2" class="top-left-logo" alt="" style="display:none;">
-
     <div id="toast-notification"></div>
 
     <div id="game-over-overlay">
@@ -1184,7 +1183,10 @@
 
     <div id="main-menu">
         <div class="menu-content">
-            <img src="sab.png" alt="SAB" class="main-brand-logo">
+            <div class="logo-row">
+                <img data-brand="2" class="main-brand-logo" alt="" style="display:none;">
+                <img data-brand="1" class="main-brand-logo" alt="Logo" style="visibility:hidden;">
+            </div>
             <h1 class="menu-title">حروف وألوف</h1>
             <p style="font-size: 1.1rem; color: #ccc;"><br></p>
             <div id="host-id-display" onclick="copyId()">...</div>
@@ -1261,14 +1263,14 @@
                 <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 0;">
                     <span class="settings-label">شعار العلامة التجارية</span>
                     <div class="logo-upload-row">
-                        <div class="logo-preview-box"><img id="logo-preview-img" src="sab.png" alt="Logo preview"></div>
+                        <div class="logo-preview-box"><img id="logo-preview-img" alt="Logo preview"></div>
                         <label for="logo-upload-input" class="logo-upload-btn">📤 رفع شعار جديد</label>
                         <input type="file" id="logo-upload-input" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)">
                         <button type="button" class="logo-reset-btn" onclick="resetLogo()">↺ افتراضي</button>
                     </div>
                 </div>
                 <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 12px; margin: 18px 0 0 0;">
-                    <span class="settings-label">شعار إضافي (أعلى يسار الصفحة)</span>
+                    <span class="settings-label">شعار إضافي (بجانب الشعار الأول)</span>
                     <div class="logo-upload-row">
                         <div class="logo-preview-box"><img id="logo2-preview-img" alt="" style="display:none;"><span id="logo2-empty" style="opacity:0.5; font-size:0.8rem;">لا يوجد</span></div>
                         <label for="logo2-upload-input" class="logo-upload-btn">📤 إضافة شعار</label>
@@ -1282,7 +1284,7 @@
                 <h3>📂 إدارة البيانات</h3>
                 <div class="settings-grid">
                     <button class="settings-btn-tile tile-edit" onclick="openEditor()">📝 تعديل الأسئلة</button>
-                    <button class="settings-btn-tile tile-reset" onclick="resetGameData()">🗑️ إعادة تعيين</button>
+                    <button class="settings-btn-tile tile-reset" onclick="resetGameData()">🗑️ حذف وإعادة رفع الأسئلة</button>
                 </div>
             </div>
             <button class="save-btn" onclick="saveSettings()">حفظ وإغلاق</button>
@@ -1290,7 +1292,8 @@
     </div>
 
     <div id="game-container">
-        <img src="sab.png" alt="SAB" class="game-header-logo">
+        <img data-brand="1" alt="Logo" class="game-header-logo" style="visibility:hidden;">
+        <img data-brand="2" alt="" class="game-header-logo game-header-logo-2" style="display:none;">
 
         <button class="exit-btn" onclick="location.reload()">خروج نهائي</button>
 
@@ -1525,6 +1528,7 @@
         
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore(); const questionsCollection = db.collection('questions');
+        Branding.init(db);
 
         let currentGameData = []; let boardState = new Array(25).fill(0); let currentTarget = null; let currentData = null; let isQuestionOpen = false;
         let timerInterval; let gameTimerDuration = 10; let pointsToWin = 500; let activeCategoryFilter = null;
@@ -1538,15 +1542,25 @@
             green: { name: 'الفريق الأخضر', color: '#00ff44' },
             red: { name: 'الفريق الأحمر', color: '#ff0000' }
         };
-        let brandLogo = null;
-        let brandLogo2 = null;
+        let brandLogo = null;   // logo being edited on the settings page (null = default logo)
+        let brandLogo2 = null;  // second logo being edited (null = none)
+        let legacyLogos = { l1: null, l2: null };
         let questionMode = 'national_day';
+
+        // Saved immediately on every change so nothing resets after a reload
+        function persistSettings() {
+            try {
+                localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin, teamSettings, questionMode, language: currentLanguage }));
+                return true;
+            } catch (e) { return false; }
+        }
 
         function setQuestionMode(mode) {
             questionMode = mode;
             ['football', 'national_day', 'general'].forEach(m => {
                 const b = document.getElementById('mode-' + m); if (b) b.classList.toggle('active', m === mode);
             });
+            persistSettings();
         }
 
         function loadSettings() {
@@ -1556,14 +1570,26 @@
                 if (saved.timer) gameTimerDuration = saved.timer;
                 if (saved.winPoints) pointsToWin = saved.winPoints;
                 if (saved.teamSettings) teamSettings = saved.teamSettings;
-                if (saved.brandLogo) brandLogo = saved.brandLogo;
-                if (saved.brandLogo2) brandLogo2 = saved.brandLogo2;
                 if (saved.questionMode) questionMode = saved.questionMode;
+                if (saved.language === 'ar' || saved.language === 'en') currentLanguage = saved.language;
+                if (saved.brandLogo) legacyLogos.l1 = saved.brandLogo;
+                if (saved.brandLogo2) legacyLogos.l2 = saved.brandLogo2;
             }
             setQuestionMode(questionMode);
+            applyLanguageUI(currentLanguage);
             applyTeamSettings();
-            applyBrandLogo();
-            applyBrandLogo2();
+        }
+
+        // Logos are shared through the database (branding.js) so every page shows the same ones
+        function syncBrandingSettings() {
+            Branding.whenReady(function (st) {
+                const jobs = [];
+                if (legacyLogos.l1 && !st.exists1) jobs.push(Branding.save(1, legacyLogos.l1));
+                if (legacyLogos.l2 && !st.exists2) jobs.push(Branding.save(2, legacyLogos.l2));
+                if (legacyLogos.l1 || legacyLogos.l2) Promise.all(jobs).then(persistSettings).catch(function () {});
+                brandLogo = st.l1; brandLogo2 = st.l2;
+                refreshLogoPreviews();
+            });
         }
 
         function applyTeamSettings() {
@@ -1580,16 +1606,8 @@
             const redBtn = document.getElementById('btn-red-correct'); if (redBtn) redBtn.textContent = 'صحيحة (' + teamSettings.red.name + ')';
         }
 
-        function applyBrandLogo() {
-            const src = brandLogo || 'sab.png';
-            document.querySelectorAll('.main-brand-logo, .game-header-logo').forEach(img => { img.src = src; });
-            const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = src;
-        }
-
-        function applyBrandLogo2() {
-            const img = document.getElementById('logo2');
-            if (img) { if (brandLogo2) { img.src = brandLogo2; img.style.display = 'block'; } else { img.removeAttribute('src'); img.style.display = 'none'; } }
-            document.body.classList.toggle('has-logo2', !!brandLogo2);
+        function refreshLogoPreviews() {
+            const p1 = document.getElementById('logo-preview-img'); if (p1) p1.src = brandLogo || Branding.DEFAULT_LOGO;
             updateLogo2Preview();
         }
 
@@ -1599,7 +1617,7 @@
             if (empty) empty.style.display = brandLogo2 ? 'none' : 'block';
         }
 
-        // Downscale uploads so two logos always fit in localStorage
+        // Downscale uploads so each logo stays well under the database document size limit
         function readLogoFile(file, done) {
             if (!file) return;
             if (!file.type.startsWith('image/')) { showToast('الرجاء اختيار ملف صورة'); return; }
@@ -1608,10 +1626,15 @@
                 const img = new Image();
                 img.onload = function () {
                     const w = img.naturalWidth || 300, h = img.naturalHeight || 300;
-                    const scale = Math.min(1, 500 / Math.max(w, h));
-                    const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * scale)); c.height = Math.max(1, Math.round(h * scale));
-                    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-                    done(c.toDataURL('image/png'));
+                    let maxSide = 500, data = '';
+                    do {
+                        const scale = Math.min(1, maxSide / Math.max(w, h));
+                        const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * scale)); c.height = Math.max(1, Math.round(h * scale));
+                        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+                        data = c.toDataURL('image/png');
+                        maxSide = Math.round(maxSide * 0.7);
+                    } while (data.length > 600000 && maxSide > 100);
+                    done(data);
                 };
                 img.onerror = function () { showToast('تعذر قراءة الصورة'); };
                 img.src = e.target.result;
@@ -1628,7 +1651,7 @@
 
         function resetLogo() {
             brandLogo = null;
-            const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = 'sab.png';
+            const preview = document.getElementById('logo-preview-img'); if (preview) preview.src = Branding.DEFAULT_LOGO;
         }
 
         function handleLogo2Upload(event) {
@@ -1641,9 +1664,15 @@
             updateLogo2Preview();
         }
 
-        window.onload = function () { loadSettings(); initHost(); loadGameData(); };
+        window.onload = function () { loadSettings(); syncBrandingSettings(); initHost(); loadGameData(); };
 
         function setLanguage(lang) {
+            applyLanguageUI(lang);
+            persistSettings();
+            showToast(lang === 'ar' ? "اللغة: العربية" : "Language: English");
+        }
+
+        function applyLanguageUI(lang) {
             currentLanguage = lang;
             document.getElementById('set-ar').classList.toggle('active', lang === 'ar');
             document.getElementById('set-en').classList.toggle('active', lang === 'en');
@@ -1657,7 +1686,6 @@
                 btnEn.style.background = '#00a651'; btnEn.style.color = 'white';
                 btnAr.style.background = 'transparent'; btnAr.style.color = 'white';
             }
-            showToast(lang === 'ar' ? "اللغة: العربية" : "Language: English");
         }
 
         function loadGameData() {
@@ -1684,13 +1712,22 @@
             }
         }
 
-        function uploadDefaultData() {
+        // Uploads BOTH the Arabic and English built-in question banks (in chunks under the 500-write batch limit)
+        async function uploadDefaultData() {
             currentGameData = [];
-            if (typeof defaultGameData === 'undefined') { showToast("Error: questions.js not found!"); return; }
-            showToast("جاري رفع البيانات... (قد يستغرق وقتاً)"); const batch = db.batch();
-            const dataToUpload = defaultGameData.slice(0, 400);
-            dataToUpload.forEach((q) => { const docRef = questionsCollection.doc(); batch.set(docRef, q); });
-            batch.commit().then(() => { showToast("تم رفع الأسئلة من الملف!"); loadGameData(); }).catch((error) => { console.error("Error writing batch: ", error); showToast("حدث خطأ أثناء الرفع"); });
+            const docs = [];
+            if (typeof defaultGameData !== 'undefined') defaultGameData.forEach(q => docs.push({ ...q, lang: 'ar' }));
+            if (typeof defaultGameDataENG !== 'undefined') defaultGameDataENG.forEach(q => docs.push({ ...q, lang: 'en' }));
+            if (docs.length === 0) { showToast("Error: questions.js not found!"); return; }
+            showToast("جاري رفع الأسئلة العربية والإنجليزية... (قد يستغرق وقتاً)");
+            try {
+                for (let i = 0; i < docs.length; i += 400) {
+                    const batch = db.batch();
+                    docs.slice(i, i + 400).forEach((q) => { batch.set(questionsCollection.doc(), q); });
+                    await batch.commit();
+                }
+                showToast("تم رفع " + docs.length + " سؤال (عربي + إنجليزي)!"); loadGameData();
+            } catch (error) { console.error("Error writing batch: ", error); showToast("حدث خطأ أثناء الرفع"); }
         }
 
         function deleteQuestion(index) {
@@ -1712,10 +1749,16 @@
         }
 
         async function resetGameData() {
+            if (!confirm("تنبيه: سيتم حذف كل الأسئلة الموجودة (بما فيها أي أسئلة أضفتها) ثم إعادة رفع الأسئلة الأصلية العربية والإنجليزية.\n\nإذا كنت تريد فقط إعادة الأسئلة المستخدمة فاستخدم زر «إعادة تدوير الأسئلة المستعملة» في الأعلى.\n\nهل تريد المتابعة؟")) return;
             showToast("جاري حذف البيانات القديمة...");
-            const snapshot = await questionsCollection.get(); const batch = db.batch();
-            snapshot.docs.forEach((doc) => { batch.delete(doc.ref); }); await batch.commit();
-            showToast("تم الحذف، جاري رفع الأسئلة الجديدة..."); uploadDefaultData();
+            const snapshot = await questionsCollection.get();
+            for (let i = 0; i < snapshot.docs.length; i += 400) {
+                const batch = db.batch();
+                snapshot.docs.slice(i, i + 400).forEach((doc) => { batch.delete(doc.ref); });
+                await batch.commit();
+            }
+            localStorage.removeItem('usedQuestionIds');
+            showToast("تم الحذف، جاري رفع الأسئلة الجديدة..."); await uploadDefaultData();
         }
 
         function playSound(name) {
@@ -1980,8 +2023,8 @@
             document.getElementById('timer-input').value = gameTimerDuration; document.getElementById('win-points-input').value = pointsToWin;
             document.getElementById('team-green-name').value = teamSettings.green.name; document.getElementById('team-green-color').value = teamSettings.green.color;
             document.getElementById('team-red-name').value = teamSettings.red.name; document.getElementById('team-red-color').value = teamSettings.red.color;
-            document.getElementById('logo-preview-img').src = brandLogo || 'sab.png';
-            updateLogo2Preview(); setQuestionMode(questionMode);
+            brandLogo = Branding.state.l1; brandLogo2 = Branding.state.l2;
+            refreshLogoPreviews(); setQuestionMode(questionMode); applyLanguageUI(currentLanguage);
         }
         function saveSettings() {
             const newTimer = document.getElementById('timer-input').value; const newPoints = document.getElementById('win-points-input').value;
@@ -1989,12 +2032,16 @@
             const greenName = document.getElementById('team-green-name').value.trim(); const redName = document.getElementById('team-red-name').value.trim();
             teamSettings.green.name = greenName || 'الفريق الأخضر'; teamSettings.red.name = redName || 'الفريق الأحمر';
             teamSettings.green.color = document.getElementById('team-green-color').value; teamSettings.red.color = document.getElementById('team-red-color').value;
-            applyTeamSettings(); applyBrandLogo(); applyBrandLogo2();
+            applyTeamSettings();
             publishSession({ teams: teamSettings });
-            let saved = true;
-            try { localStorage.setItem('gameSettings', JSON.stringify({ timer: gameTimerDuration, winPoints: pointsToWin, teamSettings, brandLogo, brandLogo2, questionMode })); } catch (e) { saved = false; }
+            const saved = persistSettings();
+            // logos go to the shared database so every page and device updates
+            const logoJobs = [];
+            if ((brandLogo || null) !== (Branding.state.l1 || null)) logoJobs.push(Branding.save(1, brandLogo));
+            if ((brandLogo2 || null) !== (Branding.state.l2 || null)) logoJobs.push(Branding.save(2, brandLogo2));
             document.getElementById('settings-page').style.display = 'none'; document.getElementById('main-menu').style.display = 'flex';
-            showToast(saved ? 'تم حفظ الإعدادات!' : 'تعذر حفظ الإعدادات (الشعار كبير جداً)');
+            showToast(saved ? 'تم حفظ الإعدادات!' : 'تعذر حفظ الإعدادات');
+            if (logoJobs.length) Promise.all(logoJobs).catch(function () { showToast('تعذر حفظ الشعار (الصورة كبيرة جداً)'); });
         }
         function openEditor() { document.getElementById('settings-page').style.display = 'none'; document.getElementById('editor-container').style.display = 'flex'; document.getElementById('editor-container').style.opacity = '1'; renderEditorList(); }
         function closeEditor() { document.getElementById('editor-container').style.display = 'none'; document.getElementById('settings-page').style.display = 'flex'; }
