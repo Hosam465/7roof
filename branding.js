@@ -10,8 +10,9 @@
 (function () {
     var DEFAULT_LOGO = 'sab.png';
     var CACHE_KEY = 'brandingCache_v1';
-    var state = { l1: null, l2: null, exists1: false, exists2: false };
-    var loaded = { 1: false, 2: false };
+    var state = { l1: null, l2: null, exists1: false, exists2: false, teams: null, existsTeams: false };
+    var loaded = { 1: false, 2: false, t: false };
+    var teamCallbacks = [];
     var known = { 1: false, 2: false };   // do we know the real value (from cache or database)?
     var forced = false;                   // safety net: show the default even if nothing is known
     var db = null;
@@ -23,7 +24,12 @@
     }
 
     function writeCache() {
-        try { localStorage.setItem(CACHE_KEY, JSON.stringify({ l1: state.l1, l2: state.l2 })); } catch (e) {}
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify({ l1: state.l1, l2: state.l2, teams: state.teams })); } catch (e) {}
+    }
+
+    function fireTeams() {
+        if (!state.teams) return;
+        for (var i = 0; i < teamCallbacks.length; i++) teamCallbacks[i](state.teams);
     }
 
     function paint() {
@@ -50,7 +56,7 @@
     }
 
     function checkReady() {
-        if (loaded[1] && loaded[2]) {
+        if (loaded[1] && loaded[2] && loaded.t) {
             var cbs = readyCallbacks; readyCallbacks = [];
             for (var i = 0; i < cbs.length; i++) cbs[i](state);
         }
@@ -59,7 +65,19 @@
     function init(firestore) {
         db = firestore;
         var cache = readCache();
-        if (cache) { state.l1 = cache.l1 || null; state.l2 = cache.l2 || null; known[1] = known[2] = true; paint(); }
+        if (cache) {
+            state.l1 = cache.l1 || null; state.l2 = cache.l2 || null; known[1] = known[2] = true; paint();
+            if (cache.teams && cache.teams.green && cache.teams.red) { state.teams = cache.teams; fireTeams(); }
+        }
+
+        // team names + colors, shared with every page
+        db.collection('config').doc('teams').onSnapshot(function (doc) {
+            var d = doc.exists ? doc.data() : null;
+            state.existsTeams = doc.exists;
+            if (d && d.green && d.red) { state.teams = { green: d.green, red: d.red }; writeCache(); fireTeams(); }
+            loaded.t = true;
+            checkReady();
+        }, function () { loaded.t = true; checkReady(); });
 
         // never leave the logo hidden forever if the database is unreachable
         setTimeout(function () { forced = true; paint(); }, 3500);
@@ -91,14 +109,30 @@
         });
     }
 
+    // Host only: publish team names/colors ({ green: {name,color}, red: {name,color} })
+    function saveTeams(teams) {
+        if (!db) return Promise.reject(new Error('Branding not initialised'));
+        return db.collection('config').doc('teams').set({
+            green: teams.green,
+            red: teams.red,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+
+    // Any page: get team names/colors now (from cache) and whenever they change
+    function onTeams(cb) {
+        teamCallbacks.push(cb);
+        if (state.teams) cb(state.teams);
+    }
+
     // safety net: never leave the main logo hidden if something goes wrong
     document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () { forced = true; paint(); }, 4000);
     });
 
     function whenReady(cb) {
-        if (loaded[1] && loaded[2]) cb(state); else readyCallbacks.push(cb);
+        if (loaded[1] && loaded[2] && loaded.t) cb(state); else readyCallbacks.push(cb);
     }
 
-    window.Branding = { init: init, save: save, state: state, whenReady: whenReady, DEFAULT_LOGO: DEFAULT_LOGO };
+    window.Branding = { init: init, save: save, saveTeams: saveTeams, onTeams: onTeams, state: state, whenReady: whenReady, DEFAULT_LOGO: DEFAULT_LOGO };
 })();

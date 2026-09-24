@@ -125,20 +125,24 @@
             transition: all 0.2s;
         }
 
-        .team-option.green-opt { color: #88ffaa; }
-        .team-option.red-opt { color: #ff8888; }
+        .team-option.green-opt { color: var(--neon-green); }
+        .team-option.red-opt { color: var(--neon-red); }
 
         .team-option.selected.green-opt {
             background: rgba(40, 167, 69, 0.3);
+            background: color-mix(in srgb, var(--neon-green) 30%, transparent);
             border-color: var(--neon-green);
             box-shadow: 0 0 15px rgba(0, 255, 68, 0.3);
+            box-shadow: 0 0 15px color-mix(in srgb, var(--neon-green) 35%, transparent);
             transform: scale(1.05);
             color: white;
         }
         .team-option.selected.red-opt {
             background: rgba(220, 53, 69, 0.3);
+            background: color-mix(in srgb, var(--neon-red) 30%, transparent);
             border-color: var(--neon-red);
             box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
+            box-shadow: 0 0 15px color-mix(in srgb, var(--neon-red) 35%, transparent);
             transform: scale(1.05);
             color: white;
         }
@@ -203,13 +207,17 @@
         }
 
         .buzzer-btn.active.green-mode {
-            background: radial-gradient(circle at 30% 30%, #2ecc71, #218838);
+            background: var(--neon-green);
+            background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--neon-green) 82%, white), color-mix(in srgb, var(--neon-green) 68%, black));
             box-shadow: 0 10px 0 #1e7e34, 0 0 40px rgba(46, 204, 113, 0.5);
+            box-shadow: 0 10px 0 color-mix(in srgb, var(--neon-green) 50%, black), 0 0 40px color-mix(in srgb, var(--neon-green) 50%, transparent);
         }
 
         .buzzer-btn.active.red-mode {
-            background: radial-gradient(circle at 30% 30%, #e74c3c, #c0392b);
+            background: var(--neon-red);
+            background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--neon-red) 82%, white), color-mix(in srgb, var(--neon-red) 68%, black));
             box-shadow: 0 10px 0 #a93226, 0 0 40px rgba(231, 76, 60, 0.5);
+            box-shadow: 0 10px 0 color-mix(in srgb, var(--neon-red) 50%, black), 0 0 40px color-mix(in srgb, var(--neon-red) 50%, transparent);
         }
 
         .buzzer-btn.active:active {
@@ -272,6 +280,7 @@
         var gameId = "";
         var isLocked = true;
         var db;
+        var teamsInfo = { green: { name: 'الفريق الأخضر', color: '#00ff44' }, red: { name: 'الفريق الأحمر', color: '#ff0000' } };
 
         document.getElementById('game-id').addEventListener('input', function (e) {
             this.value = this.value.replace(/[^0-9]/g, '');
@@ -294,6 +303,7 @@
             db = firebase.firestore();
             Branding.init(db);
         }
+        Branding.onTeams(applyTeams);
 
         function selectTeam(team) {
             myTeam = team;
@@ -358,18 +368,25 @@
             var badge = document.getElementById('disp-team');
             var bzr = document.getElementById('buzzer');
             
-            if(myTeam === 'green') {
-                badge.textContent = 'الفريق الأخضر';
-                badge.style.color = 'var(--neon-green)';
-                bzr.classList.add('green-mode');
-            } else {
-                badge.textContent = 'الفريق الأحمر';
-                badge.style.color = 'var(--neon-red)';
-                bzr.classList.add('red-mode');
-            }
+            var key = (myTeam === 'green') ? 'green' : 'red';
+            badge.textContent = teamsInfo[key].name;
+            badge.style.color = teamsInfo[key].color;
+            bzr.classList.add(key + '-mode');
+        }
+
+        // Team names and colors come from the host (shared database), so a change shows up here too
+        function applyTeams(t) {
+            if (!t || !t.green || !t.red) return;
+            teamsInfo = t;
+            document.documentElement.style.setProperty('--neon-green', t.green.color);
+            document.documentElement.style.setProperty('--neon-red', t.red.color);
+            document.getElementById('btn-team-green').textContent = t.green.name;
+            document.getElementById('btn-team-red').textContent = t.red.name;
+            if (myTeam && document.getElementById('game-screen').style.display === 'flex') setupGameScreen();
         }
 
         function handleGameState(data) {
+            if (data && data.teams) applyTeams(data.teams);
             var btn = document.getElementById('buzzer');
             var status = document.getElementById('status-text');
             if (!data) return;

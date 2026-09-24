@@ -1545,6 +1545,7 @@
         let brandLogo = null;   // logo being edited on the settings page (null = default logo)
         let brandLogo2 = null;  // second logo being edited (null = none)
         let legacyLogos = { l1: null, l2: null };
+        let hadSavedTeams = false;
         let questionMode = 'national_day';
 
         // Saved immediately on every change so nothing resets after a reload
@@ -1569,7 +1570,7 @@
             if (saved) {
                 if (saved.timer) gameTimerDuration = saved.timer;
                 if (saved.winPoints) pointsToWin = saved.winPoints;
-                if (saved.teamSettings) teamSettings = saved.teamSettings;
+                if (saved.teamSettings) { teamSettings = saved.teamSettings; hadSavedTeams = true; }
                 if (saved.questionMode) questionMode = saved.questionMode;
                 if (saved.language === 'ar' || saved.language === 'en') currentLanguage = saved.language;
                 if (saved.brandLogo) legacyLogos.l1 = saved.brandLogo;
@@ -1589,6 +1590,9 @@
                 if (legacyLogos.l1 || legacyLogos.l2) Promise.all(jobs).then(persistSettings).catch(function () {});
                 brandLogo = st.l1; brandLogo2 = st.l2;
                 refreshLogoPreviews();
+                // team names/colors: this host's saved values win; otherwise adopt the shared ones
+                if (hadSavedTeams && !st.existsTeams) { Branding.saveTeams(teamSettings).catch(function () {}); }
+                else if (!hadSavedTeams && st.teams) { teamSettings = st.teams; applyTeamSettings(); persistSettings(); }
             });
         }
 
@@ -2034,6 +2038,7 @@
             teamSettings.green.color = document.getElementById('team-green-color').value; teamSettings.red.color = document.getElementById('team-red-color').value;
             applyTeamSettings();
             publishSession({ teams: teamSettings });
+            Branding.saveTeams(teamSettings).catch(function () { showToast('تعذر مشاركة أسماء الفرق مع الصفحات الأخرى'); });
             const saved = persistSettings();
             // logos go to the shared database so every page and device updates
             const logoJobs = [];
